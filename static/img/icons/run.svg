@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>running</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M26.971647,17.8167554 C28.8872131,18.9241245 28.8837872,20.721505 26.971647,21.8268937 L15.4684392,28.4767802 C13.5528731,29.5841493 12,28.7007843 12,26.484223 L12,13.159426 C12,10.9515979 13.556299,10.0614802 15.4684392,11.1668688 L26.971647,17.8167554 Z" id="path-1"></path>
+    </defs>
+    <g id="Iconset" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="running">
+            <g id="run">
+                <use fill="#FFD48D" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <path stroke="#4A4A4A" stroke-width="1" d="M26.721407,18.2496294 L15.2181991,11.5997428 C13.6376167,10.6860243 12.5,11.3386711 12.5,13.159426 L12.5,26.484223 C12.5,28.3118575 13.6325813,28.9605357 15.2181991,28.0439062 L26.721407,21.3940196 C28.3018588,20.4803766 28.3026355,19.1637214 26.721407,18.2496294 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

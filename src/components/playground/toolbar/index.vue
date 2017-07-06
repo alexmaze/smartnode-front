@@ -3,57 +3,109 @@
   <div class="left">
     <div class="in-left">
       <router-link to="/console" class="close">关闭</router-link>
-      <img src="static/img/icons/run.png" alt="" class="icon-btn run">
-      <img src="static/img/icons/build.png" alt="" class="icon-btn build">
+      <img :src="'static/img/icons/'+runtimeIcon+'.svg'" alt="" class="icon-btn run" @click="toggleSimulation">
     </div>
     <div class="in-right">
-      <img src="static/img/icons/code.png" alt="" class="icon-btn">
+      <img src="static/img/icons/build.svg" alt="" class="icon-btn build" @click="uploadToBoard">
     </div>
   </div>
   <div class="middle">
     <div class="infobox">
-      <div class="title">新项目2</div>
+      <div class="title">新项目2{{runtimeStage}}</div>
       <div class="statusbox">
-        <div>
-          <span class="status">已连接</span>
-          <span class="name">Evan SNKit</span>
-          <img class="info" src="static/img/icons/info.png" alt="">
+        <div class="info" v-if="runtimeStage === 'EDITING'">
+          <img class="status" src="static/img/icons/unconnected.svg" alt="">
+          <span class="message ping-fang-sc-medium single-line-wrap">{{newDevice}} 个新的实体硬件可用 省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略省略</span>
         </div>
+        <div class="info" v-else-if="runtimeStage === 'SIMULATING'">
+          <span class="error">{{errorNum}}</span> 错误, <span class="warning">{{warningNum}}</span> 警告
+        </div>
+        <div class="info" v-else-if="runtimeStage === 'UPLOADING'">
+          <el-progress :stroke-width="8" :percentage="progress" :show-text="false"></el-progress>
+        </div>
+        <img class="icon-info" src="static/img/icons/info.svg" alt="">
       </div>
     </div>
   </div>
   <div class="right">
-    <img src="static/img/icons/toolbox.png" alt="" class="icon-btn drawer" @click="toggleSidebar" :class="{ 'active': config.isShowSidebar }">
-    <div class="user">
-      <a>颜景豪 <i class="icon"></i></a>
-    </div>
+    <img src="static/img/icons/toolbox.svg" alt="" class="icon-btn drawer" @click="toggleSidebar" :class="{ 'active': config.isShowSidebar }">
+    <!--<div class="user">-->
+      <!--<a>颜景豪 <i class="icon"></i></a>-->
+    <!--</div>-->
   </div>
 </div>
 
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
   name: 'toolbar',
   components: {
   },
   data () {
     return {
+      runtimeIcon: 'run',
+      progress: 0,
+      errorNum: 0,
+      warningNum: 0
+    }
+  },
+  computed: {
+    ...mapGetters({
+      runtimeStage: 'getRuntimeStage'
+    }),
+    newDevice () {
+      return 3
     }
   },
   props: ['config'],
   methods: {
     toggleSidebar () {
       this.$emit('toggle-sidebar')
-    }
+    },
+    toggleSimulation () {
+      const enumSimulating = {
+        'EDITING': false,
+        'SIMULATING': true
+      }
+      if (enumSimulating[this.runtimeStage]) {
+        this.STOP_SIMULATION()
+        this.runtimeIcon = 'run'
+      } else {
+        this.START_SIMULATION()
+        this.runtimeIcon = 'stop'
+      }
+    },
+    uploadToBoard () {
+      this.progress = 0
+      this.START_UPLOADING()
+      let fun = () => {
+        let newProgress = this.progress + Math.random()
+        this.progress = (newProgress > 100) ? 100 : newProgress
+        if (this.progress === 100) {
+          this.FINISH_UPLOADING()
+        } else {
+          requestAnimationFrame(fun)
+        }
+      }
+      requestAnimationFrame(fun)
+    },
+    ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING'])
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+
+@import "../../index.less";
+el-progress-bar__inner{
+  background-color: @progress-bar-inner;
+}
 a {
-  color: #4A90E2;
+  color: @blue-text;
   text-decoration: none;
   cursor: pointer;
 }
@@ -63,34 +115,33 @@ a {
   cursor: pointer;
   border-radius: 4px;
   &:hover, &.active {
-    background: #DADADA;
+    background: @icon-hover;
   }
 }
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25px;
+  padding: 0 15px;
   box-sizing: border-box;
   flex-shrink: 0;
   width: 100%;
   height: 60px;
-  background-color: #fff;
-  box-shadow: 0 1px 0 #DADADA;
+  background-color: @tool-bar-background;
+  box-shadow: 0 1px 0 @tool-bar-box-shadow;
   font-size: 14px;
   font-weight: 500;
 }
 .left {
-  flex-grow: 1;
-  flex-shrink: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
   color: #4A90E2;
-  position: relative;
   height: 100%;
+  width: 34.375%;
   .in-left {
-    position: absolute;
-    top: 10px;
-    left: 0;
     display: flex;
+    justify-content: space-around;
     align-items: center;
     .close {
       margin-right: 72px;
@@ -100,21 +151,21 @@ a {
     }
   }
   .in-right {
-    position: absolute;
-    top: 10px;
-    right: 23px;
+    display: flex;
+    margin-right:24px;
   }
 }
 .middle {
-  height: 60px;
-  width: 400px;
-  box-sizing: border-box;
+  height: 100%;
+  width: 31.25%;
+  /*box-sizing: border-box;*/
   border-right: 1px solid #DADADA;
   border-left: 1px solid #DADADA;
   background: #FAFAFA;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin:;
   .infobox {
     color: #9B9B9B;
     width: 100%;
@@ -125,26 +176,40 @@ a {
       margin-bottom: 2px;
     }
     .statusbox {
-      width: 100%;
+      width: calc(~"100% - 22px");
+      display: flex;
+      margin:0 11px;
+      .info{
+        width: calc(~"100% - 16px - 15px");
+        margin: auto 15px auto 0;
+        display: flex;
+        align-items:center;
+        .el-progress{
+          width:100%;
+        }
+      }
       .status {
-        background: #7ED321;
-        color: #ffffff;
-        border-radius: 4px;
-        padding: 1px 5px;
-        margin-right: 8px;
+        background: @connected;
+        max-height: 20px;
+        /*color: #ffffff;*/
+        border-radius: 50%;
+        /*padding: 1px 5px;*/
+        /*margin-right: 8px;*/
       }
-      .name {
-        color: #4A4A4A;
+      .message {
+        margin-left: 8px;
+        display: inline-block;
+        /*width:50%;*/
+        /*color: #4A4A4A;*/
       }
-      .info {
-        float: right;
+      .icon-info {
         width: 16px;
-        margin-top: 2px;
       }
     }
   }
 }
 .right {
+  width:34.375%;
   flex-grow: 1;
   flex-shrink: 1;
   color: #4A90E2;
@@ -177,4 +242,14 @@ a {
     left: 23px;
   }
 }
+</style>
+
+<style lang="less" >
+  @import "../../index.less";
+  .el-progress-bar__outer{
+    background-color: @progress-bar-outer !important;
+  }
+  .el-progress-bar__inner{
+    background-color: @progress-bar-inner !important;
+  }
 </style>

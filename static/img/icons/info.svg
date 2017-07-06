@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>info</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="P-编程" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="testing" transform="translate(-814.000000, -32.000000)" fill="#9B9B9B">
+            <g id="tool-bar">
+                <g id="Status" transform="translate(441.000000, 0.000000)">
+                    <path d="M381,48 C376.581722,48 373,44.418278 373,40 C373,35.581722 376.581722,32 381,32 C385.418278,32 389,35.581722 389,40 C389,44.418278 385.418278,48 381,48 Z M381,37.5 C381.828427,37.5 382.5,36.8284271 382.5,36 C382.5,35.1715729 381.828427,34.5 381,34.5 C380.171573,34.5 379.5,35.1715729 379.5,36 C379.5,36.8284271 380.171573,37.5 381,37.5 Z M380,39.990778 L380,44.009222 C380,44.5490248 380.447715,45 381,45 C381.556135,45 382,44.5564136 382,44.009222 L382,39.990778 C382,39.4509752 381.552285,39 381,39 C380.443865,39 380,39.4435864 380,39.990778 Z" id="info"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

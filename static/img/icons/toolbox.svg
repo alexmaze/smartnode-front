@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>toolbox</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Iconset" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="toolbox" stroke-width="2">
+            <rect id="Rectangle" stroke="#979797" x="16" y="18" width="8" height="4" rx="2"></rect>
+            <path d="M11,20 L15.5,20" id="Line" stroke="#979797" stroke-linecap="square"></path>
+            <path d="M24,20 L28.5,20" id="Line-Copy" stroke="#979797" stroke-linecap="square"></path>
+            <rect id="Rectangle-2" stroke="#4A4A4A" x="10" y="12" width="20" height="16" rx="4"></rect>
+        </g>
+    </g>
+</svg>

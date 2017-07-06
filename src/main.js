@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App'
 import router from './router'
+import store from './store'
 import Promise from 'es6-promise'
 import ElementUI from 'element-ui'
 import 'isomorphic-fetch'
@@ -17,11 +19,12 @@ window.Biltong = Biltong
 
 Promise.polyfill()
 Vue.use(ElementUI)
-
+Vue.use(Vuex)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

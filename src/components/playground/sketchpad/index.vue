@@ -10,10 +10,18 @@
       </template>
     </div>
     <div id="zoomPanel">
-      <el-button-group>
-        <el-button icon="minus" @click="zoomOut"></el-button>
-        <el-button icon="plus" @click="zoomIn"></el-button>
-      </el-button-group>
+      <div id="add" @click="zoomIn"><img src="../../../assets/ic_add.svg" alt=""></div>
+      <div id="divider"></div>
+      <div id="minus" @click="zoomOut"><img src="../../../assets/ic_remove.svg" alt=""></div>
+      <!--<img src="../../../assets/ic_add.svg" alt="">-->
+      <!--<div style="height: 1px; background: black"></div>-->
+      <!--<img src="../../../assets/ic_remove.svg" alt="">-->
+      <!--<i class="el-icon-plus"></i>-->
+      <!--<i class="el-icon-minus"></i>-->
+      <!--<el-button-group>-->
+        <!--<el-button icon="minus" @click="zoomOut"></el-button>-->
+        <!--<el-button icon="plus" @click="zoomIn"></el-button>-->
+      <!--</el-button-group>-->
     </div>
   </div>
 </template>
@@ -64,7 +72,7 @@ export default {
       let s = 'scale(' + zoom + ')'
       let oString = (transformOrigin[0] * 100) + '% ' + (transformOrigin[1] * 100) + '%'
 
-      for (var i = 0; i < p.length; i++) {
+      for (let i = 0; i < p.length; i++) {
         el.style[p[i] + 'Transform'] = s
         el.style[p[i] + 'TransformOrigin'] = oString
       }
@@ -110,16 +118,38 @@ export default {
   width:100%;
   height:100%;
   #zoomPanel{
+    width: 24px;
+    height: 47px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    bottom:0;
-    left:0;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 8px;
+    left: 8px;
+    #add,#minus{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 23px;
+      width: 100%;
+      user-select: none;
+    }
+    #divider{
+      height: 1px;
+      background-color: #dddee0;
+      width: 18px;
+    }
   }
   #sketchpad_desk {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    left: 50%;
+    top: 50%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     overflow: visible;
   }
   .jtk-connector path {
