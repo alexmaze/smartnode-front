@@ -1,6 +1,6 @@
 <template>
-  <div class="sketchpad">
-    <div id="sketchpad_desk" v-if="isReady">
+  <div class="sketchpad" id="sketchpad" >
+    <div id="sketchpad_desk" v-if="isReady" >
       <template v-for="node in nodes">
         <VirtualLogicAndNode :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-logic-and'"></VirtualLogicAndNode>
         <VirtualMathFormulaNode :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-math-formula'"></VirtualMathFormulaNode>
@@ -50,10 +50,16 @@ export default {
       isReady: false,
       jsPlumbInstance: undefined,
       zoomLevel: 1,
-      zoomStep: 0.1
+      zoomStep: 0.1,
+      offsetX: 0,
+      offsetY: 0,
+      sketchpadZoom: 1
     }
   },
   methods: {
+    test () {
+      console.log('MOUSE DOWN')
+    },
     zoomIn () {
       this.zoomLevel *= 1 + this.zoomStep
       this.setZoom(this.zoomLevel)
@@ -65,11 +71,11 @@ export default {
       console.log('zoomout')
     },
     setZoom (zoom, instance, transformOrigin, el) {
-      transformOrigin = transformOrigin || [ 0.5, 0.5 ]
+      transformOrigin = transformOrigin || [ 1, 1 ]
       instance = instance || this.jsPlumbInstance
       el = el || instance.getContainer()
       let p = [ 'webkit', 'moz', 'ms', 'o' ]
-      let s = 'scale(' + zoom + ')'
+      let s = 'scale(' + zoom + ') translate3d(' + this.offsetX + 'px,' + this.offsetY + 'px,0px)'
       let oString = (transformOrigin[0] * 100) + '% ' + (transformOrigin[1] * 100) + '%'
 
       for (let i = 0; i < p.length; i++) {
@@ -81,6 +87,12 @@ export default {
       el.style['transformOrigin'] = oString
 
       instance.setZoom(zoom)
+    },
+    dragSketchPad ({movementX, movementY}) {
+      console.log(movementX, movementY)
+      this.offsetX += (movementX / this.sketchpadZoom)
+      this.offsetY += (movementY / this.sketchpadZoom)
+      this.setZoom(this.zoomLevel)
     }
   },
   created () {
@@ -102,21 +114,48 @@ export default {
         Container: 'sketchpad_desk'
       })
       this.jsPlumbInstance = instance
-
       // 绑定
       // instance.bind('connection', this.onConnectionEstablishedFactory(this))
       // instance.bind('connectionDetached', this.onConnectionDetachedFactory(this))
       // instance.bind('connectionMoved', this.onConnectionMovedFactory(this))
     })
+  },
+  mounted () {
+    let sketchpad = document.getElementById('sketchpad')
+    sketchpad.addEventListener('mousedown', () => {
+      sketchpad.addEventListener('mousemove', this.dragSketchPad, false)
+    }, false)
+    sketchpad.addEventListener('mouseup', () => {
+      sketchpad.removeEventListener('mousemove', this.dragSketchPad, false)
+    }, false)
+    sketchpad.addEventListener('wheel', ({wheelDeltaY}) => {
+      console.log(wheelDeltaY)
+      this.zoomLevel += wheelDeltaY * 0.0005 * this.zoomStep
+      this.setZoom(this.zoomLevel)
+    }, false)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
+.jtk-drag-select * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .sketchpad {
   width:100%;
   height:100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   #zoomPanel{
     width: 24px;
     height: 47px;
@@ -146,8 +185,8 @@ export default {
   }
   #sketchpad_desk {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    /*left: 50%;*/
+    /*top: 50%;*/
     /*width: 100%;*/
     /*height: 100%;*/
     overflow: visible;

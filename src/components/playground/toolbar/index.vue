@@ -187,6 +187,7 @@ a {
         .el-progress{
           width:100%;
         }
+        height:20px;
       }
       .status {
         background: @connected;
