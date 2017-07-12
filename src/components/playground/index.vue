@@ -2,7 +2,7 @@
   <div class="playground">
     <Toolbar @toggle-sidebar="toggleSidebar" :config="config"></Toolbar>
     <div class="content">
-      <Sketchpad :nodes="data"></Sketchpad>
+      <Sketchpad :nodes="data" @add-node="addNode"></Sketchpad>
     </div>
     <Sidebar :is-show="config.isShowSidebar" @add-node="addNode"></Sidebar>
   </div>
@@ -34,7 +34,7 @@ export default {
       this.config.isShowSidebar = !this.config.isShowSidebar
       console.debug('toggle sidebar', this.config.isShowSidebar)
     },
-    addNode (nodeType) {
+    addNode (nodeType, offset) {
       console.debug('add node', nodeType)
       this.data.push({
         id: 'TMP' + (new Date()).getTime(),
@@ -43,8 +43,8 @@ export default {
         address: undefined,
         label: nodeType._tertiaryLabel,
         position: {
-          x: 100,
-          y: 100
+          x: offset ? (offset.x || 100) : 100,
+          y: offset ? (offset.y || 100) : 100
         },
         inputs: [],
         outputs: []

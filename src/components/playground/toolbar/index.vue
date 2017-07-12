@@ -6,7 +6,7 @@
       <img :src="'static/img/icons/'+runtimeIcon+'.svg'" alt="" class="icon-btn run" @click="toggleSimulation">
     </div>
     <div class="in-right">
-      <img src="static/img/icons/build.svg" alt="" class="icon-btn build" @click="uploadToBoard">
+      <img src="/static/img/icons/build.svg" alt="" class="icon-btn build" @click="uploadToBoard">
     </div>
   </div>
   <div class="middle" @mouseenter="hoverDetailOn" @mouseleave="hoverDetailOff">
@@ -14,7 +14,7 @@
       <div class="title">新项目 <span v-if="runtimeStage !== 'EDITING'">- <span :class="{warntext:runtimeStage === 'SIMULATING',blacktext:runtimeStage === 'UPLOADING'}">{{stateText}}</span></span></div>
       <div class="statusbox">
         <div class="info ping-fang-sc-medium" v-if="runtimeStage === 'EDITING'">
-          <img class="status" src="static/img/icons/unconnected.svg" alt="">
+          <img class="status" src="/static/img/icons/unconnected.svg" alt="">
           <span class="message single-line-wrap">{{newDevice}} 个新的实体硬件可用 省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试省略测试</span>
         </div>
         <div class="info ping-fang-sc-medium" v-else-if="runtimeStage === 'SIMULATING'">
@@ -43,33 +43,33 @@
           <div class="new-device">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
-              <img class="status" src="static/img/icons/unconnected.svg" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" alt="">
             </div>
             <div class="device-info">
               <p>背光按键_1</p>
-              <p>6.25 09:32</p>
+              <p class="last-timestamp">6.25 09:32</p>
               <p class="identifier"></p>
             </div>
           </div>
           <div class="new-device">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
-              <img class="status" src="static/img/icons/unconnected.svg" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" alt="">
             </div>
             <div class="device-info">
               <p>背光按键_2</p>
-              <p>6.25 09:32</p>
+              <p class="last-timestamp">6.25 09:32</p>
               <p class="identifier"></p>
             </div>
           </div>
           <div class="new-device">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
-              <img class="status" src="static/img/icons/unconnected.svg" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" alt="">
             </div>
             <div class="device-info">
               <p>背光按键_3</p>
-              <p>6.25 09:32</p>
+              <p class="last-timestamp">6.25 09:32</p>
               <p class="identifier"></p>
             </div>
           </div>
@@ -338,18 +338,16 @@ a {
         min-width: 160px;
         margin: 8px 0 0 0;
         .node{
-          min-width:86px;
+          position: relative;
           display: inline-block;
           .device-icon{
             height:80px;
           }
           .status{
+            position: absolute;
             height: 16px;
-            margin-left: -24px;
-            margin-bottom: 16px;
-            /*position: relative;*/
-            /*right: 24px;*/
-            /*bottom: 16px;*/
+            right: 2.5px;
+            bottom: 16.44px;
             background: @connected;
             max-height: 20px;
             border-radius: 50%;
@@ -358,6 +356,10 @@ a {
         .device-info{
           display: inline-block;
           margin:auto 0 auto 7.64px;
+          .last-timestamp{
+            -webkit-transform: scale(0.75);
+            font-size: 8px;
+          }
           .identifier{
             width: 10px;
             height: 10px;

@@ -1,12 +1,12 @@
 <template>
-  <div class="sketchpad" id="sketchpad" >
+  <div class="sketchpad" id="sketchpad" @dragover.prevent="" @drop="drop">
     <div id="sketchpad_desk" v-if="isReady" >
       <template v-for="node in nodes">
-        <VirtualLogicAndNode :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-logic-and'"></VirtualLogicAndNode>
-        <VirtualMathFormulaNode :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-math-formula'"></VirtualMathFormulaNode>
-        <DeviceSwitchSnapNode :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch-snap'"></DeviceSwitchSnapNode>
-        <DeviceSensorInfraredNode :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-sensor-infrared'"></DeviceSensorInfraredNode>
-        <DeviceModuleLedNode :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-module-led'"></DeviceModuleLedNode>
+        <VirtualLogicAndNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-logic-and'"></VirtualLogicAndNode>
+        <VirtualMathFormulaNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-math-formula'"></VirtualMathFormulaNode>
+        <DeviceSwitchSnapNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch-snap'"></DeviceSwitchSnapNode>
+        <DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-sensor-infrared'"></DeviceSensorInfraredNode>
+        <DeviceModuleLedNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-module-led'"></DeviceModuleLedNode>
       </template>
     </div>
     <div id="zoomPanel">
@@ -43,8 +43,7 @@ export default {
       zoomLevel: 1,
       zoomStep: 0.1,
       offsetX: 0,
-      offsetY: 0,
-      sketchpadZoom: 1
+      offsetY: 0
     }
   },
   methods: {
@@ -81,9 +80,19 @@ export default {
     },
     dragSketchPad ({movementX, movementY}) {
       console.log(movementX, movementY)
-      this.offsetX += (movementX / this.sketchpadZoom)
-      this.offsetY += (movementY / this.sketchpadZoom)
+      this.offsetX += (movementX / this.zoomLevel)
+      this.offsetY += (movementY / this.zoomLevel)
       this.setZoom(this.zoomLevel)
+    },
+    drop (ev) {
+//      console.log(ev.layerX, ev.layerY)
+//      console.log(JSON.parse(ev.dataTransfer.getData('data')))
+      let offset = {
+        x: (ev.layerX) / this.zoomLevel - this.offsetX,
+        y: (ev.layerY) / this.zoomLevel - this.offsetY
+      }
+      let nodeType = JSON.parse(ev.dataTransfer.getData('data'))
+      this.$emit('add-node', nodeType, offset)
     }
   },
   created () {
