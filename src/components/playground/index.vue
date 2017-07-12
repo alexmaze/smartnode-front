@@ -12,6 +12,7 @@
 import Toolbar from './toolbar'
 import Sidebar from './sidebar'
 import Sketchpad from './sketchpad'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'playground',
@@ -48,7 +49,11 @@ export default {
         inputs: [],
         outputs: []
       })
-    }
+    },
+    ...mapActions(['checkConnection'])
+  },
+  mounted () {
+//    setInterval(this.checkConnection, 2000)// 监测连接状态
   }
 }
 </script>

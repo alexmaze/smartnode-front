@@ -8,6 +8,7 @@ import ElementUI from 'element-ui'
 import 'isomorphic-fetch'
 import 'normalize.css'
 import 'element-ui/lib/theme-default/index.css'
+import '../static/iconfont.css'
 import { jsPlumb, jsPlumbUtil, jsBezier, Mottle, Katavorio, Biltong } from 'jsplumb'
 
 window.jsPlumb = jsPlumb

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="11px" viewBox="0 0 13 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Triangle</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="P-编程" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="editing_烧录失败_弹窗" transform="translate(-576.000000, -101.000000)" fill="#FF4B62">
+            <path d="M580.715096,102.053992 C581.593537,100.648488 583.017997,100.648851 583.896211,102.053992 L588.215096,108.96421 C589.093537,110.369714 588.461303,111.509101 586.806231,111.509101 L577.805076,111.509101 C576.148541,111.509101 575.517997,110.369352 576.396211,108.96421 L580.715096,102.053992 Z" id="Triangle"></path>
+        </g>
+    </g>
+</svg>

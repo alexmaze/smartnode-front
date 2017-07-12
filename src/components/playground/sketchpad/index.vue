@@ -13,15 +13,6 @@
       <div id="add" @click="zoomIn"><img src="../../../assets/ic_add.svg" alt=""></div>
       <div id="divider"></div>
       <div id="minus" @click="zoomOut"><img src="../../../assets/ic_remove.svg" alt=""></div>
-      <!--<img src="../../../assets/ic_add.svg" alt="">-->
-      <!--<div style="height: 1px; background: black"></div>-->
-      <!--<img src="../../../assets/ic_remove.svg" alt="">-->
-      <!--<i class="el-icon-plus"></i>-->
-      <!--<i class="el-icon-minus"></i>-->
-      <!--<el-button-group>-->
-        <!--<el-button icon="minus" @click="zoomOut"></el-button>-->
-        <!--<el-button icon="plus" @click="zoomIn"></el-button>-->
-      <!--</el-button-group>-->
     </div>
   </div>
 </template>
@@ -132,7 +123,9 @@ export default {
       console.log(wheelDeltaY)
       this.zoomLevel += wheelDeltaY * 0.0005 * this.zoomStep
       this.setZoom(this.zoomLevel)
-    }, false)
+    }, {
+      passive: true
+    })
   }
 }
 </script>

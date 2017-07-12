@@ -21,7 +21,8 @@ html {
   background-color: #F3F3F3;
 }
 #app {
-  font-family: 'PingFang SC', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: PingFangSC-Medium, sans-serif;
+  /*font-family: 'PingFang SC', 'Avenir', Helvetica, Arial, sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

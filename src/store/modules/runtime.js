@@ -2,19 +2,28 @@
  * Created by zhujiaye on 2017/7/5.
  */
 import * as types from '../mutation-types'
+import api from '../../api'
 
 // initial state
 const state = {
-  runtimeStage: 'EDITING'
+  runtimeStage: 'EDITING',
+  allConnected: false
 }
 
 // getters
 const getters = {
-  getRuntimeStage: state => state.runtimeStage
+  getRuntimeStage: state => state.runtimeStage,
+  getAllConnected: state => state.allConnected
 }
 
 // actions
-const actions = {}
+const actions = {
+  async checkConnection ({ commit }) {
+    let allConnected = await api.checkConnection()
+    commit(types.CHECK_CONNECTION, { allConnected })
+    return allConnected
+  }
+}
 
 // mutations
 const mutations = {
@@ -29,6 +38,9 @@ const mutations = {
   },
   [types.FINISH_UPLOADING] (state) {
     state.runtimeStage = 'EDITING'
+  },
+  [types.CHECK_CONNECTION] (state, { allConnected }) {
+    state.allConnected = allConnected
   }
 }
 

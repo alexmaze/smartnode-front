@@ -323,12 +323,20 @@ h6 {
 }
 
 .ping-fang-sc-medium {
-  font-family: PingFangSC;
+  font-family: PingFangSC-Medium, sans-serif;
   font-size: 7px;
   font-weight: 500;
   letter-spacing: 0.1px;
   color: @charcoal-grey;
 }
+.ping-fang-sc-regular {
+  font-family: PingFangSC-Regular, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  text-align: justify;
+  color: @charcoal-grey;
+}
+
 
 /* 以上样式由sketch导入Zeplin提取生成，下面对具体变量进行命名复制 */
 
@@ -337,26 +345,42 @@ h6 {
 @tool-box-middle        : @white-six;
 @logic-background       : @dark-sky-blue;
 @unconnected            : @watermelon;
-@connected            : @apple-green;
+@connected              : @apple-green;
 @formular-background    : @liliac;
 @simulating-top         : @off-white;
 @simulating-bottom      : @off-white-two;
+@warn-detail-body       : @off-white-three;
+@new-device-body        : @white-six;
+@new-device-shadow      : @black-14;
 @icon-hover             : @white-four;
 @tool-bar-background    : @white;
 @tool-bar-box-shadow    : @white-four;
 @progress-bar-inner     : @aqua-marine;
 @progress-bar-outer     : @white;
-
+@icon-info              : @grey-four;
+@hr                     : @white-seven;
+@identifier             : @white-eleven;
+@identifier-active      : @water-blue;
 
 @blue-text              : @dark-sky-blue;
 @black-text             : @charcoal-grey;
 @node-text              : @white;
 @node-title             : @white-three-48;
 @last-sync-time         : @grey-four;
+@warn-text              : @squash;
+@error-text             : @lightish-red;
 
 /* 类 */
 .single-line-wrap{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.warntext{
+  color: @warn-text;
+}
+
+.blacktext{
+  color: @black-text;
 }
