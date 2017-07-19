@@ -4,7 +4,7 @@
     <div class="content">
       <Sketchpad :nodes="data" @add-node="addNode"></Sketchpad>
     </div>
-    <Sidebar :is-show="config.isShowSidebar" @add-node="addNode"></Sidebar>
+    <Sidebar :is-show="config.isShowSidebar" @toggle-sidebar="toggleSidebar" @add-node="addNode"></Sidebar>
   </div>
 </template>
 
@@ -32,10 +32,10 @@ export default {
   methods: {
     toggleSidebar () {
       this.config.isShowSidebar = !this.config.isShowSidebar
-      console.debug('toggle sidebar', this.config.isShowSidebar)
+//      console.debug('toggle sidebar', this.config.isShowSidebar)
     },
     addNode (nodeType, offset) {
-      console.debug('add node', nodeType)
+//      console.debug('add node', nodeType)
       this.data.push({
         id: 'TMP' + (new Date()).getTime(),
         type: nodeType,
@@ -49,6 +49,7 @@ export default {
         inputs: [],
         outputs: []
       })
+//      console.log('new data object:', this.data)
     },
     ...mapActions(['checkConnection'])
   },
@@ -65,7 +66,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  min-width: 740px;
+  min-width: 1080px;
   height: 100%;
   overflow: hidden;
   /*.toolbar {*/

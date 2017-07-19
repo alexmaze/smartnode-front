@@ -302,7 +302,7 @@ a {
       }
       .status {
         background: @connected;
-        max-height: 20px;
+        height: 20px;
         /*color: #ffffff;*/
         border-radius: 50%;
         /*padding: 1px 5px;*/
@@ -357,8 +357,8 @@ a {
           display: inline-block;
           margin:auto 0 auto 7.64px;
           .last-timestamp{
-            -webkit-transform: scale(0.75);
-            font-size: 8px;
+            /*-webkit-transform: scale(0.75);*/
+            font-size: 10px;
           }
           .identifier{
             width: 10px;

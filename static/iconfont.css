@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1499657268569'); /* IE9*/
-  src: url('iconfont.eot?t=1499657268569#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1499657268569') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1499657268569') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1499657268569#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1500353396548'); /* IE9*/
+  src: url('iconfont.eot?t=1500353396548#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1500353396548') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1500353396548') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1500353396548#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -16,4 +16,14 @@
 }
 
 .icon-info:before { content: "\e609"; }
+
+.icon-module-icon:before { content: "\e60a"; }
+
+.icon-syntax-lib:before { content: "\e60b"; }
+
+.icon-back:before { content: "\e60c"; }
+
+.icon-reload:before { content: "\e60d"; }
+
+.icon-search:before { content: "\e60e"; }
 

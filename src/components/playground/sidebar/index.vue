@@ -1,23 +1,190 @@
 <template>
   <div class="sidebar" :class="{ 'active': isShow }" >
-    <p class="sidebar-title">工具箱</p>
-    <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
-      <div class="node">
-        <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-        <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+    <div class="sidebar-header">
+      <div class="hardware-lib" :class="{active: toolboxStage === 'hardware'}" @click="toggleStage('hardware')">
+        <i class="iconfont icon-module-icon"></i>
+        <span>硬件库</span>
       </div>
-      <div class="device-info">
-        <p>开关_{{i}}</p>
-        <p class="last-timestamp">6.25 09:32</p>
-        <p class="identifier"></p>
+      <div class="syntax-lib" :class="{active: toolboxStage === 'syntax'}" @click="toggleStage('syntax')">
+        <i class="iconfont icon-syntax-lib"></i>
+        <span>语法库</span>
       </div>
+      <i class="iconfont icon-back" @click="toggleSidebar"></i>
     </div>
+    <div class="search">
+      <i class="iconfont icon-search" ></i>
+      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'">
+      <i class="iconfont icon-reload" :style="{transform:'rotate3d(0,0,1,' + rotateDeg + 'deg)'}" @click="reloadAnimate"></i>
+    </div>
+    <el-collapse v-show="toolboxStage === 'hardware'" v-model="activeNames" @change="">
+      <el-collapse-item title="已连通的实体硬件" name="1">
+        <div style="display: flex; justify-content: center; align-content: center">
+          <img src="/static/img/icons/connection-reminder.svg" style="margin: 68px 0;" alt="">
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="开关" name="2">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>人体红外传感器</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>开关_{{i}}</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="传感器" name="3">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>人体红外传感器</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>开关_{{i}}</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="执行器" name="4">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>人体红外传感器</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
+            <div class="node">
+              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+            </div>
+            <div class="device-info">
+              <p>开关_{{i}}</p>
+              <p class="last-timestamp">6.25 09:32</p>
+              <p class="identifier"></p>
+            </div>
+          </div>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
+    <el-collapse v-show="toolboxStage === 'syntax'" v-model="activeNames" @change="">
+      <el-collapse-item title="Logic Patch" name="5">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="Control Flow Patch" name="6">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="Operator Patch" name="7">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div class="syntax-node operator-node">
+            <p class="title">Operation</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div><div class="syntax-node operator-node">
+          <p class="title">Bitwise</p>
+          <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+        </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="Math Patch" name="8">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="Utility Patch" name="9">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+          <div class="syntax-node logic-node">
+            <p class="title">&&</p>
+            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
+          </div>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
     <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
   </div>
 </template>
 
 <script>
 import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
+import { nodesConfig } from '../../../../node-conf'
 
 export default {
   name: 'sidebar',
@@ -30,7 +197,10 @@ export default {
       defaultProps: {
         children: 'sub',
         label: 'label'
-      }
+      },
+      toolboxStage: 'hardware',
+      rotateDeg: 0,
+      activeNames: ['1']
     }
   },
   methods: {
@@ -46,21 +216,52 @@ export default {
       }
       type._all = `${type.primary}-${type.secondary}-${type.tertiary}`
       this.$emit('add-node', type)
-      console.log(type)
+//      console.log(type)
     },
     setDataTransfer (data, ev) {
 //      console.log(ev)
 //      console.log(ev.target)
 //      console.log(data)
+//      ev.dataTransfer.setData('data', JSON.stringify({
+//        primary: 'device',
+//        secondary: 'switch',
+//        tertiary: 'snap',
+//        _all: 'device-switch-snap',
+//        _primaryLabel: 'Device Nodes',
+//        _secondaryLabel: 'Switchs',
+//        _tertiaryLabel: 'Switch'
+//      }))
       ev.dataTransfer.setData('data', JSON.stringify({
+        ...nodesConfig.device.sensor.human_infrared,
         primary: 'device',
-        secondary: 'switch',
-        tertiary: 'snap',
-        _all: 'device-switch-snap',
         _primaryLabel: 'Device Nodes',
-        _secondaryLabel: 'Switchs',
-        _tertiaryLabel: 'Switch'
+        secondary: 'sensor',
+        _secondaryLabel: 'Sensor',
+        tertiary: 'human_infrared',
+        _tertiaryLabel: '人体红外传感器',
+        _all: 'device-sensor'
       }))
+    },
+    toggleStage (stage) {
+      this.toolboxStage = stage
+    },
+    toggleSidebar () {
+      this.$emit('toggle-sidebar')
+    },
+    reloadAnimate () {
+      this.reloadFinished = false
+      setTimeout(() => {
+        this.reloadFinished = true
+      }, 2000)
+      let ani = () => {
+        this.rotateDeg += 12
+        if (!this.reloadFinished) {
+          requestAnimationFrame(ani)
+        } else {
+          this.rotateDeg = 0
+        }
+      }
+      requestAnimationFrame(ani)
     }
   }
 }
@@ -69,21 +270,132 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 @import "../../index";
+
 .sidebar {
   position: absolute;
-  top: 60px;
+  top: -1px;
   right: 0;
   width: calc(~'34.375% - 1px');
-  height: e('calc(100% - 60px)');
+  height: 100%;
   background: #ffffff;
   border-left: 1px solid #DADADA;
   border-top: 1px solid #DADADA;
-
   transition: all .2s;
   transform: translate(100%);
   overflow: auto;
   &.active {
     transform: translate(0);
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    margin: 14px 0 31px 0;
+    div {
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+      display: inline-flex;
+      justify-content: inherit;
+      align-items: inherit;
+      font-size: 14px;
+      max-width: 147px;
+      width:33.5616%;
+      height: 100%;
+      background: @button-inactivate;
+      color: @black-text;
+      span {
+        margin-left: 10px;
+      }
+      &:first-of-type {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        /*background: red;*/
+      }
+      &:last-of-type {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        /*background: blue;*/
+      }
+      &.active {
+        background: @button-activate;
+        color: @white;
+        &:hover {
+          background: darken(@button-activate, 10%);
+        }
+      }
+      &:hover {
+        background: darken(@button-inactivate, 10%);
+      }
+    }
+    .icon-back{
+      position: absolute;
+      right: 24px;
+      color: @back-btn;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+      &:hover {
+        color: darken(@back-btn,10%)
+      }
+    }
+  }
+
+  .search {
+    padding: 0 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .icon-search{
+      position: absolute;
+      right:97px;
+      color: @search-placeholder;
+    }
+    input{
+      margin-right:28px;
+      width: 100%;
+      height: 100%;
+      border-radius: 100px;
+      border:none;
+      background: @search-input;
+      font-family: PingFangSC;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 1.2px;
+      color: @black-text;
+      padding: 1px 17px;
+      outline:none;
+      &::-webkit-input-placeholder{
+        color: @search-placeholder;
+      }
+      &:-moz-placeholder{
+        color: @search-placeholder;
+      }
+      &::-moz-placeholder{
+        color: @search-placeholder;
+      }
+      &:-ms-input-placeholder{
+        color: @search-placeholder;
+      }
+    }
+    .icon-reload{
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+      color: @reload-icon;
+      &:hover{
+        color: darken(@reload-icon, 10%);
+      }
+    }
   }
 
   .sidebar-title {
@@ -93,6 +405,11 @@ export default {
     line-height: 25px;
     margin-bottom: 10px;
     padding-left: 10px;
+  }
+
+  .el-collapse{
+    border: none;
+    padding: 24px 30px;
   }
 }
 
@@ -108,7 +425,7 @@ export default {
   transition: all 0.2s;
   border-radius: 4px;
   width: 120px;
-  margin: 15px 25px 21px 25px;
+  margin: 15px 0 21px 0;
   padding: 9px 6px;
   text-align: center;
   .node{
@@ -133,8 +450,8 @@ export default {
     position: relative;
     display: inline-block;
     .last-timestamp{
-      -webkit-transform: scale(0.75);
-      font-size: 8px;
+      /*-webkit-transform: scale(0.75);*/
+      font-size: 10px;
     }
     .identifier{
       position: absolute;
@@ -171,7 +488,57 @@ export default {
   }
 }
 
+.syntax-node{
+  margin:16px;
+  color: @white;
+  width: 160px;
+  height: 43px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  p{
+    line-height:15px;
+    margin: 6px 0;
+    text-align: center;
+  }
+  &.logic-node{
+    background: @logic-node-bg;
+    box-shadow: 0 10px 16px 0 @logic-node-shadow;
+  }
+  &.operator-node{
+    background: @operator-node-bg;
+    box-shadow: 0 10px 16px 0 @operator-node-shadow;
+  }
+  .dash{
+    position: absolute;
+    bottom: 10px;
+    left: 17px;
+  }
+}
+
 .el-tree {
   border: none;
 }
+</style>
+
+<style lang="less" >
+  @import "../../index.less";
+  .el-collapse-item__header{
+    color: @tool-box-text !important;
+    border-bottom-color: @tool-box-hr !important;
+    font-size: 12px !important;
+  }
+  .el-icon-arrow-right:before{
+    font-size:10px !important;
+  }
+  .el-collapse-item__wrap{
+    color: @tool-box-text;
+    border-bottom: none !important;
+    background: @white !important;
+  }
+  .el-collapse-item__content{
+    color: @tool-box-text !important;
+    padding: 10px 0 !important;
+  }
+
 </style>

@@ -3,13 +3,23 @@
 .node-port-out-yellow {
   z-index: 2;
   filter: drop-shadow(rgba(246, 166, 35, 0.3) 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
   svg {
-    overflow: visible;
+    overflow: visible !important;
     circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
       fill: #FFFFFF;
       stroke: #F69D00;
-      stroke-width: 1;
-      r: 6;
+      stroke-width: 2;
+      //r: 6;
     }
   }
   &.jtk-endpoint-connected {
@@ -26,22 +36,39 @@
 // -----------------
 .node-port-in-yellow {
   z-index: 2;
-  overflow: hidden;
-  width: 10px !important;
-  height: 10px !important;
-  border: 1px solid #F69D00;
-  border-radius: 2px;
-  overflow: hidden;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(rgba(246, 166, 35, 0.3) 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
   svg {
-    width: 10px !important;
-    height: 10px !important;
+    overflow: visible !important;
     rect {
-      width: 10px !important;
-      height: 10px !important;
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
       fill: #FFFFFF;
+      stroke: #f69D00;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
     }
   }
   &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
     svg rect {
       fill: #F69D00;
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="node node-device node-device-module node-device-module-led" :id="data.id">
+  <div class="node node-device node-device-module node-device-module-led" :id="data.id" >
     <img src="static/img/node.png" class="preview-img" @contextmenu="openMenu">
     <div class="body">
       <div class="input-group rgb">
@@ -19,7 +19,7 @@
       </div>
 
     </div>
-    <ul class="menu" :id="data.id + '-right-click-menu'" tabindex="-1" v-if="viewMenu" v-on:blur="closeMenu"  :style="{ top: menuTop + 'px', left:menuLeft + 'px'}">
+    <ul class="menu" :id="data.id + '-right-click-menu'" tabindex="-1" v-if="viewMenu" v-on:blur="closeMenu"  :style="{ position:'absolute', top: menuTop + 'px', left:menuLeft + 'px'}">
       <li>Toggle Blink</li>
     </ul>
   </div>
@@ -154,14 +154,14 @@ export default {
       }
     },
     openMenu ($event) {
-      console.log('open', $event)
-      this.menuTop = $event.clientY
-      this.menuLeft = $event.clientX
-      // this.viewMenu = true
+//      console.log('open', $event)
+      this.menuTop = $event.offsetY
+      this.menuLeft = $event.offsetX
+      this.viewMenu = true
       $event.preventDefault()
     },
     closeMenu () {
-      console.log('close')
+//      console.log('close')
       this.viewMenu = false
     }
   },

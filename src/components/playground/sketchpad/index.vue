@@ -1,11 +1,11 @@
 <template>
-  <div class="sketchpad" id="sketchpad" @dragover.prevent="" @drop="drop">
-    <div id="sketchpad_desk" v-if="isReady" >
+  <div class="sketchpad" id="sketchpad" @dragover.prevent @drop="drop">
+    <div id="sketchpad_desk" >
       <template v-for="node in nodes">
         <VirtualLogicAndNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-logic-and'"></VirtualLogicAndNode>
         <VirtualMathFormulaNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-math-formula'"></VirtualMathFormulaNode>
         <DeviceSwitchSnapNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch-snap'"></DeviceSwitchSnapNode>
-        <DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-sensor-infrared'"></DeviceSensorInfraredNode>
+        <DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-sensor'"></DeviceSensorInfraredNode>
         <DeviceModuleLedNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-module-led'"></DeviceModuleLedNode>
       </template>
     </div>
@@ -22,7 +22,8 @@ import AbstractNode from './nodes/abstract-node.vue'
 import VirtualLogicAndNode from './nodes/virtual-nodes/logic-nodes/and'
 import VirtualMathFormulaNode from './nodes/virtual-nodes/math-nodes/formula'
 import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
-import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
+// import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
+import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
 import DeviceModuleLedNode from './nodes/device-nodes/module-nodes/led'
 
 export default {
@@ -47,18 +48,13 @@ export default {
     }
   },
   methods: {
-    test () {
-      console.log('MOUSE DOWN')
-    },
     zoomIn () {
       this.zoomLevel *= 1 + this.zoomStep
       this.setZoom(this.zoomLevel)
-      console.log('zoomin')
     },
     zoomOut () {
       this.zoomLevel /= 1 + this.zoomStep
       this.setZoom(this.zoomLevel)
-      console.log('zoomout')
     },
     setZoom (zoom, instance, transformOrigin, el) {
       transformOrigin = transformOrigin || [ 1, 1 ]
@@ -79,48 +75,44 @@ export default {
       instance.setZoom(zoom)
     },
     dragSketchPad ({movementX, movementY}) {
-      console.log(movementX, movementY)
       this.offsetX += (movementX / this.zoomLevel)
       this.offsetY += (movementY / this.zoomLevel)
       this.setZoom(this.zoomLevel)
     },
     drop (ev) {
-//      console.log(ev.layerX, ev.layerY)
-//      console.log(JSON.parse(ev.dataTransfer.getData('data')))
       let offset = {
         x: (ev.layerX) / this.zoomLevel - this.offsetX,
         y: (ev.layerY) / this.zoomLevel - this.offsetY
       }
       let nodeType = JSON.parse(ev.dataTransfer.getData('data'))
       this.$emit('add-node', nodeType, offset)
+//      console.log(nodeType)
     }
   },
-  created () {
-    console.log('playground created!')
+  mounted () {
+    console.log('playground mounted!')
     window.jsPlumb.ready(() => {
       console.log('jsPlumb ready!')
       this.isReady = true
-
       // 新建jsplumb实例
       const instance = window.jsPlumb.getInstance({
         Connector: ['Bezier', { curviness: 50 }],
 //        DragOptions: { cursor: 'pointer', zIndex: 2000 },
         PaintStyle: { strokeStyle: '#2EFDF6', lineWidth: 1 },
-        EndpointStyle: {
-          // radius: 3
-        },
+//        EndpointStyle: {
+//          // radius: 3
+//        },
         HoverPaintStyle: { strokeStyle: '#7073EB' },
         EndpointHoverStyle: { fillStyle: '#7073EB' },
         Container: 'sketchpad_desk'
       })
       this.jsPlumbInstance = instance
+      console.log('jsplumb容器:', instance.getContainer())
       // 绑定
       // instance.bind('connection', this.onConnectionEstablishedFactory(this))
       // instance.bind('connectionDetached', this.onConnectionDetachedFactory(this))
       // instance.bind('connectionMoved', this.onConnectionMovedFactory(this))
     })
-  },
-  mounted () {
     let sketchpad = document.getElementById('sketchpad')
     sketchpad.addEventListener('mousedown', () => {
       sketchpad.addEventListener('mousemove', this.dragSketchPad, false)
@@ -129,7 +121,6 @@ export default {
       sketchpad.removeEventListener('mousemove', this.dragSketchPad, false)
     }, false)
     sketchpad.addEventListener('wheel', ({wheelDeltaY}) => {
-      console.log(wheelDeltaY)
       this.zoomLevel += wheelDeltaY * 0.0005 * this.zoomStep
       this.setZoom(this.zoomLevel)
     }, {
