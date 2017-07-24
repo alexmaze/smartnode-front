@@ -3,7 +3,7 @@
  */
 export const nodesConfig = {
   device: {
-    module: [],
+    module: {},
     sensor: {
       human_infrared: {
         // 整体节点配置中的节点标识符
@@ -32,6 +32,7 @@ export const nodesConfig = {
           idSuffix: 'humanDetected',
           name: '开关状态',
           type: 'Boolean',
+          visual: 'el-switch',
           defValue: false,
           hasOutput: true,
           hasInput: true
@@ -40,7 +41,30 @@ export const nodesConfig = {
         funs: []
       }
     },
-    switch: []
+    switch: {
+      backlight_key: {
+        id: 'backlight_key',
+        title: '背光按键',
+        titleInput: null,
+        titleOutput: null,
+        inputs: [],
+        outputs: [
+          {
+            name: 'keyDown',
+            type: 'Boolean'
+          }
+        ],
+        props: [{
+          idSuffix: 'keyDown',
+          name: '开关状态',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: false,
+          hasOutput: true,
+          hasInput: true
+        }]
+      }
+    }
   },
   virtual: {
     logic: [],
