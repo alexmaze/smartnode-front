@@ -24,28 +24,40 @@
       </el-collapse-item>
       <el-collapse-item title="开关" name="2">
         <div style="display: flex; flex-wrap: wrap;">
-          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+          <div v-for="(s,name) in node_device.switch"  class="device" draggable="true" @dragstart="setDataTransfer(['device', 'switch', name, s.title],$event)">
+            {{name}}*******************{{s}}
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
             </div>
             <div class="device-info">
-              <p>人体红外传感器</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
+              <p>{{s.title}}</p>
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
             </div>
           </div>
-          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
-            <div class="node">
-              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
-            </div>
-            <div class="device-info">
-              <p>开关_{{i}}</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
-            </div>
-          </div>
+          <!--<div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">-->
+            <!--<div class="node">-->
+              <!--<img class="device-icon" src="/static/img/node.png" draggable="false" alt="">-->
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
+            <!--</div>-->
+            <!--<div class="device-info">-->
+              <!--<p>人体红外传感器</p>-->
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">-->
+            <!--<div class="node">-->
+              <!--<img class="device-icon" src="/static/img/node.png" draggable="false" alt="">-->
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
+            <!--</div>-->
+            <!--<div class="device-info">-->
+              <!--<p>开关_{{i}}</p>-->
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
+            <!--</div>-->
+          <!--</div>-->
         </div>
       </el-collapse-item>
       <el-collapse-item title="传感器" name="3">
@@ -200,7 +212,8 @@ export default {
       },
       toolboxStage: 'hardware',
       rotateDeg: 0,
-      activeNames: ['1']
+      activeNames: ['2'],
+      node_device: nodesConfig.device
     }
   },
   methods: {
@@ -231,16 +244,31 @@ export default {
 //        _secondaryLabel: 'Switchs',
 //        _tertiaryLabel: 'Switch'
 //      }))
-      ev.dataTransfer.setData('data', JSON.stringify({
-        ...nodesConfig.device.sensor.human_infrared,
-        primary: 'device',
-        _primaryLabel: 'Device Nodes',
-        secondary: 'sensor',
-        _secondaryLabel: 'Sensor',
-        tertiary: 'human_infrared',
-        _tertiaryLabel: '人体红外传感器',
-        _all: 'device-sensor'
-      }))
+      if (data === null) {
+        ev.dataTransfer.setData('data', JSON.stringify({
+          ...nodesConfig.device.sensor.human_infrared,
+          primary: 'device',
+          _primaryLabel: 'Device Nodes',
+          secondary: 'sensor',
+          _secondaryLabel: 'Sensor',
+          tertiary: 'human_infrared',
+          _tertiaryLabel: '人体红外传感器',
+          _all: 'device-sensor'
+        }))
+      } else {
+        let type = {
+          ...nodesConfig[data[0]][data[1]][data[2]],
+          primary: data[0],
+          _primaryLabel: '',
+          secondary: data[1],
+          _secondaryLabel: '',
+          tertiary: data[2],
+          _tertiaryLabel: data[3]
+        }
+        type._all = `${type.primary}-${type.secondary}`
+        ev.dataTransfer.setData('data', JSON.stringify(type))
+        console.log(type)
+      }
     },
     toggleStage (stage) {
       this.toolboxStage = stage
@@ -263,6 +291,9 @@ export default {
       }
       requestAnimationFrame(ani)
     }
+  },
+  created () {
+    console.log(nodesConfig)
   }
 }
 </script>
