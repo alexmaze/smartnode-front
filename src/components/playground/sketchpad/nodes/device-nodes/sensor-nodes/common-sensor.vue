@@ -43,6 +43,7 @@
     },
     data () {
       return {
+        showMenuContent: false
       }
     },
     methods: {
@@ -103,7 +104,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
+<style lang="less" scoped>
   .node-device-sensor-infrared {
     position: absolute;
     display: flex;

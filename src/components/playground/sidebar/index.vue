@@ -25,7 +25,7 @@
       <el-collapse-item title="开关" name="2">
         <div style="display: flex; flex-wrap: wrap;">
           <div v-for="(s,name) in node_device.switch"  class="device" draggable="true" @dragstart="setDataTransfer(['device', 'switch', name, s.title],$event)">
-            {{name}}*******************{{s}}
+            <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
               <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
@@ -36,78 +36,36 @@
               <!--<p class="identifier"></p>-->
             </div>
           </div>
-          <!--<div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">-->
-            <!--<div class="node">-->
-              <!--<img class="device-icon" src="/static/img/node.png" draggable="false" alt="">-->
-              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
-            <!--</div>-->
-            <!--<div class="device-info">-->
-              <!--<p>人体红外传感器</p>-->
-              <!--<p class="last-timestamp">6.25 09:32</p>-->
-              <!--<p class="identifier"></p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">-->
-            <!--<div class="node">-->
-              <!--<img class="device-icon" src="/static/img/node.png" draggable="false" alt="">-->
-              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
-            <!--</div>-->
-            <!--<div class="device-info">-->
-              <!--<p>开关_{{i}}</p>-->
-              <!--<p class="last-timestamp">6.25 09:32</p>-->
-              <!--<p class="identifier"></p>-->
-            <!--</div>-->
-          <!--</div>-->
         </div>
       </el-collapse-item>
       <el-collapse-item title="传感器" name="3">
         <div style="display: flex; flex-wrap: wrap;">
-          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+          <div v-for="(s,name) in node_device.sensor" class="device" draggable="true" @dragstart="setDataTransfer(['device', 'sensor', name, s.title],$event)">
+            <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
             </div>
             <div class="device-info">
-              <p>人体红外传感器</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
-            </div>
-          </div>
-          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
-            <div class="node">
-              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
-            </div>
-            <div class="device-info">
-              <p>开关_{{i}}</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
+              <p>{{s.title}}</p>
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
             </div>
           </div>
         </div>
       </el-collapse-item>
       <el-collapse-item title="执行器" name="4">
         <div style="display: flex; flex-wrap: wrap;">
-          <div  class="device" draggable="true" @dragstart="setDataTransfer(null,$event)">
+          <div v-for="(s,name) in node_device.module" class="device" draggable="true" @dragstart="setDataTransfer(['device', 'module', name, s.title],$event)">
+            <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">-->
             </div>
             <div class="device-info">
-              <p>人体红外传感器</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
-            </div>
-          </div>
-          <div v-for="i in [1,2,3,4,5]" class="device" draggable="true" @dragstart="setDataTransfer(i,$event)">
-            <div class="node">
-              <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" draggable="false" alt="">
-            </div>
-            <div class="device-info">
-              <p>开关_{{i}}</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
+              <p>{{s.title}}</p>
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
             </div>
           </div>
         </div>
@@ -190,7 +148,7 @@
         </div>
       </el-collapse-item>
     </el-collapse>
-    <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+    <!--<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>-->
   </div>
 </template>
 
@@ -265,7 +223,8 @@ export default {
           tertiary: data[2],
           _tertiaryLabel: data[3]
         }
-        type._all = `${type.primary}-${type.secondary}`
+//        type._all = `${type.primary}-${type.secondary}`
+        type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
         console.log(type)
       }
@@ -448,7 +407,8 @@ export default {
   &:hover{
     background: #f8f8f8;
   }
-  display: inline-block;
+  display: inline-flex;
+  flex-direction:column;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -ms-transition: all 0.2s;

@@ -5,8 +5,9 @@
         <VirtualLogicAndNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-logic-and'"></VirtualLogicAndNode>
         <VirtualMathFormulaNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-if="node.type._all === 'virtual-math-formula'"></VirtualMathFormulaNode>
         <DeviceSwitchSnapNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch-snap'"></DeviceSwitchSnapNode>
-        <DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch'"></DeviceSensorInfraredNode>
+        <!--<DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch'"></DeviceSensorInfraredNode>-->
         <DeviceModuleLedNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-module-led'"></DeviceModuleLedNode>
+        <CommonNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device'"></CommonNode>
       </template>
     </div>
     <div id="zoomPanel">
@@ -22,9 +23,10 @@ import AbstractNode from './nodes/abstract-node.vue'
 import VirtualLogicAndNode from './nodes/virtual-nodes/logic-nodes/and'
 import VirtualMathFormulaNode from './nodes/virtual-nodes/math-nodes/formula'
 import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
-// import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
-import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
+//  import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
+// import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
 import DeviceModuleLedNode from './nodes/device-nodes/module-nodes/led'
+import CommonNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
 
 export default {
   name: 'sketchpad',
@@ -33,8 +35,9 @@ export default {
     DeviceModuleLedNode,
     VirtualLogicAndNode,
     VirtualMathFormulaNode,
-    DeviceSensorInfraredNode,
-    DeviceSwitchSnapNode
+//    DeviceSensorInfraredNode,
+    DeviceSwitchSnapNode,
+    CommonNode
   },
   props: ['nodes'],
   data () {
