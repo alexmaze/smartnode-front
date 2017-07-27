@@ -289,7 +289,7 @@ export const nodesConfig = {
           name: '颜色',
           type: 'color',
           visual: 'rgb',
-          defValue: false,
+          defValue: [255, 255, 255],
           hasOutput: false,
           hasInput: true
         },
@@ -302,7 +302,12 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         }],
-        funs: []
+        funs: [],
+        simulateFun: function (activated, color, light) {
+          this.active = !!(activated)
+          if (color) this.color = color
+          if (light) this.light = light
+        }
       },
       vibration_module: {
         id: 'vibration_module',
@@ -1011,7 +1016,12 @@ export const nodesConfig = {
           defValue: false,
           hasOutput: true,
           hasInput: true
-        }]
+        }],
+        simulateFun: function () {
+          return {
+            keyDown: this.keyDown
+          }
+        }
       },
       digital_switch: {
         id: 'digital_switch',
@@ -1031,7 +1041,12 @@ export const nodesConfig = {
           defValue: false,
           hasOutput: true,
           hasInput: false
-        }]
+        }],
+        simulateFun: function () {
+          return {
+            keyDown: this.keyDown
+          }
+        }
       },
       infrared_tansceiver1: {
         id: 'infrared_tansceiver',
@@ -1111,33 +1126,3 @@ export const nodesConfig = {
     math: []
   }
 }
-// export const nodesConfig = [
-//   {
-//     // 节点分类
-//     type: 'device/sensor',
-//     // 节点名称
-//     title: '人体红外传感器',
-//     // title栏左边输入
-//     titleInput: null,
-//     // title栏右边输出
-//     titleOutput: {
-//       // 展现形式，switch为开关形式
-//       type: 'switch'
-//     },
-//     // 整体的输入数据字段数组
-//     inputs: [],
-//     // 整体的输出数据字段数组
-//     outputs: [
-//       {
-//         // 输出的字段名称
-//         name: 'humanDetected',
-//         // 输出的字段类型
-//         type: 'Boolean'
-//       }
-//     ],
-//     // 节点自有属性数组
-//     props: [],
-//     // 节点自有函数数组
-//     funs: []
-//   }
-// ]

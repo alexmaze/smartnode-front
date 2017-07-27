@@ -13,7 +13,8 @@
     </div>
     <div class="search">
       <i class="iconfont icon-search" ></i>
-      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'">
+      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'" module="aaa">
+      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'" module="aaa">
       <i class="iconfont icon-reload" :style="{transform:'rotate3d(0,0,1,' + rotateDeg + 'deg)'}" @click="reloadAnimate"></i>
     </div>
     <el-collapse v-show="toolboxStage === 'hardware'" v-model="activeNames" @change="">
@@ -155,10 +156,16 @@
 <script>
 import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
 import { nodesConfig } from '../../../../node-conf'
+import { mapState } from 'vuex'
 
 export default {
   name: 'sidebar',
   components: {
+  },
+  computed: {
+    ...mapState({
+      aaa: 'aaa'
+    })
   },
   props: ['isShow'],
   data () {
@@ -214,6 +221,7 @@ export default {
           _all: 'device-sensor'
         }))
       } else {
+//        console.log('---', 'configBeforeEmit', nodesConfig[data[0]][data[1]][data[2]], '---')
         let type = {
           ...nodesConfig[data[0]][data[1]][data[2]],
           primary: data[0],
@@ -223,10 +231,11 @@ export default {
           tertiary: data[2],
           _tertiaryLabel: data[3]
         }
+//        console.log('---', '展开后的config', type, '---')
 //        type._all = `${type.primary}-${type.secondary}`
         type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
-        console.log(type)
+//        console.log(type)
       }
     },
     toggleStage (stage) {

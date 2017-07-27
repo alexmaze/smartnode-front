@@ -26,7 +26,8 @@ import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
 //  import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
 // import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
 import DeviceModuleLedNode from './nodes/device-nodes/module-nodes/led'
-import CommonNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
+import CommonNode from './nodes/common-sensor.vue'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'sketchpad',
@@ -89,46 +90,74 @@ export default {
       }
       let nodeType = JSON.parse(ev.dataTransfer.getData('data'))
       this.$emit('add-node', nodeType, offset)
-      console.log(nodeType)
-    }
-  },
-  mounted () {
-    console.log('playground mounted!')
-    window.jsPlumb.ready(() => {
-      console.log('jsPlumb ready!')
-      this.isReady = true
-      // 新建jsplumb实例
-      const instance = window.jsPlumb.getInstance({
-        Connector: ['Bezier', { curviness: 50 }],
+//      console.log('---', 'nodetype:', nodeType, '---')
+    },
+    init () {
+      console.log('playground mounted!')
+      window.jsPlumb.ready(() => {
+        console.log('jsPlumb ready!')
+        this.isReady = true
+        // 新建jsplumb实例
+        const instance = window.jsPlumb.getInstance({
+          Connector: ['Bezier', { curviness: 50 }],
 //        DragOptions: { cursor: 'pointer', zIndex: 2000 },
-        PaintStyle: { strokeStyle: '#2EFDF6', lineWidth: 1 },
+          PaintStyle: { strokeStyle: '#2EFDF6', lineWidth: 1 },
 //        EndpointStyle: {
 //          // radius: 3
 //        },
-        HoverPaintStyle: { strokeStyle: '#7073EB' },
-        EndpointHoverStyle: { fillStyle: '#7073EB' },
-        Container: 'sketchpad_desk'
+          HoverPaintStyle: { strokeStyle: '#7073EB' },
+          EndpointHoverStyle: { fillStyle: '#7073EB' },
+          Container: 'sketchpad_desk',
+          ConnectionOverlays: [
+            ['Label', { label: '', id: 'label', cssClass: 'aLabel' }]
+          ]
+        })
+        this.jsPlumbInstance = instance
+        console.log('jsplumb容器:', instance.getContainer())
+        // 绑定
+        let _this = this
+        instance.bind('connection', function (info) {
+          let connection = info.connection
+          connection.getOverlay('label').setLabel(info.connection.id)
+          _this.LINKMAP_ADD({
+            keyName: connection.id,
+            payload: connection
+          })
+        })
+        instance.bind('connectionDetached', function (info) {
+          let connectionId = info.connection.id
+          _this.LINKMAP_DELETE({
+            keyName: connectionId
+          })
+        })
+        instance.bind('connectionMoved', function (info) {
+          console.log('connectionMoved', info)
+        })
+        // instance.bind('connection', this.onConnectionEstablishedFactory(this))
+        // instance.bind('connectionDetached', this.onConnectionDetachedFactory(this))
+        // instance.bind('connectionMoved', this.onConnectionMovedFactory(this))
       })
-      this.jsPlumbInstance = instance
-      console.log('jsplumb容器:', instance.getContainer())
-      // 绑定
-      // instance.bind('connection', this.onConnectionEstablishedFactory(this))
-      // instance.bind('connectionDetached', this.onConnectionDetachedFactory(this))
-      // instance.bind('connectionMoved', this.onConnectionMovedFactory(this))
-    })
-    let sketchpad = document.getElementById('sketchpad')
-    sketchpad.addEventListener('mousedown', () => {
-      sketchpad.addEventListener('mousemove', this.dragSketchPad, false)
-    }, false)
-    sketchpad.addEventListener('mouseup', () => {
-      sketchpad.removeEventListener('mousemove', this.dragSketchPad, false)
-    }, false)
-    sketchpad.addEventListener('wheel', ({wheelDeltaY}) => {
-      this.zoomLevel += wheelDeltaY * 0.0005 * this.zoomStep
-      this.setZoom(this.zoomLevel)
-    }, {
-      passive: true
-    })
+      let sketchpad = document.getElementById('sketchpad')
+      sketchpad.addEventListener('mousedown', () => {
+        sketchpad.addEventListener('mousemove', this.dragSketchPad, false)
+      }, false)
+      sketchpad.addEventListener('mouseup', () => {
+        sketchpad.removeEventListener('mousemove', this.dragSketchPad, false)
+      }, false)
+      sketchpad.addEventListener('wheel', ({wheelDeltaY}) => {
+        this.zoomLevel += wheelDeltaY * 0.0005 * this.zoomStep
+        this.setZoom(this.zoomLevel)
+      }, {
+        passive: true
+      })
+    },
+    ...mapMutations(['LINKMAP_ADD', 'LINKMAP_SET', 'LINKMAP_DELETE'])
+  },
+  computed: {
+    ...mapGetters(['getLinkMap'])
+  },
+  mounted () {
+    this.init()
   }
 }
 </script>
@@ -190,6 +219,12 @@ export default {
   .jtk-connector path {
     stroke: #909090;
     stroke-width: 3px;
+  }
+  .aLabel {
+    color: red;
+    background: white;
+    /*position: relative;*/
+    /*top:0;*/
   }
 }
 </style>

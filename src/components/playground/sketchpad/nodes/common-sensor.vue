@@ -8,15 +8,19 @@
       <div class="content">
         <p class="title" :id="data.id + '-title'">{{data.label}}</p>
         <p class="prop" :id="data.id + '-' + prop.idSuffix" v-for="prop in data.type.props">
-          <span>{{prop.name}}</span>
+          <span>{{prop.name}} {{NODES[data.id].payload[prop.idSuffix]}}</span>
           <el-switch
-            v-model="prop.defValue"
+            v-model="NODES[data.id].payload[prop.idSuffix]"
             on-text=""
             off-text=""
             on-color="#F69D00"
             v-if="prop.visual==='el-switch'"
+            @change="switchChange"
           >
           </el-switch>
+          <input v-model="testV">
+          <input v-model="testV">
+          <span>{{testV}}</span>
         </p>
       </div>
     </div>
@@ -33,7 +37,9 @@
   </div>
 </template>
 <script>
-  import Node from '../../abstract-node'
+  import Node from './abstract-node'
+  import { mapState, mapMutations } from 'vuex'
+  import { nodesConfig } from '../../../../../node-conf'
 
   export default {
     mixins: [Node],
@@ -43,10 +49,14 @@
     },
     data () {
       return {
-        showMenuContent: false
+        showMenuContent: false,
+        NodePayload: {}
       }
     },
     methods: {
+      switchChange (newSwitchState) {
+        console.log(this.$store.state)
+      },
       init () {
         const instance = this.instance
         const id = this.data.id
@@ -73,7 +83,6 @@
           isTarget: true
         }
         const config = this.data.type
-        console.log(config)
         let title = document.querySelector('#' + id + '-title')
         if (config.titleInput !== null) {
           instance.addEndpoint(title, inputEndpoint)
@@ -88,16 +97,47 @@
           }
           if (e.hasInput) {
             let propLine = document.querySelector('#' + id + '-' + e.idSuffix)
-            console.log(propLine)
             instance.addEndpoint(propLine, inputEndpoint)
           }
         })
+
 //        this.instance.draggable(this.data.id)
 //        let el = document.querySelector('#' + this.data.id + ' .title')
 //        this.instance.addEndpoint(el, outputEndpoint)
-      }
+      },
+      ...mapMutations(['NODEMAP_ADD', 'NODEMAP_SET'])
+    },
+    computed: {
+      ...mapState({
+        NODES: state => state.runtime.NodeMap,
+        testV: {
+          get () {
+            console.log(this.$store.state)
+            return this.$store.state.aaa
+          },
+          set (value) {
+            this.$store.commit('updateaaa', value)
+          }
+        }
+      })
+    },
+    created () {
+      const id = this.data.id
+      const config = this.data.type
+      let simulateFun = nodesConfig[config.primary][config.secondary][config.tertiary].simulateFun
+      config.props.forEach(e => {
+        this.NodePayload[e.idSuffix] = e.defValue
+      })
+      if (config.titleInput) this.NodePayload.active = false
+      this.NODEMAP_ADD({
+        keyName: id,
+        payload: this.NodePayload,
+        updateFun: simulateFun
+      })
     },
     mounted () {
+      window.log(this.data.id, 'id')
+      window.log(this.RUNTIME, 'runtime')
       this.init()
     }
   }

@@ -140,7 +140,7 @@ export default {
     toggleSidebar () {
       this.$emit('toggle-sidebar')
     },
-    toggleSimulation () {
+    async toggleSimulation () {
       const enumSimulating = {
         'EDITING': false,
         'SIMULATING': true
@@ -150,6 +150,8 @@ export default {
 //        this.runtimeIcon = 'run'
       } else {
         this.START_SIMULATION()
+        let result = await this.calcEndNodes()
+        console.log(result)
 //        this.runtimeIcon = 'stop'
       }
     },
@@ -196,7 +198,7 @@ export default {
       }
       requestAnimationFrame(fun)
     },
-    ...mapActions(['checkConnection']),
+    ...mapActions(['checkConnection', 'calcEndNodes']),
     ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING'])
   }
 }
