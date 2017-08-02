@@ -10,11 +10,6 @@ export default new Vuex.Store({
   state: {
     aaa: '1'
   },
-  mutations: {
-    updateaaa (state, message) {
-      state.aaa = message
-    }
-  },
   // actions,
   // getters,
   modules: {

@@ -32,10 +32,8 @@ export default {
   methods: {
     toggleSidebar () {
       this.config.isShowSidebar = !this.config.isShowSidebar
-//      console.debug('toggle sidebar', this.config.isShowSidebar)
     },
     addNode (nodeType, offset) {
-//      console.debug('add node', nodeType)
       this.data.push({
         id: 'TMP' + (new Date()).getTime(),
         type: nodeType,
@@ -49,12 +47,11 @@ export default {
         inputs: [],
         outputs: []
       })
-//      console.log('new data object:', this.data)
     },
     ...mapActions(['checkConnection'])
   },
   mounted () {
-//    setInterval(this.checkConnection, 2000)// 监测连接状态
+// setInterval(this.checkConnection, 2000)// 监测连接状态
   }
 }
 </script>

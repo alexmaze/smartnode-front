@@ -3,6 +3,7 @@
  */
 import * as types from '../mutation-types'
 import api from '../../api'
+import __ from 'lodash'
 
 // initial state
 const state = {
@@ -83,6 +84,10 @@ const mutations = {
   [types.CHECK_CONNECTION] (state, { allConnected }) {
     state.allConnected = allConnected
   },
+  // [types.CD_NODEMAP] (state) {
+  //   let clone = __.cloneDeep(state.NodeMap)
+  //   state.NodeMap = clone
+  // },
   [types.NODEMAP_DELETE] (state, { keyName }) {
     delete state.NodeMap[keyName]
   },
@@ -94,6 +99,8 @@ const mutations = {
         payload,
         updateFun
       }
+      let clone = __.cloneDeep(state.NodeMap)
+      state.NodeMap = clone
       return true
     }
   },
@@ -113,6 +120,15 @@ const mutations = {
       return false
     } else {
       state.LinkMap[keyName] = payload
+      // window.log(keyName, 'linkmap app keyname')
+      // window.log(payload, 'linkmap payload')
+      let [sourceId, sPayloadKey] = payload.sourceId.split('-')
+      let [targetId, tPayloadKey] = payload.targetId.split('-')
+      // window.log(state.NodeMap[sourceId].payload, 'source payload key')
+      // window.log(state.NodeMap[targetId].payload, 'target payload key')
+      state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
+      // let clone = __.cloneDeep(state.LinkMap)
+      // state.LinkMap = clone
       return true
     }
   },

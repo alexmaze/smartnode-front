@@ -8,19 +8,18 @@
       <div class="content">
         <p class="title" :id="data.id + '-title'">{{data.label}}</p>
         <p class="prop" :id="data.id + '-' + prop.idSuffix" v-for="prop in data.type.props">
-          <span>{{prop.name}} {{NODES[data.id].payload[prop.idSuffix]}}</span>
+          <span>{{prop.name}}</span>
           <el-switch
-            v-model="NODES[data.id].payload[prop.idSuffix]"
+            v-model="curNode.payload[prop.idSuffix]"
             on-text=""
             off-text=""
             on-color="#F69D00"
             v-if="prop.visual==='el-switch'"
-            @change="switchChange"
           >
           </el-switch>
-          <input v-model="testV">
-          <input v-model="testV">
-          <span>{{testV}}</span>
+          <input type="text"
+                 v-model="curNode.payload[prop.idSuffix]"
+                 v-if="prop.visual === 'input'">
         </p>
       </div>
     </div>
@@ -38,9 +37,9 @@
 </template>
 <script>
   import Node from './abstract-node'
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapGetters } from 'vuex'
   import { nodesConfig } from '../../../../../node-conf'
-
+  import __ from 'lodash'
   export default {
     mixins: [Node],
 //    props: ['setting'],
@@ -50,12 +49,31 @@
     data () {
       return {
         showMenuContent: false,
-        NodePayload: {}
+        NodePayload: {},
+        payload:{},
+      }
+    },
+    watch:{
+      curNode: {
+        handler: function (val, old){
+          for (let con in this.getLinkMap){
+            if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
+              let [targetId, plKey] = this.getLinkMap[con].targetId.split('-')
+              this.getNodeMap[targetId].payload[plKey] = this.curNode.payload[plKey]
+              this.getLinkMap[con].getOverlay('label').setLabel(this.curNode.payload[plKey].toString())
+//              let nL = (this.curNode.payload[plKey]) ? 'true' : 'false'
+//              this.getLinkMap[con].getOverlay('label').setLabel(nL)
+            } else {
+              console.log(this.$store.state.runtime.LinkMap[con].sourceId)
+            }
+          }
+        },
+        deep: true
       }
     },
     methods: {
-      switchChange (newSwitchState) {
-        console.log(this.$store.state)
+      switchChange (info) {
+        console.log(this.$store.state.runtime.NodeMap)
       },
       init () {
         const instance = this.instance
@@ -110,16 +128,11 @@
     computed: {
       ...mapState({
         NODES: state => state.runtime.NodeMap,
-        testV: {
-          get () {
-            console.log(this.$store.state)
-            return this.$store.state.aaa
-          },
-          set (value) {
-            this.$store.commit('updateaaa', value)
-          }
+        curNode: function (state) {
+          return state.runtime.NodeMap[this.data.id]
         }
-      })
+      }),
+      ...mapGetters(['getNodeMap','getLinkMap'])
     },
     created () {
       const id = this.data.id
@@ -134,17 +147,38 @@
         payload: this.NodePayload,
         updateFun: simulateFun
       })
+      this.payload = __.cloneDeep(this.NodePayload)
+      console.log(this.NodePayload)
+//      window.log(this.$store.state.runtime.NodeMap,'created')
     },
     mounted () {
-      window.log(this.data.id, 'id')
-      window.log(this.RUNTIME, 'runtime')
       this.init()
+//      this.CD_NODEMAP()
+//      window.log(this.$store.state.runtime.NodeMap,'mounted after clonedeep')
+//      console.log(this.$store.state.runtime.NodeMap)
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+@search-input: #4bbdb0;
+@black-text: black;
+
+  input{
+    width: 50px;
+    height: 100%;
+    border-radius: 100px;
+    border: none;
+    background: darken(@search-input, 5%);
+    font-family: PingFangSC;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    color: @black-text;
+    outline:none;
+    text-align: center;
+  }
   .node-device-sensor-infrared {
     position: absolute;
     display: flex;

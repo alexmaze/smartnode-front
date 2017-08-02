@@ -11,10 +11,12 @@
       </div>
       <i class="iconfont icon-back" @click="toggleSidebar"></i>
     </div>
+    <div>
+      {{$store.state.runtime.NodeMap}}
+    </div>
     <div class="search">
       <i class="iconfont icon-search" ></i>
-      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'" module="aaa">
-      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'" module="aaa">
+      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'">
       <i class="iconfont icon-reload" :style="{transform:'rotate3d(0,0,1,' + rotateDeg + 'deg)'}" @click="reloadAnimate"></i>
     </div>
     <el-collapse v-show="toolboxStage === 'hardware'" v-model="activeNames" @change="">
@@ -156,16 +158,10 @@
 <script>
 import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
 import { nodesConfig } from '../../../../node-conf'
-import { mapState } from 'vuex'
 
 export default {
   name: 'sidebar',
   components: {
-  },
-  computed: {
-    ...mapState({
-      aaa: 'aaa'
-    })
   },
   props: ['isShow'],
   data () {

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -20,7 +20,7 @@ window.Biltong = Biltong
 
 Promise.polyfill()
 Vue.use(ElementUI)
-Vue.use(Vuex)
+// Vue.use(Vuex)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

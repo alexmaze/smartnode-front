@@ -97,6 +97,7 @@ export default {
       window.jsPlumb.ready(() => {
         console.log('jsPlumb ready!')
         this.isReady = true
+        console.log(window.jsPlumb)
         // 新建jsplumb实例
         const instance = window.jsPlumb.getInstance({
           Connector: ['Bezier', { curviness: 50 }],
@@ -117,8 +118,11 @@ export default {
         // 绑定
         let _this = this
         instance.bind('connection', function (info) {
+          window.log(info,'info')
           let connection = info.connection
-          connection.getOverlay('label').setLabel(info.connection.id)
+          let [sourceId, sourcePayloadKey] = info.sourceId.split('-')
+          window.log(connection.getOverlay('label'),'payload')
+          connection.getOverlay('label').setLabel(_this.getNodeMap[sourceId].payload[sourcePayloadKey].toString())
           _this.LINKMAP_ADD({
             keyName: connection.id,
             payload: connection
@@ -154,7 +158,7 @@ export default {
     ...mapMutations(['LINKMAP_ADD', 'LINKMAP_SET', 'LINKMAP_DELETE'])
   },
   computed: {
-    ...mapGetters(['getLinkMap'])
+    ...mapGetters(['getLinkMap','getNodeMap'])
   },
   mounted () {
     this.init()

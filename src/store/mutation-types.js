@@ -12,4 +12,3 @@ export const NODEMAP_SET = 'NODEMAP_SET'
 export const LINKMAP_DELETE = 'LINKMAP_DELETE'
 export const LINKMAP_ADD = 'LINKMAP_ADD'
 export const LINKMAP_SET = 'LINKMAP_SET'
-
