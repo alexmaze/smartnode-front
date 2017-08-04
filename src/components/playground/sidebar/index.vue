@@ -16,7 +16,7 @@
     </div>
     <div class="search">
       <i class="iconfont icon-search" ></i>
-      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'">
+      <input type="search" :placeholder="(toolboxStage === 'hardware') ? '搜索硬件...' : '搜索语法...'" v-model = "searchInp">
       <i class="iconfont icon-reload" :style="{transform:'rotate3d(0,0,1,' + rotateDeg + 'deg)'}" @click="reloadAnimate"></i>
     </div>
     <el-collapse v-show="toolboxStage === 'hardware'" v-model="activeNames" @change="">
@@ -27,7 +27,11 @@
       </el-collapse-item>
       <el-collapse-item title="开关" name="2">
         <div style="display: flex; flex-wrap: wrap;">
-          <div v-for="(s,name) in node_device.switch"  class="device" draggable="true" @dragstart="setDataTransfer(['device', 'switch', name, s.title],$event)">
+          <div v-for="(s, name) in node_device.switch"
+               class="device"
+               draggable="true"
+               @dragstart="setDataTransfer(['device', 'switch', name, s.title], $event)"
+               v-if="s.title.match(searchInp) != null">
             <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
@@ -43,7 +47,11 @@
       </el-collapse-item>
       <el-collapse-item title="传感器" name="3">
         <div style="display: flex; flex-wrap: wrap;">
-          <div v-for="(s,name) in node_device.sensor" class="device" draggable="true" @dragstart="setDataTransfer(['device', 'sensor', name, s.title],$event)">
+          <div v-for="(s, name) in node_device.sensor"
+               class="device"
+               draggable="true"
+               @dragstart="setDataTransfer(['device', 'sensor', name, s.title], $event)"
+               v-if="s.title.match(searchInp) != null">
             <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
@@ -59,7 +67,11 @@
       </el-collapse-item>
       <el-collapse-item title="执行器" name="4">
         <div style="display: flex; flex-wrap: wrap;">
-          <div v-for="(s,name) in node_device.module" class="device" draggable="true" @dragstart="setDataTransfer(['device', 'module', name, s.title],$event)">
+          <div v-for="(s, name) in node_device.module"
+               class="device"
+               draggable="true"
+               @dragstart="setDataTransfer(['device', 'module', name, s.title], $event)"
+               v-if="s.title.match(searchInp) != null">
             <!--{{name}}*******************{{s}}-->
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
@@ -156,7 +168,9 @@
 </template>
 
 <script>
-import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
+  /* eslint-disable indent */
+
+  import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
 import { nodesConfig } from '../../../../node-conf'
 
 export default {
@@ -166,6 +180,7 @@ export default {
   props: ['isShow'],
   data () {
     return {
+      searchInp: '',
       data: NODE_TYPES_TREE,
       defaultProps: {
         children: 'sub',

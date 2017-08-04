@@ -40,35 +40,49 @@
       </div>
       <div v-if="showNewDevice" class="new-device-detail">
         <div class="detail-container">
-          <div class="new-device">
+
+          <!--<div class="new-device" draggable="true" @dragstart="setDataTransfer(['device', 'switch', name, s.title], $event)">-->
+            <!--<div class="node">-->
+              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
+            <!--</div>-->
+            <!--<div class="device-info">-->
+              <!--<p>背光按键_1</p>-->
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="new-device">-->
+            <!--<div class="node">-->
+              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
+            <!--</div>-->
+            <!--<div class="device-info">-->
+              <!--<p>背光按键_2</p>-->
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="new-device">-->
+            <!--<div class="node">-->
+              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
+              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
+            <!--</div>-->
+            <!--<div class="device-info">-->
+              <!--<p>背光按键_3</p>-->
+              <!--<p class="last-timestamp">6.25 09:32</p>-->
+              <!--<p class="identifier"></p>-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <div class="new-device" v-for="(item,index) in connectedDev" draggable="true" @dragstart="setDataTransfer(item, $event)">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
               <img class="status" src="/static/img/icons/unconnected.svg" alt="">
             </div>
             <div class="device-info">
-              <p>背光按键_1</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
-            </div>
-          </div>
-          <div class="new-device">
-            <div class="node">
-              <img class="device-icon" src="/static/img/node.png" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" alt="">
-            </div>
-            <div class="device-info">
-              <p>背光按键_2</p>
-              <p class="last-timestamp">6.25 09:32</p>
-              <p class="identifier"></p>
-            </div>
-          </div>
-          <div class="new-device">
-            <div class="node">
-              <img class="device-icon" src="/static/img/node.png" alt="">
-              <img class="status" src="/static/img/icons/unconnected.svg" alt="">
-            </div>
-            <div class="device-info">
-              <p>背光按键_3</p>
+              <p>{{ getConnDev(index) }}</p>
+              <!--<p>{{ item.split('-')[2] }}</p>-->
               <p class="last-timestamp">6.25 09:32</p>
               <p class="identifier"></p>
             </div>
@@ -91,6 +105,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import MessageBox from '../../message-box'
+import { nodesConfig } from '../../../../node-conf'
 
 export default {
   name: 'toolbar',
@@ -100,6 +115,7 @@ export default {
   data () {
     return {
 //      runtimeIcon: 'run',
+      connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key'],
       progress: 0,
       errorNum: 0,
       warningNum: 22,
@@ -198,8 +214,33 @@ export default {
       }
       requestAnimationFrame(fun)
     },
+    setDataTransfer (item, ev) {
+        let data = item.split('-')
+        let tLabel = nodesConfig[data[0]][data[1]][data[2]].title
+        let type = {
+          ...nodesConfig[data[0]][data[1]][data[2]],
+          primary: data[0],
+          _primaryLabel: '',
+          secondary: data[1],
+          _secondaryLabel: '',
+          tertiary: data[2],
+          _tertiaryLabel: tLabel
+        }
+        type._all = type.primary
+        ev.dataTransfer.setData('data', JSON.stringify(type))
+    },
     ...mapActions(['checkConnection', 'calcEndNodes']),
-    ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING'])
+    ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
+    getConnDev (index) {
+      //this.connectedDev.forEach(function (cur) {
+      let data = this.connectedDev[index].split('-')
+      return nodesConfig[data[0]][data[1]][data[2]].title
+//          let data = []
+//          data.push(cur.split('-')[2]) ;
+//          //this.idDev.push(cur.split('-')[2])
+//          console.log('data ' + data)
+      //})
+    },
   }
 }
 </script>

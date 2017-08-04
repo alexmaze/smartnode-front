@@ -935,7 +935,27 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         }],
-        funs: []
+        funs: [{
+          title:'平移距离',
+          id:'move_distance',
+          titleInput: null,
+          titleOutput: true,
+          // props: [{
+          //   idSuffix: 'accelerate',
+          //   name: '加速度',
+          //   type: 'Array',
+          //   visual: 'number',
+          //   defValue: ['X50', 'Y50', 'Z0'],
+          //   hasOutput: true,
+          //   hasInput: false
+          // }]
+        },{
+          title:'角度',
+          id:'move_distance',
+          type:'number',
+          titleInput: null,
+          titleOutput: true,
+        }]
       },
       color_sensor: {
         id: 'light_sensor',

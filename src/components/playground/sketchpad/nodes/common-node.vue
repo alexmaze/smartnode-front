@@ -23,8 +23,9 @@
         </p>
       </div>
     </div>
-    <div class="add-content"></div>
-    <div class="extra-menu">
+    <div class="add-content" @click="cliAddFunc"></div>
+    <!--<div class="add-func"></div>-->
+    <div class="extra-menu" >
       <div class="menu-content" v-if="showMenuContent">
         <p>单色渐变</p>
         <p>多色渐变</p>
@@ -74,6 +75,10 @@
     methods: {
       switchChange (info) {
         console.log(this.$store.state.runtime.NodeMap)
+      },
+      cliAddFunc () {
+          this.showMenuContent = true;
+
       },
       init () {
         const instance = this.instance
@@ -253,11 +258,13 @@
       z-index: 4;
     }
     .extra-menu{
+      display: flex;
       position: absolute;
       bottom: -15px;
       background: white;
       width: 115px;
       height: 30px;
+      //height:auto;
       font-size:12px;
       font-family: PingFangSC;
       line-height:17px;
@@ -265,6 +272,11 @@
       z-index: -1;
       p {
         margin: 6px 0;
+      }
+      .menu-content
+      {
+        /*display:flex;*/
+        padding: 6%;
       }
     }
   }

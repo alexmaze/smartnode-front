@@ -24,9 +24,9 @@ import VirtualLogicAndNode from './nodes/virtual-nodes/logic-nodes/and'
 import VirtualMathFormulaNode from './nodes/virtual-nodes/math-nodes/formula'
 import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
 //  import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/infrared'
-// import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-sensor.vue'
+// import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-node.vue'
 import DeviceModuleLedNode from './nodes/device-nodes/module-nodes/led'
-import CommonNode from './nodes/common-sensor.vue'
+import CommonNode from './nodes/common-node.vue'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
