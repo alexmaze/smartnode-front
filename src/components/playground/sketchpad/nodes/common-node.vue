@@ -14,8 +14,7 @@
             on-text=""
             off-text=""
             on-color="#F69D00"
-            v-if="prop.visual==='el-switch'"
-          >
+            v-if="prop.visual==='el-switch'">
           </el-switch>
           <input type="text"
                  v-model="curNode.payload[prop.idSuffix]"
@@ -23,16 +22,20 @@
         </p>
       </div>
     </div>
-    <div class="add-content" @click="cliAddFunc"></div>
-    <!--<div class="add-func"></div>-->
-    <div class="extra-menu" >
-      <div class="menu-content" v-if="showMenuContent">
-        <p>单色渐变</p>
-        <p>多色渐变</p>
+    <div class="add-content" @click="cliToggleFunc"></div>
+    <div class="extra-content" v-for="item in addedFuncList">
+      <div class="extra-item" :id="data.id + '-' + item.id">
+        <span>{{item.title}}</span>
+        <span>{{item.defaultVal}}</span>
       </div>
     </div>
-    <div class="extra-content">
-
+    <div class="presu-menu" v-if="!showMenuContent"></div>
+    <div class="extra-menu" v-if="showMenuContent">
+      <div class="func" v-for="item in data.type.funs" v-on:click="addFunc(item, $event)">
+        <p>{{item.title}}</p>
+      </div>
+      <!--<p>平移距离</p>-->
+      <!--<p>角度</p>-->
     </div>
   </div>
 </template>
@@ -52,6 +55,9 @@
         showMenuContent: false,
         NodePayload: {},
         payload:{},
+        addedFuncList: [],
+        flagAdded: false
+
       }
     },
     watch:{
@@ -70,15 +76,22 @@
           }
         },
         deep: true
-      }
+      },
     },
     methods: {
       switchChange (info) {
         console.log(this.$store.state.runtime.NodeMap)
       },
-      cliAddFunc () {
-          this.showMenuContent = true;
-
+      addFunc (item, ev) {
+          if(this.showMenuContent){
+            this.flagAdded = true
+            console.log(this.flagAdded)
+            this.addedFuncList.push(item)
+            this.showMenuContent = false
+          }
+      },
+      cliToggleFunc () {
+          this.showMenuContent = !this.showMenuContent;
       },
       init () {
         const instance = this.instance
@@ -96,7 +109,7 @@
           isTarget: false
         }
         const inputEndpoint = {
-          uuid: id + '-output-0',
+          uuid: id + '-input-0',
           anchor: [-0.12, 0.5, 0, 0],
           cssClass: 'node-port-in-yellow',
           hoverClass: 'node-port-hover-in-yellow',
@@ -106,6 +119,7 @@
           isTarget: true
         }
         const config = this.data.type
+        //title is a DOM element
         let title = document.querySelector('#' + id + '-title')
         if (config.titleInput !== null) {
           instance.addEndpoint(title, inputEndpoint)
@@ -123,6 +137,21 @@
             instance.addEndpoint(propLine, inputEndpoint)
           }
         })
+//        config.funs.forEach(e => {
+//            if(e.titleInput !== null){
+//                //console.log('#' + id + '-' + e.id)
+//                let funcLine = document.querySelector('#' + id + '-' + e.id)
+//
+//                instance.addEndpoint(funcLine, inputEndpoint)
+//            }
+//            if(e.titleOutput !== null){
+//              //console.log('#' + id + '-' + e.id)
+//
+//              let funcLine = document.querySelector('#' + id + '-' + e.id)
+//              console.log(funcLine)
+//              instance.addEndpoint(funcLine, outputEndpoint)
+//            }
+//          })
 
 //        this.instance.draggable(this.data.id)
 //        let el = document.querySelector('#' + this.data.id + ' .title')
@@ -161,14 +190,63 @@
 //      this.CD_NODEMAP()
 //      window.log(this.$store.state.runtime.NodeMap,'mounted after clonedeep')
 //      console.log(this.$store.state.runtime.NodeMap)
+    },
+    updated () {
+        if(this.flagAdded){
+          this.flagAdded = false;
+          const instance = this.instance
+          const id = this.data.id
+          instance.draggable(id)
+          const outputEndpoint = {
+            uuid: id + '-output-0',
+            anchor: [1.12, 0.5, 0, 0],
+            cssClass: 'node-port-out-yellow',
+            hoverClass: 'node-port-hover-out-yellow',
+            radius: 6,
+            endpoint: 'Dot',
+            maxConnections: -1,
+            isSource: true,
+            isTarget: false
+          }
+          const inputEndpoint = {
+            uuid: id + '-input-0',
+            anchor: [-0.12, 0.5, 0, 0],
+            cssClass: 'node-port-in-yellow',
+            hoverClass: 'node-port-hover-in-yellow',
+            endpoint: 'Rectangle',
+            maxConnections: -1,
+            isSource: false,
+            isTarget: true
+          }
+          const config = this.data.type
+          //console.log(config.funs)
+          config.funs.forEach(e => {
+            console.log('#' + id + '-' + e.id)
+            if(e.titleInput !== null){
+              //console.log('#' + id + '-' + e.id)
+              let funcLine = document.querySelector('#' + id + '-' + e.id)
+              if(funcLine !== null)
+              instance.addEndpoint(funcLine, inputEndpoint)
+            }
+            if(e.titleOutput !== null){
+              let funcLine = document.querySelector('#' + id + '-' + e.id)
+              //console.log(funcLine)
+              if(funcLine !== null)
+                instance.addEndpoint(funcLine, outputEndpoint)
+            }
+          })
+        }
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+  @import "../../../index";
+
 @search-input: #4bbdb0;
 @black-text: black;
+
 
   input{
     width: 50px;
@@ -257,27 +335,57 @@
       left: 60px;
       z-index: 4;
     }
-    .extra-menu{
-      display: flex;
-      position: absolute;
-      bottom: -15px;
+    .presu-menu{
       background: white;
       width: 115px;
-      height: 30px;
+      height: 15px;
+      border-radius: 0 0 6px 6px;
+      z-index: -1;
+    }
+    .extra-menu{
+      display: flex;
+      flex-direction: column;
+      //position: absolute;
+      //bottom: -15px;
+      background: white;
+      width: 115px;
+      height: auto;
       //height:auto;
       font-size:12px;
       font-family: PingFangSC;
       line-height:17px;
-      border-radius: 6px;
-      z-index: -1;
+      border-radius: 0 0 6px 6px;
+      z-index: 3;
+      padding: 11px 0px 6px 0px;
       p {
-        margin: 6px 0;
+        color: @func-grey;
+        margin: 3px 6px;
       }
-      .menu-content
-      {
-        /*display:flex;*/
-        padding: 6%;
+      .func{
+        z-index:4;
+      }
+      .func:hover{
+        background-color: #9b9b9b;
       }
     }
+    .extra-content{
+      display: flex;
+      flex-direction: column;
+      background-color: #4bbdb0;
+      width: 135px;
+      height: auto;
+      font-size:12px;
+      font-family: PingFangSC;
+      line-height:17px;
+      border-radius: 6px;
+      margin: 6px 0px 0px 0px;
+      color: #fff;
+      .extra-item{
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 6px;
+      }
+    }
+
   }
 </style>

@@ -935,9 +935,12 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         }],
-        funs: [{
+        funs: [
+          {
           title:'平移距离',
           id:'move_distance',
+          type: 'number',
+          defaultVal: '-',
           titleInput: null,
           titleOutput: true,
           // props: [{
@@ -949,10 +952,12 @@ export const nodesConfig = {
           //   hasOutput: true,
           //   hasInput: false
           // }]
-        },{
+          },
+          {
           title:'角度',
-          id:'move_distance',
+          id:'rotate_angel',
           type:'number',
+          defaultVal: '-',
           titleInput: null,
           titleOutput: true,
         }]

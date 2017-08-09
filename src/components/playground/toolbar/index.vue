@@ -75,7 +75,7 @@
             <!--</div>-->
           <!--</div>-->
 
-          <div class="new-device" v-for="(item,index) in connectedDev" draggable="true" @dragstart="setDataTransfer(item, $event)">
+          <div class="new-device" v-for="(item,index) in connectedDev" draggable="true" @dragstart="setDataTransfer(item, $event)" @dragend="deleteItem(index, $event)">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
               <img class="status" src="/static/img/icons/unconnected.svg" alt="">
@@ -214,7 +214,7 @@ export default {
       }
       requestAnimationFrame(fun)
     },
-    setDataTransfer (item, ev) {
+    setDataTransfer (item,  ev) {
         let data = item.split('-')
         let tLabel = nodesConfig[data[0]][data[1]][data[2]].title
         let type = {
@@ -228,6 +228,12 @@ export default {
         }
         type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
+
+        //this.connectedDev.pop(index)
+        console.log(this.connectedDev);
+    },
+    deleteItem (index, ev) {
+      let temp = this.connectedDev.splice(index, 1)
     },
     ...mapActions(['checkConnection', 'calcEndNodes']),
     ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
@@ -235,6 +241,7 @@ export default {
       //this.connectedDev.forEach(function (cur) {
       let data = this.connectedDev[index].split('-')
       return nodesConfig[data[0]][data[1]][data[2]].title
+
 //          let data = []
 //          data.push(cur.split('-')[2]) ;
 //          //this.idDev.push(cur.split('-')[2])
