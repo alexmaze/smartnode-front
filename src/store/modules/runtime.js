@@ -9,6 +9,7 @@ import __ from 'lodash'
 const state = {
   runtimeStage: 'EDITING',
   allConnected: false,
+  hardwareConnected: false,
   NodeMap: {},
   LinkMap: {},
   testV: ''
@@ -18,6 +19,7 @@ const state = {
 const getters = {
   getRuntimeStage: state => state.runtimeStage,
   getAllConnected: state => state.allConnected,
+  getHardConnected: state => state.hardwareConnected,
   getNodeMap: state => state.NodeMap,
   getLinkMap: state => state.LinkMap
 }
@@ -28,6 +30,13 @@ const actions = {
     let allConnected = await api.checkConnection()
     commit(types.CHECK_CONNECTION, { allConnected })
     return allConnected
+  },
+  async checkHardware ({ commit }) {
+    let hardwareConn = await api.checkHardware()
+    console.log('ooooo + ' + hardwareConn)
+    commit(types.CHECK_HARDWARE, { hardwareConn })
+    return hardwareConn
+
   },
   calcEndNodes ({ state, getters }) {
     let nodesArray = getters.getNodeMap
@@ -139,6 +148,9 @@ const mutations = {
       state.LinkMap[keyName] = payload
       return true
     }
+  },
+  [types.CHECK_HARDWARE] (state, { hardwareConn }) {
+    state.hardwareConnected = hardwareConn
   }
 }
 

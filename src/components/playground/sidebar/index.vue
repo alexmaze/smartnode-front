@@ -21,7 +21,7 @@
     </div>
     <el-collapse v-show="toolboxStage === 'hardware'" v-model="activeNames" @change="">
       <el-collapse-item title="已连通的实体硬件" name="1">
-        <div style="display: flex; justify-content: center; align-content: center">
+        <div style="display: flex; justify-content: center; align-content: center" v-if="!hardwareConn">
           <img src="/static/img/icons/connection-reminder.svg" style="margin: 68px 0;" alt="">
         </div>
       </el-collapse-item>
@@ -172,6 +172,7 @@
 
   import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
 import { nodesConfig } from '../../../../node-conf'
+  import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'sidebar',
@@ -189,10 +190,15 @@ export default {
       toolboxStage: 'hardware',
       rotateDeg: 0,
       activeNames: ['2'],
-      node_device: nodesConfig.device
+      node_device: nodesConfig.device,
+      hardwareConn: false
     }
   },
+  computed: {
+    ...mapGetters(['getHardConnected'])
+  },
   methods: {
+    ...mapActions(['checkHardware']),
     handleNodeClick (data, node) {
       if (data.sub) return
       let type = {
@@ -269,8 +275,19 @@ export default {
         }
       }
       requestAnimationFrame(ani)
+      //check hardware
+      //console.log(this)
+      if(this.getHardConnected){
+        // if hardware connected, show the hardware list as toolbar did
+        this.hardwareConn = true
+        console.log(this.hardwareConn)
+      }
+      else {
+          this.checkHardware()
+      }
     }
   },
+
   created () {
     console.log(nodesConfig)
   }
