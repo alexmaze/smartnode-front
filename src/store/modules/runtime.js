@@ -12,7 +12,8 @@ const state = {
   hardwareConnected: false,
   NodeMap: {},
   LinkMap: {},
-  testV: ''
+  testV: '',
+  connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key'],
 }
 
 // getters
@@ -21,7 +22,8 @@ const getters = {
   getAllConnected: state => state.allConnected,
   getHardConnected: state => state.hardwareConnected,
   getNodeMap: state => state.NodeMap,
-  getLinkMap: state => state.LinkMap
+  getLinkMap: state => state.LinkMap,
+  getterConnDev: state => state.connectedDev
 }
 
 // actions

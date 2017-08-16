@@ -24,6 +24,19 @@
         <div style="display: flex; justify-content: center; align-content: center" v-if="!hardwareConn">
           <img src="/static/img/icons/connection-reminder.svg" style="margin: 68px 0;" alt="">
         </div>
+        <div v-for="(item, index) in getterConnDev" v-if="hardwareConn" class="device" draggable="true"
+             @dragstart="setDataTransfer(item, $event)">
+          <div class="node">
+            <img class="device-icon" src="/static/img/node.png" draggable="false" alt="">
+            <img class="status" src="/static/img/icons/unconnected.svg" alt="">
+
+          </div>
+          <div class="device-info">
+            <p>{{ getConnDev(index) }}</p>
+            <p class="last-timestamp">6.25 09:32</p>
+            <!--<p class="identifier"></p>-->
+          </div>
+        </div>
       </el-collapse-item>
       <el-collapse-item title="开关" name="2">
         <div style="display: flex; flex-wrap: wrap;">
@@ -195,10 +208,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getHardConnected'])
+    ...mapGetters(['getHardConnected','getterConnDev'])
   },
   methods: {
     ...mapActions(['checkHardware']),
+    getConnDev (index) {
+      //this.connectedDev.forEach(function (cur) {
+      let data = this.getterConnDev[index].split('-')
+      return nodesConfig[data[0]][data[1]][data[2]].title
+
+//          let data = []
+//          data.push(cur.split('-')[2]) ;
+//          //this.idDev.push(cur.split('-')[2])
+//          console.log('data ' + data)
+      //})
+    },
     handleNodeClick (data, node) {
       if (data.sub) return
       let type = {
@@ -237,7 +261,28 @@ export default {
           _tertiaryLabel: '人体红外传感器',
           _all: 'device-sensor'
         }))
-      } else {
+      } else
+      //if(data.match('-') !== null)
+      if(typeof data === 'string')
+      {
+        let temp = data.split('-')
+        let tLabel = nodesConfig[temp[0]][temp[1]][temp[2]].title
+        let type = {
+          ...nodesConfig[temp[0]][temp[1]][temp[2]],
+          primary: temp[0],
+          _primaryLabel: '',
+          secondary: temp[1],
+          _secondaryLabel: '',
+          tertiary: temp[2],
+          _tertiaryLabel: tLabel
+        }
+        type._all = type.primary
+        ev.dataTransfer.setData('data', JSON.stringify(type))
+
+        //this.connectedDev.pop(index)
+        console.log(this.connectedDev);
+      }else
+      {
 //        console.log('---', 'configBeforeEmit', nodesConfig[data[0]][data[1]][data[2]], '---')
         let type = {
           ...nodesConfig[data[0]][data[1]][data[2]],
@@ -466,8 +511,8 @@ export default {
     .status{
       float: right;
       position: absolute;
-      right: 8px;
-      bottom: 16px;
+      right: 20px;
+      bottom: 20px;
       height: 16px;
       background: @connected;
       max-height: 20px;

@@ -115,7 +115,7 @@ export default {
   data () {
     return {
 //      runtimeIcon: 'run',
-      connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key'],
+      //connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key'],
       progress: 0,
       errorNum: 0,
       warningNum: 22,
@@ -128,8 +128,16 @@ export default {
   computed: {
     ...mapGetters({
       runtimeStage: 'getRuntimeStage',
-      allConnected: 'getAllConnected'
+      allConnected: 'getAllConnected',
+      getConnectedDev: 'getterConnDev'
     }),
+    connectedDev() {
+        let newConnDev = []
+        this.getConnectedDev.forEach(function (e) {
+            newConnDev.push(e)
+        })
+        return newConnDev
+    },
     newDevice () {
       return 3
     },
@@ -234,6 +242,7 @@ export default {
     },
     deleteItem (index, ev) {
       let temp = this.connectedDev.splice(index, 1)
+      this.showNewDevice = false
     },
     ...mapActions(['checkConnection', 'calcEndNodes']),
     ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
