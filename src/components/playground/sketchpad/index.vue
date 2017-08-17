@@ -8,6 +8,7 @@
         <!--<DeviceSensorInfraredNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-switch'"></DeviceSensorInfraredNode>-->
         <DeviceModuleLedNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device-module-led'"></DeviceModuleLedNode>
         <CommonNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'device'"></CommonNode>
+        <VirtualNode :style="'left:'+node.position.x+'px;top:'+node.position.y+'px'" :data="node" :instance="jsPlumbInstance" v-else-if="node.type._all === 'virtual'"></VirtualNode>
       </template>
     </div>
     <div id="zoomPanel">
@@ -27,6 +28,7 @@ import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
 // import DeviceSensorInfraredNode from './nodes/device-nodes/sensor-nodes/common-node.vue'
 import DeviceModuleLedNode from './nodes/device-nodes/module-nodes/led'
 import CommonNode from './nodes/common-node.vue'
+import VirtualNode from './nodes/virtual-node.vue'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -38,7 +40,8 @@ export default {
     VirtualMathFormulaNode,
 //    DeviceSensorInfraredNode,
     DeviceSwitchSnapNode,
-    CommonNode
+    CommonNode,
+    VirtualNode
   },
   props: ['nodes'],
   data () {

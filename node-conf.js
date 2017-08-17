@@ -937,12 +937,12 @@ export const nodesConfig = {
         }],
         funs: [
           {
-          title:'平移距离',
-          id:'move_distance',
-          type: 'number',
-          defaultVal: '-',
-          titleInput: null,
-          titleOutput: true,
+            title: '平移距离',
+            id: 'move_distance',
+            type: 'number',
+            defaultVal: '-',
+            titleInput: null,
+            titleOutput: true
           // props: [{
           //   idSuffix: 'accelerate',
           //   name: '加速度',
@@ -954,13 +954,13 @@ export const nodesConfig = {
           // }]
           },
           {
-          title:'角度',
-          id:'rotate_angel',
-          type:'number',
-          defaultVal: '-',
-          titleInput: null,
-          titleOutput: true,
-        }]
+            title: '角度',
+            id: 'rotate_angel',
+            type: 'number',
+            defaultVal: '-',
+            titleInput: null,
+            titleOutput: true
+          }]
       },
       color_sensor: {
         id: 'light_sensor',
@@ -1147,7 +1147,36 @@ export const nodesConfig = {
     }
   },
   virtual: {
-    logic: [],
+    logic: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: 'Bollean'
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: 'Bollean'
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: 'Bollean'
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: 'Boolean'}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      }
+    },
     math: []
   }
 }

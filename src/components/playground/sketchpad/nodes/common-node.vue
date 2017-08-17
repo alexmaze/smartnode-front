@@ -47,7 +47,7 @@
   export default {
     mixins: [Node],
 //    props: ['setting'],
-    name: 'device-sensor-common',
+    name: 'common-node',
     components: {
     },
     data () {
