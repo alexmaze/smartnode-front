@@ -166,7 +166,8 @@
           return state.runtime.NodeMap[this.data.id]
         }
       }),
-      ...mapGetters(['getNodeMap','getLinkMap'])
+      ...mapGetters(['getNodeMap','getLinkMap']),
+
     },
     created () {
       const id = this.data.id
