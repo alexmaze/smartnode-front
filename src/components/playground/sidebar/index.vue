@@ -102,31 +102,24 @@
     <el-collapse v-show="toolboxStage === 'syntax'" v-model="activeNames" @change="">
       <el-collapse-item title="Logic Patch" name="5">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node logic-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node logic-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node logic-node">
-            <p class="title">&&</p>
+          <div v-for="(item, name) in node_virtual.logic" class="syntax-node logic-node"
+          draggable="true" @dragstart="setDataTransfer(['virtual', 'logic', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
         </div>
       </el-collapse-item>
       <el-collapse-item title="Control Flow Patch" name="6">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node logic-node">
+          <div class="syntax-node control-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node control-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node control-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
@@ -145,15 +138,15 @@
       </el-collapse-item>
       <el-collapse-item title="Math Patch" name="8">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node logic-node">
+          <div class="syntax-node math-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node math-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node math-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
@@ -161,15 +154,15 @@
       </el-collapse-item>
       <el-collapse-item title="Utility Patch" name="9">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node logic-node">
+          <div class="syntax-node utility-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node utility-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node logic-node">
+          <div class="syntax-node utility-node">
             <p class="title">&&</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
@@ -204,6 +197,7 @@ export default {
       rotateDeg: 0,
       activeNames: ['2'],
       node_device: nodesConfig.device,
+      node_virtual: nodesConfig.virtual,
       hardwareConn: false
     }
   },
@@ -223,20 +217,20 @@ export default {
 //          console.log('data ' + data)
       //})
     },
-    handleNodeClick (data, node) {
-      if (data.sub) return
-      let type = {
-        primary: node.parent.parent.data.key,
-        _primaryLabel: node.parent.parent.data.label,
-        secondary: node.parent.data.key,
-        _secondaryLabel: node.parent.data.label,
-        tertiary: node.data.key,
-        _tertiaryLabel: node.data.label
-      }
-      type._all = `${type.primary}-${type.secondary}-${type.tertiary}`
-      this.$emit('add-node', type)
-//      console.log(type)
-    },
+//    handleNodeClick (data, node) {
+//      if (data.sub) return
+//      let type = {
+//        primary: node.parent.parent.data.key,
+//        _primaryLabel: node.parent.parent.data.label,
+//        secondary: node.parent.data.key,
+//        _secondaryLabel: node.parent.data.label,
+//        tertiary: node.data.key,
+//        _tertiaryLabel: node.data.label
+//      }
+//      type._all = `${type.primary}-${type.secondary}-${type.tertiary}`
+//      this.$emit('add-node', type)
+////      console.log(type)
+//    },
     setDataTransfer (data, ev) {
 //      console.log(ev)
 //      console.log(ev.target)
@@ -297,7 +291,7 @@ export default {
 //        type._all = `${type.primary}-${type.secondary}`
         type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
-//        console.log(type)
+        //console.log(type)
       }
     },
     toggleStage (stage) {
@@ -578,9 +572,21 @@ export default {
     background: @logic-node-bg;
     box-shadow: 0 10px 16px 0 @logic-node-shadow;
   }
+  &.control-node{
+    background: @chartre-green;
+    box-shadow: 0 10px 16px 0 @control-node-shadow;
+  }
   &.operator-node{
     background: @operator-node-bg;
     box-shadow: 0 10px 16px 0 @operator-node-shadow;
+  }
+  &.math-node{
+    background: @liliac;
+    box-shadow: 0 10px 16px 0 @math-node-shadow;
+  }
+  &.utility-node{
+    background: @pomelo-orange;
+    box-shadow: 0 10px 16px 0 @utility-node-shadow;
   }
   .dash{
     position: absolute;

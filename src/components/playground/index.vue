@@ -47,6 +47,7 @@ export default {
         inputs: [],
         outputs: []
       })
+      console.log(this.data)
     },
     ...mapActions(['checkConnection'])
   },

@@ -309,6 +309,7 @@
         border-radius: 0 0 6px 6px;
         padding-bottom: 6px;
         padding-top: 10px;
+        box-shadow: 0 1px 2px 0px @content-shadow ;
         p{
           margin:6px;
         }

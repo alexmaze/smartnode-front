@@ -92,6 +92,7 @@ export default {
         y: (ev.layerY) / this.zoomLevel - this.offsetY
       }
       let nodeType = JSON.parse(ev.dataTransfer.getData('data'))
+      //console.log(nodeType)
       this.$emit('add-node', nodeType, offset)
 //      console.log('---', 'nodetype:', nodeType, '---')
     },
