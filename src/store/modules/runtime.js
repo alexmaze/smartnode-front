@@ -13,7 +13,7 @@ const state = {
   NodeMap: {},
   LinkMap: {},
   testV: '',
-  connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key'],
+  connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key']
 }
 
 // getters
@@ -38,7 +38,6 @@ const actions = {
     console.log('ooooo + ' + hardwareConn)
     commit(types.CHECK_HARDWARE, { hardwareConn })
     return hardwareConn
-
   },
   calcEndNodes ({ state, getters }) {
     let nodesArray = getters.getNodeMap

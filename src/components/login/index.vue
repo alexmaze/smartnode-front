@@ -7,9 +7,7 @@
       </div>
       <div class="main">
         <p class="welcome">欢迎回来</p>
-        <p>{{$store.state.aaa}}</p>
         <p class="login-title">登录</p>
-        <input type="text" v-model="$store.state.aaa">
         <div class="inputs">
           <input class="username" type="text" name="username" placeholder="用户名">
           <input class="password" type="password" name="password" placeholder="密码">
@@ -34,7 +32,6 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
 
 export default {
   name: 'login',
@@ -46,9 +43,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      test: 'aaa'
-    })
   },
   methods: {
     submit () {
@@ -56,7 +50,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$store.state)
   }
 }
 </script>

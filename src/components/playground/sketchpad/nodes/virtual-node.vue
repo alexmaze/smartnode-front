@@ -3,12 +3,12 @@
     <div class="virtual-title"> {{ data.type.title }}</div>
     <div class="virtual-content">
       <div class="virtual-inputs">
-        <div class="virtual-input-item" v-for="item in data.type.inputs">
+        <div :id="data.id + '-' + item.idSuffix" class="virtual-input-item" v-for="item in data.type.inputs">
           <p>{{ item.name }}</p>
         </div>
       </div>
       <div class="virtual-outputs">
-        <div class="virtual-output-item" v-for="item in data.type.outputs">
+        <div :id="data.id + '-' + item.idSuffix" class="virtual-output-item" v-for="item in data.type.outputs">
           <p>{{ item.name }}</p>
         </div>
       </div>
@@ -28,6 +28,55 @@
       return {
 
       }
+    },
+    methods: {
+      init () {
+        const instance = this.instance
+        const id = this.data.id
+        instance.draggable(id)
+        const outputEndpoint = {
+          uuid: id + '-output-0',
+          anchor: [1.5, 0.5, 0, 0],
+          cssClass: 'node-port-out-yellow',
+          hoverClass: 'node-port-hover-out-yellow',
+          radius: 6,
+          endpoint: 'Dot',
+          maxConnections: -1,
+          isSource: true,
+          isTarget: false
+        }
+        const inputEndpoint = {
+          uuid: id + '-input-0',
+          anchor: [-0.5, 0.5, 0, 0],
+          cssClass: 'node-port-in-yellow',
+          hoverClass: 'node-port-hover-in-yellow',
+          endpoint: 'Rectangle',
+          maxConnections: -1,
+          isSource: false,
+          isTarget: true
+        }
+        const config = this.data.type
+        //title is a DOM element
+        let title = document.querySelector('#' + id + '-title')
+//        if (config.titleInput !== null) {
+//          instance.addEndpoint(title, inputEndpoint)
+//        }
+//        if (config.titleOutput !== null) {
+//          instance.addEndpoint(title, outputEndpoint)
+//        }
+        config.inputs.forEach(e => {
+          let propLine = document.querySelector('#' + id + '-' + e.idSuffix)
+          instance.addEndpoint(propLine, inputEndpoint)
+        })
+        config.outputs.forEach(e => {
+          let propLine = document.querySelector('#' + id + '-' + e.idSuffix)
+          console.log(e.idSuffix)
+          instance.addEndpoint(propLine, outputEndpoint)
+        })
+      }
+    },
+    mounted () {
+      this.init()
     }
   }
 </script>

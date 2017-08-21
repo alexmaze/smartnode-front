@@ -4,6 +4,24 @@
 export const nodesConfig = {
   device: {
     module: {
+      DEBUG_REVERSE: {
+        id: 'DEBUG_REVERSE',
+        title: '调试用反转器',
+        titleInput: null,
+        titleOutput: null,
+        props: [{
+          idSuffix: 'input',
+          name: '输入量',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: false,
+          hasInput: true,
+          hasOutput: true
+        }],
+        simulateFun: function (input) {
+          return !input
+        }
+      },
       NFC_communication: {
         id: 'NFC_communication',
         title: 'NFC近场通讯模块',
@@ -1042,10 +1060,8 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: true
         }],
-        simulateFun: function () {
-          return {
-            keyDown: this.keyDown
-          }
+        simulateFun: function (input) {
+          return input
         }
       },
       digital_switch: {
@@ -1067,10 +1083,8 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         }],
-        simulateFun: function () {
-          return {
-            keyDown: this.keyDown
-          }
+        simulateFun: function (input) {
+          return input
         }
       },
       infrared_tansceiver1: {

@@ -43,7 +43,7 @@
   import Node from './abstract-node'
   import { mapState, mapMutations, mapGetters } from 'vuex'
   import { nodesConfig } from '../../../../../node-conf'
-  import __ from 'lodash'
+//  import __ from 'lodash'
   export default {
     mixins: [Node],
 //    props: ['setting'],
@@ -53,7 +53,6 @@
     data () {
       return {
         showMenuContent: false,
-        NodePayload: {},
         payload:{},
         addedFuncList: [],
         flagAdded: false
@@ -66,8 +65,14 @@
           for (let con in this.getLinkMap){
             if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
               let [targetId, plKey] = this.getLinkMap[con].targetId.split('-')
-              this.getNodeMap[targetId].payload[plKey] = this.curNode.payload[plKey]
-              this.getLinkMap[con].getOverlay('label').setLabel(this.curNode.payload[plKey].toString())
+              let calcFun = this.curNode.updateFun
+              window.log(calcFun,'calcFun')
+              let input = this.curNode.payload[plKey]
+              window.log(input,'input')
+              let output = calcFun(input)
+              window.log(output,'output')
+//              this.getNodeMap[targetId].payload[plKey] = output// 修改target节点的对应属性值
+//              this.getLinkMap[con].getOverlay('label').setLabel(this.curNode.payload[plKey].toString())// 改变label
 //              let nL = (this.curNode.payload[plKey]) ? 'true' : 'false'
 //              this.getLinkMap[con].getOverlay('label').setLabel(nL)
             } else {
@@ -79,9 +84,9 @@
       },
     },
     methods: {
-      switchChange (info) {
-        console.log(this.$store.state.runtime.NodeMap)
-      },
+//      switchChange (info) {
+//        console.log(this.$store.state.runtime.NodeMap)
+//      },
       addFunc (item, ev) {
           if(this.showMenuContent){
             this.flagAdded = true
@@ -161,7 +166,6 @@
     },
     computed: {
       ...mapState({
-        NODES: state => state.runtime.NodeMap,
         curNode: function (state) {
           return state.runtime.NodeMap[this.data.id]
         }
@@ -172,19 +176,19 @@
     created () {
       const id = this.data.id
       const config = this.data.type
+      let NodePayload = {};
       let simulateFun = nodesConfig[config.primary][config.secondary][config.tertiary].simulateFun
       config.props.forEach(e => {
-        this.NodePayload[e.idSuffix] = e.defValue
+        NodePayload[e.idSuffix] = e.defValue
       })
-      if (config.titleInput) this.NodePayload.active = false
+      if (config.titleInput) NodePayload.active = false
       this.NODEMAP_ADD({
         keyName: id,
-        payload: this.NodePayload,
+        payload: NodePayload,
         updateFun: simulateFun
       })
-      this.payload = __.cloneDeep(this.NodePayload)
-      console.log(this.NodePayload)
-//      window.log(this.$store.state.runtime.NodeMap,'created')
+//      this.payload = __.cloneDeep(this.NodePayload)
+      console.log(this.curNode);
     },
     mounted () {
       this.init()
@@ -192,7 +196,7 @@
 //      window.log(this.$store.state.runtime.NodeMap,'mounted after clonedeep')
 //      console.log(this.$store.state.runtime.NodeMap)
     },
-    updated () {
+    updated () {  // 用updated钩子是因为要等dom更新完才能执行jsplumb的增加endpoint方法
         if(this.flagAdded){
           this.flagAdded = false;
           const instance = this.instance
@@ -200,7 +204,7 @@
           instance.draggable(id)
           const outputEndpoint = {
             uuid: id + '-output-0',
-            anchor: [1.12, 0.5, 0, 0],
+            anchor: [1.075, 0.5, 0, 0],
             cssClass: 'node-port-out-yellow',
             hoverClass: 'node-port-hover-out-yellow',
             radius: 6,
