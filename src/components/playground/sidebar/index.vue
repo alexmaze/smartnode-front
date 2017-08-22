@@ -111,59 +111,45 @@
       </el-collapse-item>
       <el-collapse-item title="Control Flow Patch" name="6">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node control-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node control-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node control-node">
-            <p class="title">&&</p>
+          <div v-for="(item, name) in node_virtual.control" class="syntax-node control-node"
+               draggable="true" @dragstart="setDataTransfer(['virtual', 'control', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
         </div>
       </el-collapse-item>
       <el-collapse-item title="Operator Patch" name="7">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node operator-node">
-            <p class="title">Operation</p>
+          <div v-for="(item, name) in node_virtual.operator" class="syntax-node operator-node"
+               draggable="true" @dragstart="setDataTransfer(['virtual', 'operator', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div><div class="syntax-node operator-node">
-          <p class="title">Bitwise</p>
-          <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-        </div>
+          </div>
         </div>
       </el-collapse-item>
       <el-collapse-item title="Math Patch" name="8">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node math-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node math-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node math-node">
-            <p class="title">&&</p>
+          <div v-for="(item, name) in node_virtual.math" class="syntax-node math-node"
+               draggable="true" @dragstart="setDataTransfer(['virtual', 'math', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
         </div>
       </el-collapse-item>
       <el-collapse-item title="Utility Patch" name="9">
         <div style="display: flex; flex-wrap: wrap;">
-          <div class="syntax-node utility-node">
-            <p class="title">&&</p>
+          <div v-for="(item, name) in node_virtual.utility" class="syntax-node utility-node"
+               draggable="true" @dragstart="setDataTransfer(['virtual', 'utility', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
-          <div class="syntax-node utility-node">
-            <p class="title">&&</p>
-            <img class="dash" src="/static/img/icons/dashline.svg" alt="">
-          </div>
-          <div class="syntax-node utility-node">
-            <p class="title">&&</p>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="Data Patch" name="10">
+        <div style="display: flex; flex-wrap: wrap;">
+          <div v-for="(item, name) in node_virtual.data" class="syntax-node data-node"
+               draggable="true" @dragstart="setDataTransfer(['virtual', 'data', name, item.title], $event)">
+            <p class="title">{{ item.title }}</p>
             <img class="dash" src="/static/img/icons/dashline.svg" alt="">
           </div>
         </div>
@@ -587,6 +573,10 @@ export default {
   &.utility-node{
     background: @pomelo-orange;
     box-shadow: 0 10px 16px 0 @utility-node-shadow;
+  }
+  &.data-node{
+    background: @bludi-blue;
+    box-shadow: 0 10px 16px 0 @bludi-blue-shadow;
   }
   .dash{
     position: absolute;
