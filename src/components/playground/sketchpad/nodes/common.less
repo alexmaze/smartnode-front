@@ -1,5 +1,4 @@
-
-
+@import "../../../index";
 .node-port-out-yellow {
   z-index: 2;
   filter: drop-shadow(rgba(246, 166, 35, 0.3) 0px 4px 8px);
@@ -81,110 +80,591 @@
 }
 // -----------------
 
-.node-port-in-blue {
-  z-index: 2;
-  filter: drop-shadow(rgba(246, 166, 35, 0.3) 0px 4px 8px);
-  overflow: hidden;
-  width: 10px !important;
-  height: 10px !important;
-  border: 1px solid #4990E2;
-  border-radius: 2px;
-  overflow: hidden;
-  svg {
-    width: 10px !important;
-    height: 10px !important;
-    rect {
-      width: 10px !important;
-      height: 10px !important;
-      fill: #FFFFFF;
-    }
-  }
-  &.jtk-endpoint-connected {
-    svg rect {
-      fill: #4990E2;
-    }
-  }
-}
-.node-port-hover-in-blue {
-  svg rect {
-    fill: #4990E2;
-  }
-}
-// -----------------
-
 .node-port-out-blue {
   z-index: 2;
+  filter: drop-shadow(@dark-sky-blue-24 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
   svg {
-    overflow: visible;
+    overflow: visible !important;
     circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
       fill: #FFFFFF;
-      stroke: #4990E2;
-      stroke-width: 1;
-      r: 6;
+      stroke: @dark-sky-blue;
+      stroke-width: 2;
+      //r: 6;
     }
   }
   &.jtk-endpoint-connected {
     svg circle {
-      fill: #4990E2;
+      fill: @dark-sky-blue;
     }
   }
 }
 .node-port-hover-out-blue {
   svg circle {
-    fill: #4990E2;
+    fill: @dark-sky-blue;
   }
 }
 // -----------------
-
-.node-port-in-purple {
+.node-port-in-blue {
   z-index: 2;
-  overflow: hidden;
-  width: 10px !important;
-  height: 10px !important;
-  border: 1px solid #C178FF;
-  border-radius: 2px;
-  overflow: hidden;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@dark-sky-blue-24 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
   svg {
-    width: 10px !important;
-    height: 10px !important;
+    overflow: visible !important;
     rect {
-      width: 10px !important;
-      height: 10px !important;
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
       fill: #FFFFFF;
+      stroke: @dark-sky-blue;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
     }
   }
   &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
     svg rect {
-      fill: #C178FF;
+      fill: @dark-sky-blue;
     }
   }
 }
-.node-port-hover-in-purple {
+.node-port-hover-in-blue {
   svg rect {
-    fill: #C178FF;
+    fill: @dark-sky-blue;
   }
 }
 // -----------------
 
-.node-port-out-purple {
+.node-port-out-green {
   z-index: 2;
+  filter: drop-shadow(@chartre-green-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
   svg {
-    overflow: visible;
+    overflow: visible !important;
     circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
       fill: #FFFFFF;
-      stroke: #C178FF;
-      stroke-width: 1;
-      r: 6;
+      stroke: @chartre-green;
+      stroke-width: 2;
+      //r: 6;
     }
   }
   &.jtk-endpoint-connected {
     svg circle {
-      fill: #C178FF;
+      fill: @chartre-green;
+    }
+  }
+}
+.node-port-hover-out-green {
+  svg circle {
+    fill: @chartre-green;
+  }
+}
+// -----------------
+.node-port-in-green {
+  z-index: 2;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@chartre-green-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
+  svg {
+    overflow: visible !important;
+    rect {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @chartre-green;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
+    }
+  }
+  &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    svg rect {
+      fill: @chartre-green;
+    }
+  }
+}
+.node-port-hover-in-green {
+  svg rect {
+    fill: @chartre-green;
+  }
+}
+
+.node-port-out-purple {
+  z-index: 2;
+  filter: drop-shadow(@liliac-24 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
+  svg {
+    overflow: visible !important;
+    circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @liliac;
+      stroke-width: 2;
+      //r: 6;
+    }
+  }
+  &.jtk-endpoint-connected {
+    svg circle {
+      fill: @liliac;
     }
   }
 }
 .node-port-hover-out-purple {
   svg circle {
-    fill: #C178FF;
+    fill: @liliac;
   }
 }
+// -----------------
+.node-port-in-purple {
+  z-index: 2;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@liliac-24 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
+  svg {
+    overflow: visible !important;
+    rect {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @liliac;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
+    }
+  }
+  &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    svg rect {
+      fill: @liliac;
+    }
+  }
+}
+.node-port-hover-in-purple {
+  svg rect {
+    fill: @liliac;
+  }
+}
+
+.node-port-out-orange {
+  z-index: 2;
+  filter: drop-shadow(@pomelo-orange-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
+  svg {
+    overflow: visible !important;
+    circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @pomelo-orange;
+      stroke-width: 2;
+      //r: 6;
+    }
+  }
+  &.jtk-endpoint-connected {
+    svg circle {
+      fill: @pomelo-orange;
+    }
+  }
+}
+.node-port-hover-out-orange {
+  svg circle {
+    fill: @pomelo-orange;
+  }
+}
+// -----------------
+.node-port-in-orange {
+  z-index: 2;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@pomelo-orange-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
+  svg {
+    overflow: visible !important;
+    rect {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @pomelo-orange;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
+    }
+  }
+  &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    svg rect {
+      fill: @pomelo-orange;
+    }
+  }
+}
+.node-port-hover-in-orange {
+  svg rect {
+    fill: @liliac;
+  }
+}
+
+.node-port-out-magenta {
+  z-index: 2;
+  filter: drop-shadow(@operator-node-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
+  svg {
+    overflow: visible !important;
+    circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @operator-node-bg;
+      stroke-width: 2;
+      //r: 6;
+    }
+  }
+  &.jtk-endpoint-connected {
+    svg circle {
+      fill: @operator-node-bg;
+    }
+  }
+}
+.node-port-hover-out-magenta {
+  svg circle {
+    fill: @operator-node-bg;
+  }
+}
+// -----------------
+.node-port-in-magenta {
+  z-index: 2;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@operator-node-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
+  svg {
+    overflow: visible !important;
+    rect {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @operator-node-bg;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
+    }
+  }
+  &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    svg rect {
+      fill: @operator-node-bg;
+    }
+  }
+}
+.node-port-hover-in-magenta {
+  svg rect {
+    fill: @operator-node-bg;
+  }
+}
+
+.node-port-out-cyan {
+  z-index: 2;
+  filter: drop-shadow(@bludi-blue-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) ;
+  -moz-transform: scale(0.5) ;
+  -ms-transform: scale(0.5) ;
+  -o-transform: scale(0.5) ;
+  transform: scale(0.5) ;
+  svg {
+    overflow: visible !important;
+    circle {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @bludi-blue;
+      stroke-width: 2;
+      //r: 6;
+    }
+  }
+  &.jtk-endpoint-connected {
+    svg circle {
+      fill: @bludi-blue;
+    }
+  }
+}
+.node-port-hover-out-cyan {
+  svg circle {
+    fill: @bludi-blue;
+  }
+}
+// -----------------
+.node-port-in-cyan {
+  z-index: 2;
+  -webkit-transition: transform 0.2s;
+  -moz-transition: transform 0.2s;
+  -ms-transition: transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  filter: drop-shadow(@bludi-blue-shadow 0px 4px 8px);
+  -webkit-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -moz-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -ms-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  -o-transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  transform: scale(0.5) rotate3d(0, 0, 1, 45deg);
+  overflow: visible;
+  svg {
+    overflow: visible !important;
+    rect {
+      -webkit-transition: fill 0.2s;
+      -moz-transition: fill 0.2s;
+      -ms-transition: fill 0.2s;
+      -o-transition: fill 0.2s;
+      transition: fill 0.2s;
+      fill: #FFFFFF;
+      stroke: @bludi-blue;
+      stroke-width: 2;
+      rx: 4;
+      ry: 4;
+    }
+  }
+  &.jtk-endpoint-connected {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    svg rect {
+      fill: @bludi-blue;
+    }
+  }
+}
+.node-port-hover-in-cyan {
+  svg rect {
+    fill: @bludi-blue;
+  }
+}
+//
+//.node-port-in-blue {
+//  z-index: 2;
+//  filter: drop-shadow(rgba(246, 166, 35, 0.3) 0px 4px 8px);
+//  overflow: hidden;
+//  width: 10px !important;
+//  height: 10px !important;
+//  border: 1px solid #4990E2;
+//  border-radius: 2px;
+//  overflow: hidden;
+//  svg {
+//    width: 10px !important;
+//    height: 10px !important;
+//    rect {
+//      width: 10px !important;
+//      height: 10px !important;
+//      fill: #FFFFFF;
+//    }
+//  }
+//  &.jtk-endpoint-connected {
+//    svg rect {
+//      fill: #4990E2;
+//    }
+//  }
+//}
+//.node-port-hover-in-blue {
+//  svg rect {
+//    fill: #4990E2;
+//  }
+//}
+//// -----------------
+//
+//.node-port-out-blue {
+//  z-index: 2;
+//  svg {
+//    overflow: visible;
+//    circle {
+//      fill: #FFFFFF;
+//      stroke: #4990E2;
+//      stroke-width: 1;
+//      r: 6;
+//    }
+//  }
+//  &.jtk-endpoint-connected {
+//    svg circle {
+//      fill: #4990E2;
+//    }
+//  }
+//}
+//.node-port-hover-out-blue {
+//  svg circle {
+//    fill: #4990E2;
+//  }
+//}
+//// -----------------
+//
+//.node-port-in-purple {
+//  z-index: 2;
+//  overflow: hidden;
+//  width: 10px !important;
+//  height: 10px !important;
+//  border: 1px solid #C178FF;
+//  border-radius: 2px;
+//  overflow: hidden;
+//  svg {
+//    width: 10px !important;
+//    height: 10px !important;
+//    rect {
+//      width: 10px !important;
+//      height: 10px !important;
+//      fill: #FFFFFF;
+//    }
+//  }
+//  &.jtk-endpoint-connected {
+//    svg rect {
+//      fill: #C178FF;
+//    }
+//  }
+//}
+//.node-port-hover-in-purple {
+//  svg rect {
+//    fill: #C178FF;
+//  }
+//}
+//// -----------------
+//
+//.node-port-out-purple {
+//  z-index: 2;
+//  svg {
+//    overflow: visible;
+//    circle {
+//      fill: #FFFFFF;
+//      stroke: #C178FF;
+//      stroke-width: 1;
+//      r: 6;
+//    }
+//  }
+//  &.jtk-endpoint-connected {
+//    svg circle {
+//      fill: #C178FF;
+//    }
+//  }
+//}
+//.node-port-hover-out-purple {
+//  svg circle {
+//    fill: #C178FF;
+//  }
+//}

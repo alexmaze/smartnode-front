@@ -1,5 +1,5 @@
 <template>
-  <div class="virtual-body" :id="data.id">
+  <div class="virtual-body" :class="data.type.secondary + '-node'" :id="data.id">
     <div class="virtual-title"> {{ data.type.title }}</div>
     <div class="virtual-content">
       <div class="virtual-inputs">
@@ -26,34 +26,47 @@
     components: {},
     data () {
       return {
-
       }
     },
     methods: {
       init () {
         const instance = this.instance
         const id = this.data.id
+        console.log(this.data);
+        const nodeType = this.data.type.secondary
         instance.draggable(id)
-        const outputEndpoint = {
-          uuid: id + '-output-0',
-          anchor: [1.5, 0.5, 0, 0],
-          cssClass: 'node-port-out-yellow',
-          hoverClass: 'node-port-hover-out-yellow',
-          radius: 6,
-          endpoint: 'Dot',
-          maxConnections: -1,
-          isSource: true,
-          isTarget: false
+        let palette = {
+            logic: 'blue',
+            control: 'green',
+            math: 'purple',
+            utility: 'orange',
+            operator: 'magenta',
+            data: 'cyan'
         }
-        const inputEndpoint = {
-          uuid: id + '-input-0',
-          anchor: [-0.5, 0.5, 0, 0],
-          cssClass: 'node-port-in-yellow',
-          hoverClass: 'node-port-hover-in-yellow',
-          endpoint: 'Rectangle',
-          maxConnections: -1,
-          isSource: false,
-          isTarget: true
+        let outputEndpoint = function(type) {
+            return{
+              uuid: id + '-output-0',
+              anchor: [1.65, 0.5, 0, 0],
+              cssClass: 'node-port-out-' + palette[type],
+              hoverClass: 'node-port-hover-out-' + palette[type],
+              radius: 6,
+              endpoint: 'Dot',
+              maxConnections: -1,
+              isSource: true,
+              isTarget: false
+            }
+        }
+        let inputEndpoint = function(type){
+            return{
+              uuid: id + '-input-0',
+              anchor: [-0.5, 0.5, 0, 0],
+              cssClass: 'node-port-in-' + palette[type],
+              hoverClass: 'node-port-hover-in-' + palette[type],
+              endpoint: 'Rectangle',
+              maxConnections: -1,
+              isSource: false,
+              isTarget: true
+            }
         }
         const config = this.data.type
         //title is a DOM element
@@ -66,12 +79,12 @@
 //        }
         config.inputs.forEach(e => {
           let propLine = document.querySelector('#' + id + '-' + e.idSuffix)
-          instance.addEndpoint(propLine, inputEndpoint)
+          instance.addEndpoint(propLine, inputEndpoint(nodeType))
         })
         config.outputs.forEach(e => {
           let propLine = document.querySelector('#' + id + '-' + e.idSuffix)
-          console.log(e.idSuffix)
-          instance.addEndpoint(propLine, outputEndpoint)
+          //console.log(e.idSuffix)
+          instance.addEndpoint(propLine, outputEndpoint(nodeType))
         })
       }
     },
@@ -89,9 +102,33 @@
     flex-direction: column;
     width: 160px;
     height: auto;
-    background-color: @logic-background;
     border-radius: 8px;
-    box-shadow: 0 10px 16px 0px @dark-sky-blue-24 ;
+    &.logic-node{
+      background: @logic-node-bg;
+      box-shadow: 0 10px 16px 0 @logic-node-shadow;
+    }
+    &.control-node{
+      background: @chartre-green;
+      box-shadow: 0 10px 16px 0 @control-node-shadow;
+    }
+    &.operator-node{
+      background: @operator-node-bg;
+      box-shadow: 0 10px 16px 0 @operator-node-shadow;
+    }
+    &.math-node{
+      background: @liliac;
+      box-shadow: 0 10px 16px 0 @math-node-shadow;
+    }
+    &.utility-node{
+      background: @pomelo-orange;
+      box-shadow: 0 10px 16px 0 @utility-node-shadow;
+    }
+    &.data-node{
+      background: @bludi-blue;
+      box-shadow: 0 10px 16px 0 @bludi-blue-shadow;
+    }
+   // <!--background-color: @logic-background;-->
+  //  <!--box-shadow: 0 10px 16px 0px @dark-sky-blue-24 ;-->
     .virtual-content{
       display: flex;
       flex-direction: row;

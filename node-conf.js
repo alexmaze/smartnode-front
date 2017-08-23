@@ -1186,23 +1186,185 @@ export const nodesConfig = {
         title: '&&',
         titleInput: null,
         titleOutput: null,
+        operateList: [],
         inputs: [{
           idSuffix: 'input_0',
           name: '条件0',
-          type: 'Bollean'
+          type: ['boolean']
         }, {
           idSuffix: 'input_1',
           name: '条件1',
-          type: 'Bollean'
+          type: ['boolean']
         }, {
           idSuffix: 'input_2',
           name: '条件2',
-          type: 'Bollean'
+          type: ['boolean']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '结果',
-          type: 'Boolean'}],
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      },
+      logic_or: {
+        id: 'logic_or',
+        title: '||',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+
+        }
+
+      },
+      logic_not: {
+        id: 'logic_not',
+        title: '!',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+
+        }
+
+      },
+      logic_conditional: {
+        id: 'logic_conditional',
+        title: 'Conditional',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['>', '<', '<=', '>='],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        },
+          {
+            idSuffix: 'input_1',
+            name: '条件1',
+            type: ['boolean']
+          }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']
+        }],
+        simulateFun: function () {
+
+        }
+      },
+      logic_conditional_equal: {
+        id: 'logic_conditional_equal',
+        title: 'Equal or Not',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['==','!='],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean','float']
+        },
+          {
+            idSuffix: 'input_1',
+            name: '条件1',
+            type: ['boolean','float']
+          }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean','float']}],
+        simulateFun: function () {
+
+        }
+      }
+
+    },
+    control: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      }
+
+    },
+    operator: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
         simulateFun: function () {
           let result = true
           this.inputs.forEach(e => { result = e && result })
@@ -1210,6 +1372,101 @@ export const nodesConfig = {
         }
       }
     },
-    math: []
+    math: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      },
+
+    },
+    utility: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      },
+
+    },
+    data: {
+      logic_and: {
+        id: 'logic_and',
+        title: '&&',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }, {
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['boolean']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '执行',
+          type: ['boolean']}],
+        simulateFun: function () {
+          let result = true
+          this.inputs.forEach(e => { result = e && result })
+          return result
+        }
+      }
+    }
+
   }
 }
