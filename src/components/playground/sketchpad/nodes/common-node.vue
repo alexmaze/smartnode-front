@@ -64,17 +64,15 @@
         handler: function (val, old){
           for (let con in this.getLinkMap){
             if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
-              let [targetId, plKey] = this.getLinkMap[con].targetId.split('-')
+              let [sourceId, s_plKey] = this.getLinkMap[con].sourceId.split('-') //source_payloadKey
+              let [targetId, t_plKey] = this.getLinkMap[con].targetId.split('-') //target_payloadKey
               let calcFun = this.curNode.updateFun
-              window.log(calcFun,'calcFun')
-              let input = this.curNode.payload[plKey]
-              window.log(input,'input')
-              let output = calcFun(input)
-              window.log(output,'output')
-//              this.getNodeMap[targetId].payload[plKey] = output// 修改target节点的对应属性值
-//              this.getLinkMap[con].getOverlay('label').setLabel(this.curNode.payload[plKey].toString())// 改变label
-//              let nL = (this.curNode.payload[plKey]) ? 'true' : 'false'
-//              this.getLinkMap[con].getOverlay('label').setLabel(nL)
+
+              let output = calcFun.call(this.curNode.payload, s_plKey)
+
+              this.getNodeMap[targetId].payload[t_plKey] = output// 修改target节点的对应属性值
+              console.log(this.getNodeMap[targetId].payload)
+              this.getLinkMap[con].getOverlay('label').setLabel(output.toString())// 改变label
             } else {
               console.log(this.$store.state.runtime.LinkMap[con].sourceId)
             }
