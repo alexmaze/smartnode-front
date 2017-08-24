@@ -1342,128 +1342,269 @@ export const nodesConfig = {
 
     },
     operator: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      operator_bitwise: {
+        id: 'operator_bitwise',
+        title: 'Bitwise',
         titleInput: null,
         titleOutput: null,
-        operateList: [],
+        operateList: ['&', '|', '^', '~', '<<', '>>'],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
+          name: 'x',
+          type: ['int','char']
         }, {
           idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'y',
+          type: ['int','char']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          name: '结果',
+          type: ['int','char']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
-        }
-      }
-    },
-    math: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
-        titleInput: null,
-        titleOutput: null,
-        operateList: [],
-        inputs: [{
-          idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
-        }],
-        outputs: [{
-          idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
-        simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
         }
       },
+      operator_operation: {
+        id: 'operator_operation',
+        title: 'Operation',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      }
+
+    },
+    math: {
+      math_abs: {
+        id: 'math_abs',
+        title: 'Abs',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
+      math_tri: {
+        id: 'math_tri',
+        title: 'Trigonometry',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['sin', 'cos', 'tan'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
+      math_linear: {
+        id: 'math_linear',
+        title: 'Linear',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['min','max','cons'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['float']
+        },{
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['float']
+        },{
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
+      math_map: {
+        id: 'math_map',
+        title: 'Map',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input',
+          name: 'x',
+          type: ['float']
+        },{
+          idSuffix: 'input_min',
+          name: 'Input Min',
+          type: ['float']
+        },{
+          idSuffix: 'input_max',
+          name: 'Input Max',
+          type: ['float']
+        },{
+          idSuffix: 'output_min',
+          name: 'Output Min',
+          type: ['float']
+        },{
+          idSuffix: 'output_max',
+          name: 'Output Max',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      }
 
     },
     utility: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      utility_size: {
+        id: 'utility_size',
+        title: 'SizeOf',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'x',
+          type: ['array','string']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          name: '结果',
+          type: ['int']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
         }
       },
+      utility_convert: {
+        id: 'utility_convert',
+        title: 'Convert',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['char','int','float'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['char','int','float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['char','int','float']}],
+        simulateFun: function () {
 
+        }
+      },
+      utility_random: {
+        id: 'utility_random',
+        title: 'Random',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'random_min',
+          name: 'min',
+          type: ['float']
+        }, {
+          idSuffix: 'random_max',
+          name: 'max',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
     },
     data: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      data_array: {
+        id: 'data_array',
+        title: 'Array',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['float','char','string',]
         }, {
           idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['any']
         }, {
           idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['any']
         }],
         outputs: [{
-          idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          idSuffix: 'result_array',
+          name: 'Array',
+          type: ['array']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
+        }
+      },
+      data_arrayValues: {
+        id: 'data_arrayValues',
+        title: 'ArrayValues',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_array',
+          name: 'Value0',
+          type: ['array']
+        }],
+        outputs: [{
+          idSuffix: 'value_0',
+          name: 'Value0',
+          type: ['any']},
+          {
+            idSuffix: 'value_0',
+            name: 'Value1',
+            type: ['any']},
+          {
+            idSuffix: 'value_0',
+            name: 'Value2',
+            type: ['any']}],
+        simulateFun: function () {
+
         }
       }
     }
