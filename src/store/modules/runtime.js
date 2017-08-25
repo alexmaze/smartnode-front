@@ -13,7 +13,7 @@ const state = {
   NodeMap: {},
   LinkMap: {},
   testV: '',
-  connectedDev: ['device-switch-backlight_key', 'device-sensor-volume_sensor', 'device-switch-backlight_key']
+  connectedDev: ['device-sensor-backlight_key', 'device-sensor-volume_sensor', 'device-sensor-backlight_key']
 }
 
 // getters

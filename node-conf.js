@@ -3,42 +3,7 @@
  */
 export const nodesConfig = {
   device: {
-    module: {
-      DEBUG_REVERSE: {
-        DEBUG: true,
-        id: 'DEBUG_REVERSE',
-        title: '调试用反转器',
-        titleInput: null,
-        titleOutput: null,
-        props: [{
-          idSuffix: 'input',
-          name: '输入量',
-          type: 'Boolean',
-          visual: 'el-switch',
-          defValue: false,
-          hasInput: true,
-          hasOutput: true
-        },
-        {
-          idSuffix: 'input2',
-          name: '输入量2',
-          type: 'Boolean',
-          visual: 'el-switch',
-          defValue: false,
-          hasInput: true,
-          hasOutput: true
-        }],
-        simulateFun: function (idSuffix) {
-          console.log(this)
-          switch (idSuffix) {
-            case 'input':
-              return !this['input']
-            case 'input2':
-              return !this['input2']
-          }
-          // return !input
-        }
-      },
+    advance: {
       NFC_communication: {
         id: 'NFC_communication',
         title: 'NFC近场通讯模块',
@@ -59,63 +24,6 @@ export const nodesConfig = {
         }],
         funs: []
       },
-      rotational_potentiometer: {
-        id: 'rotational_potentiometer',
-        title: '旋转电位器',
-        titleInput: null,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'resistance',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'resistance',
-          name: '电阻值',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: true,
-          hasInput: false
-        }]
-      },
-      linear_potentiometer: {
-        id: 'linear_potentiometer',
-        title: '直线电位器',
-        titleInput: null,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'resistance',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'resistance',
-          name: '电阻值',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: true,
-          hasInput: false
-        }]
-      },
-      rocker: {
-        id: 'rocker',
-        title: '摇杆',
-        titleInput: null,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'position',
-          type: 'Array'}],
-        props: [{
-          idSuffix: 'position',
-          name: 'X,Y',
-          type: 'Array',
-          visual: 'number',
-          defValue: [50, 50],
-          hasOutput: true,
-          hasInput: false
-        }]
-      },
       sound_analysis: {
         id: 'sound_analysis',
         title: '声音分析',
@@ -125,10 +33,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'frequency',
           type: 'int'},
-        {
-          name: 'amplitude',
-          type: 'int'
-        }
+          {
+            name: 'amplitude',
+            type: 'int'
+          }
         ],
         props: [{
           idSuffix: 'frequency',
@@ -139,15 +47,15 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         },
-        {
-          idSuffix: 'amplitude',
-          name: '幅值',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: true,
-          hasInput: false
-        }],
+          {
+            idSuffix: 'amplitude',
+            name: '幅值',
+            type: 'int',
+            visual: 'number',
+            defValue: 50,
+            hasOutput: true,
+            hasInput: false
+          }],
         funs: []
       },
       voice_recognition: {
@@ -167,38 +75,6 @@ export const nodesConfig = {
           defValue: 'zuozhuan',
           hasOutput: false,
           hasInput: true
-        }]
-      },
-      sequencer: {
-        id: 'sequencer',
-        title: '音序器',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'times',
-          type: 'int'},
-        {
-          name: 'values',
-          type: 'Array'
-        }],
-        props: [{
-          idSuffix: 'times',
-          name: '间隔时间（ms）',
-          type: 'int',
-          visual: 'number',
-          defValue: 1000,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'values',
-          name: '音序值',
-          type: 'Array',
-          visual: 'number',
-          defValue: [1023, 10],
-          hasOutput: true,
-          hasInput: false
         }]
       },
       makey_makey: {
@@ -243,190 +119,47 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-        {
-          idSuffix: 'wave',
-          name: '波形',
-          type: 'string',
-          visual: 'shape',
-          defValue: false,
-          hasOutput: false,
-          hasInput: true
-        }]
+          {
+            idSuffix: 'wave',
+            name: '波形',
+            type: 'string',
+            visual: 'shape',
+            defValue: false,
+            hasOutput: false,
+            hasInput: true
+          }]
       },
-      steering_engine: {
-        id: 'steering_engine',
-        title: '3.7g舵机',
+      micro_sequencer: {
+        id: 'micro_sequencer',
+        title: '音序器',
         titleInput: true,
         titleOutput: null,
         inputs: [],
         outputs: [{
-          name: 'angle',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'angle',
-          name: '转动角度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }],
-        funs: []
-      },
-      rgb_led: {
-        id: 'rgb_led',
-        title: 'RGB_LED',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'color',
-          type: 'color'},
-        {
-          name: 'light',
-          type: 'int'
-        }],
-        props: [{
-          idSuffix: 'color',
-          name: '颜色',
-          type: 'color',
-          visual: 'rgb',
-          defValue: false,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'light',
-          name: '亮度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }],
-        funs: []
-      },
-      led: {
-        id: 'led',
-        title: 'LED',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'color',
-          type: 'color'},
-        {
-          name: 'light',
-          type: 'int'
-        }],
-        props: [{
-          idSuffix: 'color',
-          name: '颜色',
-          type: 'color',
-          visual: 'rgb',
-          defValue: [255, 255, 255],
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'light',
-          name: '亮度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }],
-        funs: [],
-        simulateFun: function (activated, color, light) {
-          this.active = !!(activated)
-          if (color) this.color = color
-          if (light) this.light = light
-        }
-      },
-      vibration_module: {
-        id: 'vibration_module',
-        title: '震动',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'frequency',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'frequency',
-          name: '频率',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }]
-      },
-      DC_motor: {
-        id: 'DC_motor',
-        title: 'DC减速电机',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'speed',
-          type: 'int'},
-        {
-          name: 'direction',
-          type: 'int'
-        }],
-        props: [{
-          idSuffix: 'speed',
-          name: '旋转速度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'direction',
-          name: '旋转方向',
-          type: 'int',
-          visual: 'number',
-          defValue: 1,
-          hasOutput: false,
-          hasInput: true
-        }]
-      },
-      step_motor: {
-        id: 'step_motor',
-        title: '步进电机',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'angle',
-          type: 'int'},
-        {
           name: 'times',
-          type: 'int'
-        }],
+          type: 'int'},
+          {
+            name: 'values',
+            type: 'Array'
+          }],
         props: [{
-          idSuffix: 'angle',
-          name: '步进角',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
           idSuffix: 'times',
           name: '间隔时间（ms）',
           type: 'int',
           visual: 'number',
-          defValue: 10,
+          defValue: 1000,
           hasOutput: false,
           hasInput: true
-        }],
-        funs: []
+        },
+          {
+            idSuffix: 'values',
+            name: '音序值',
+            type: 'Array',
+            visual: 'number',
+            defValue: [1023, 10],
+            hasOutput: true,
+            hasInput: false
+          }]
       },
       mp3: {
         id: 'mp3',
@@ -446,15 +179,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: false
         },
-        {
-          idSuffix: 'type',
-          name: '模式',
-          type: 'Boolean',
-          visual: 'el-switch',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: false
-        }]
+          {
+            idSuffix: 'type',
+            name: '模式',
+            type: 'Boolean',
+            visual: 'el-switch',
+            defValue: 50,
+            hasOutput: false,
+            hasInput: false
+          }]
       },
       audio_playback: {
         id: 'audio_playback',
@@ -475,130 +208,106 @@ export const nodesConfig = {
           hasInput: true
         }]
       },
-      loud_speaker: {
-        id: 'loud_speaker',
-        title: '扬声器',
-        titleInput: true,
+      speech_synthesis: {
+        id: 'speech_synthesis',
+        title: '语音合成',
+        titleInput: null,
         titleOutput: null,
         inputs: [],
         outputs: [{
-          name: 'volume',
-          type: 'int'},
-        {
-          name: 'echo',
-          type: 'int'
-        },
-        {
-          name: 'cut_off',
-          type: 'int'
-        },
-        {
-          name: 'peak',
-          type: 'int'
-        },
-        {
-          name: 'attack',
-          type: 'int'
-        },
-        {
-          name: 'decay',
-          type: 'int'
-        }],
+          name: 'text',
+          type: 'string'}],
         props: [{
-          idSuffix: 'volume',
-          name: '音量',
-          type: 'int',
-          visual: 'number',
-          defValue: 8,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'echo',
-          name: '回声（ms）',
-          type: 'int',
-          visual: 'number',
-          defValue: 1000,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'cut_off',
-          name: 'cut off',
-          type: 'int',
-          visual: 'number',
-          defValue: 8,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'peak',
-          name: 'peak',
-          type: 'int',
-          visual: 'number',
-          defValue: 8,
-          hasOutput: false,
-          hasInput: true
-
-        },
-        {
-          idSuffix: 'attack',
-          name: 'attack',
-          type: 'int',
-          visual: 'number',
-          defValue: 8,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'decay',
-          name: 'decay',
-          type: 'int',
-          visual: 'number',
-          defValue: 8,
-          hasOutput: false,
-          hasInput: true
-        }]
-      },
-      buzzer: {
-        id: 'buzzer',
-        title: '蜂鸣器',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'frequency',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'frequency',
-          name: '频率(k)',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }]
-      },
-      motor: {
-        id: 'motor',
-        title: '10kg舵机',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'angle',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'angle',
-          name: '转动角度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
+          idSuffix: 'text',
+          name: '输入文本',
+          type: 'string',
+          visual: 'string',
+          defValue: 'zuozhuan',
+          hasOutput: true,
           hasInput: true
         }],
         funs: []
+      }
+    },
+    module: {
+      DEBUG_REVERSE: {
+        DEBUG: true,
+        id: 'DEBUG_REVERSE',
+        title: '调试用反转器',
+        titleInput: null,
+        titleOutput: null,
+        props: [{
+          idSuffix: 'input',
+          name: '输入量',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: false,
+          hasInput: true,
+          hasOutput: true
+        },
+        {
+          idSuffix: 'input2',
+          name: '输入量2',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: false,
+          hasInput: true,
+          hasOutput: true
+        }],
+        simulateFun: function (idSuffix) {
+          console.log(this)
+          switch (idSuffix) {
+            case 'input':
+              return !this['input']
+            case 'input2':
+              return !this['input2']
+          }
+          // return !input
+        }
       },
+
+
+      // led: {
+      //   id: 'led',
+      //   title: 'LED',
+      //   titleInput: true,
+      //   titleOutput: null,
+      //   inputs: [],
+      //   outputs: [{
+      //     name: 'color',
+      //     type: 'color'},
+      //   {
+      //     name: 'light',
+      //     type: 'int'
+      //   }],
+      //   props: [{
+      //     idSuffix: 'color',
+      //     name: '颜色',
+      //     type: 'color',
+      //     visual: 'rgb',
+      //     defValue: [255, 255, 255],
+      //     hasOutput: false,
+      //     hasInput: true
+      //   },
+      //   {
+      //     idSuffix: 'light',
+      //     name: '亮度',
+      //     type: 'int',
+      //     visual: 'number',
+      //     defValue: 50,
+      //     hasOutput: false,
+      //     hasInput: true
+      //   }],
+      //   funs: [],
+      //   simulateFun: function (activated, color, light) {
+      //     this.active = !!(activated)
+      //     if (color) this.color = color
+      //     if (light) this.light = light
+      //   }
+      // },
+
+
+
       source: {
         id: 'source',
         title: '素材',
@@ -671,116 +380,67 @@ export const nodesConfig = {
         }],
         funs: []
       },
-      led2: {
-        id: 'led2',
-        title: '外接LED',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'color',
-          type: 'color'},
-        {
-          name: 'light',
-          type: 'int'
-        }],
-        props: [{
-          idSuffix: 'color',
-          name: '颜色',
-          type: 'color',
-          visual: 'rgb',
-          defValue: false,
-          hasOutput: false,
-          hasInput: true
-        },
-        {
-          idSuffix: 'light',
-          name: '亮度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }],
-        funs: []
-      },
-      led3: {
-        id: 'led3',
-        title: '紫外线LED',
-        titleInput: true,
-        titleOutput: null,
-        inputs: [],
-        outputs: [{
-          name: 'light',
-          type: 'int'}],
-        props: [{
-          idSuffix: 'light',
-          name: '亮度',
-          type: 'int',
-          visual: 'number',
-          defValue: 50,
-          hasOutput: false,
-          hasInput: true
-        }],
-        funs: []
-      },
-      speech_synthesis: {
-        id: 'speech_synthesis',
-        title: '语音合成',
+
+
+    },
+    sensor: {
+      rotational_potentiometer: {
+        id: 'rotational_potentiometer',
+        title: '旋转电位器',
         titleInput: null,
         titleOutput: null,
         inputs: [],
         outputs: [{
-          name: 'text',
-          type: 'string'}],
+          name: 'resistance',
+          type: 'int'}],
         props: [{
-          idSuffix: 'text',
-          name: '输入文本',
-          type: 'string',
-          visual: 'string',
-          defValue: 'zuozhuan',
+          idSuffix: 'resistance',
+          name: '电阻值',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
           hasOutput: true,
-          hasInput: true
-        }],
-        funs: []
-      }
-    },
-    sensor: {
-      // human_infrared: {
-      //   // 整体节点配置中的节点标识符
-      //   id: 'human_infrared',
-      //   // 节点名称
-      //   title: '人体红外传感器',
-      //   // title栏左边输入
-      //   titleInput: null,
-      //   // title栏右边输出
-      //   titleOutput: {
-      //     type: 'switch'
-      //   },
-      //   // 整体的输入数据字段数组
-      //   inputs: [],
-      //   // 整体的输出数据字段数组
-      //   outputs: [
-      //     {
-      //       // 输出的字段名称
-      //       name: 'humanDetected',
-      //       // 输出的字段类型
-      //       type: 'Boolean'
-      //     }
-      //   ],
-      //   // 节点自有属性数组
-      //   props: [{
-      //     idSuffix: 'humanDetected',
-      //     name: '开关状态',
-      //     type: 'Boolean',
-      //     visual: 'el-switch',
-      //     defValue: false,
-      //     hasOutput: true,
-      //     hasInput: true
-      //   }],
-      //   // 节点自有函数数组
-      //   funs: []
-      // },
+          hasInput: false
+        }]
+      },
+      linear_potentiometer: {
+        id: 'linear_potentiometer',
+        title: '直线电位器',
+        titleInput: null,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'resistance',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'resistance',
+          name: '电阻值',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: true,
+          hasInput: false
+        }]
+      },
+      rocker: {
+        id: 'rocker',
+        title: '摇杆',
+        titleInput: null,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'position',
+          type: 'Array'}],
+        props: [{
+          idSuffix: 'position',
+          name: 'X,Y',
+          type: 'Array',
+          visual: 'number',
+          defValue: [50, 50],
+          hasOutput: true,
+          hasInput: false
+        }]
+      },
       human_infrared: {
         id: 'human_infrared',
         title: '人体红外传感器',
@@ -1053,9 +713,7 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         }]
-      }
-    },
-    switch: {
+      },
       backlight_key: {
         id: 'backlight_key',
         title: '背光按键',
@@ -1115,10 +773,10 @@ export const nodesConfig = {
           name: 'sensitivity',
           type: 'int'
         },
-        {
-          name: 'keyDown',
-          type: 'Boolean'
-        }],
+          {
+            name: 'keyDown',
+            type: 'Boolean'
+          }],
         props: [{
           idSuffix: 'sensitivity',
           name: '灵敏度',
@@ -1128,15 +786,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-        {
-          idSuffix: 'keyDown',
-          name: '开关状态',
-          type: 'Boolean',
-          visual: 'el-switch',
-          defValue: false,
-          hasOutput: true,
-          hasInput: false
-        }]
+          {
+            idSuffix: 'keyDown',
+            name: '开关状态',
+            type: 'Boolean',
+            visual: 'el-switch',
+            defValue: false,
+            hasOutput: true,
+            hasInput: false
+          }]
       },
       reed_switch: {
         id: 'reed_switch',
@@ -1176,6 +834,322 @@ export const nodesConfig = {
           hasInput: false
         }]
       }
+    },
+    execute: {
+      rgb_led: {
+        id: 'rgb_led',
+        title: 'RGB_LED',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'color',
+          type: 'color'},
+          {
+            name: 'light',
+            type: 'int'
+          }],
+        props: [{
+          idSuffix: 'color',
+          name: '颜色',
+          type: 'color',
+          visual: 'rgb',
+          defValue: false,
+          hasOutput: false,
+          hasInput: true
+        },
+          {
+            idSuffix: 'light',
+            name: '亮度',
+            type: 'int',
+            visual: 'number',
+            defValue: 50,
+            hasOutput: false,
+            hasInput: true
+          }],
+        funs: []
+      },
+      led_peri: {
+        id: 'led_peri',
+        title: '外接LED',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'color',
+          type: 'color'},
+          {
+            name: 'light',
+            type: 'int'
+          }],
+        props: [{
+          idSuffix: 'color',
+          name: '颜色',
+          type: 'color',
+          visual: 'rgb',
+          defValue: false,
+          hasOutput: false,
+          hasInput: true
+        },
+          {
+            idSuffix: 'light',
+            name: '亮度',
+            type: 'int',
+            visual: 'number',
+            defValue: 50,
+            hasOutput: false,
+            hasInput: true
+          }],
+        funs: []
+      },
+      led_ultraviolet: {
+        id: 'led_ultraviolet',
+        title: '紫外线LED',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'light',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'light',
+          name: '亮度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }],
+        funs: []
+      },
+      vibration_module: {
+        id: 'vibration_module',
+        title: '震动',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'frequency',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'frequency',
+          name: '频率',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }]
+      },
+      DC_motor: {
+        id: 'DC_motor',
+        title: 'DC减速电机',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'speed',
+          type: 'int'},
+          {
+            name: 'direction',
+            type: 'int'
+          }],
+        props: [{
+          idSuffix: 'speed',
+          name: '旋转速度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        },
+          {
+            idSuffix: 'direction',
+            name: '旋转方向',
+            type: 'int',
+            visual: 'number',
+            defValue: 1,
+            hasOutput: false,
+            hasInput: true
+          }]
+      },
+      step_motor: {
+        id: 'step_motor',
+        title: '步进电机',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'angle',
+          type: 'int'},
+          {
+            name: 'times',
+            type: 'int'
+          }],
+        props: [{
+          idSuffix: 'angle',
+          name: '步进角',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        },
+          {
+            idSuffix: 'times',
+            name: '间隔时间（ms）',
+            type: 'int',
+            visual: 'number',
+            defValue: 10,
+            hasOutput: false,
+            hasInput: true
+          }],
+        funs: []
+      },
+      steering_engine: {
+        id: 'steering_engine',
+        title: '3.7g舵机',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'angle',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'angle',
+          name: '转动角度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }],
+        funs: []
+      },
+      motor: {
+        id: 'motor',
+        title: '10kg舵机',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'angle',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'angle',
+          name: '转动角度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }],
+        funs: []
+      },
+      loud_speaker: {
+        id: 'loud_speaker',
+        title: '扬声器',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'volume',
+          type: 'int'},
+          {
+            name: 'echo',
+            type: 'int'
+          },
+          {
+            name: 'cut_off',
+            type: 'int'
+          },
+          {
+            name: 'peak',
+            type: 'int'
+          },
+          {
+            name: 'attack',
+            type: 'int'
+          },
+          {
+            name: 'decay',
+            type: 'int'
+          }],
+        props: [{
+          idSuffix: 'volume',
+          name: '音量',
+          type: 'int',
+          visual: 'number',
+          defValue: 8,
+          hasOutput: false,
+          hasInput: true
+        },
+          {
+            idSuffix: 'echo',
+            name: '回声（ms）',
+            type: 'int',
+            visual: 'number',
+            defValue: 1000,
+            hasOutput: false,
+            hasInput: true
+          },
+          {
+            idSuffix: 'cut_off',
+            name: 'cut off',
+            type: 'int',
+            visual: 'number',
+            defValue: 8,
+            hasOutput: false,
+            hasInput: true
+          },
+          {
+            idSuffix: 'peak',
+            name: 'peak',
+            type: 'int',
+            visual: 'number',
+            defValue: 8,
+            hasOutput: false,
+            hasInput: true
+
+          },
+          {
+            idSuffix: 'attack',
+            name: 'attack',
+            type: 'int',
+            visual: 'number',
+            defValue: 8,
+            hasOutput: false,
+            hasInput: true
+          },
+          {
+            idSuffix: 'decay',
+            name: 'decay',
+            type: 'int',
+            visual: 'number',
+            defValue: 8,
+            hasOutput: false,
+            hasInput: true
+          }]
+      },
+      buzzer: {
+        id: 'buzzer',
+        title: '蜂鸣器',
+        titleInput: true,
+        titleOutput: null,
+        inputs: [],
+        outputs: [{
+          name: 'frequency',
+          type: 'int'}],
+        props: [{
+          idSuffix: 'frequency',
+          name: '频率(k)',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }]
+      },
     }
   },
   virtual: {
@@ -1356,128 +1330,269 @@ export const nodesConfig = {
 
     },
     operator: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      operator_bitwise: {
+        id: 'operator_bitwise',
+        title: 'Bitwise',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['&', '|', '^', '~', '<<', '>>'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['int','char']
+        }, {
+          idSuffix: 'input_1',
+          name: 'y',
+          type: ['int','char']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['int','char']}],
+        simulateFun: function () {
+
+        }
+      },
+      operator_operation: {
+        id: 'operator_operation',
+        title: 'Operation',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'x',
+          type: ['float']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          name: '结果',
+          type: ['float']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
         }
       }
+
     },
     math: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      math_abs: {
+        id: 'math_abs',
+        title: 'Abs',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'x',
+          type: ['float']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          name: '结果',
+          type: ['float']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
+        }
+      },
+      math_tri: {
+        id: 'math_tri',
+        title: 'Trigonometry',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['sin', 'cos', 'tan'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
+      math_linear: {
+        id: 'math_linear',
+        title: 'Linear',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['min','max','cons'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: '条件0',
+          type: ['float']
+        },{
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['float']
+        },{
+          idSuffix: 'input_2',
+          name: '条件2',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
+      math_map: {
+        id: 'math_map',
+        title: 'Map',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input',
+          name: 'x',
+          type: ['float']
+        },{
+          idSuffix: 'input_min',
+          name: 'Input Min',
+          type: ['float']
+        },{
+          idSuffix: 'input_max',
+          name: 'Input Max',
+          type: ['float']
+        },{
+          idSuffix: 'output_min',
+          name: 'Output Min',
+          type: ['float']
+        },{
+          idSuffix: 'output_max',
+          name: 'Output Max',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
         }
       }
 
     },
     utility: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      utility_size: {
+        id: 'utility_size',
+        title: 'SizeOf',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'x',
+          type: ['array','string']
         }],
         outputs: [{
           idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          name: '结果',
+          type: ['int']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
-        }
-      }
 
+        }
+      },
+      utility_convert: {
+        id: 'utility_convert',
+        title: 'Convert',
+        titleInput: null,
+        titleOutput: null,
+        operateList: ['char','int','float'],
+        inputs: [{
+          idSuffix: 'input_0',
+          name: 'x',
+          type: ['char','int','float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['char','int','float']}],
+        simulateFun: function () {
+
+        }
+      },
+      utility_random: {
+        id: 'utility_random',
+        title: 'Random',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'random_min',
+          name: 'min',
+          type: ['float']
+        }, {
+          idSuffix: 'random_max',
+          name: 'max',
+          type: ['float']
+        }],
+        outputs: [{
+          idSuffix: 'result',
+          name: '结果',
+          type: ['float']}],
+        simulateFun: function () {
+
+        }
+      },
     },
     data: {
-      logic_and: {
-        id: 'logic_and',
-        title: '&&',
+      data_array: {
+        id: 'data_array',
+        title: 'Array',
         titleInput: null,
         titleOutput: null,
         operateList: [],
         inputs: [{
           idSuffix: 'input_0',
-          name: '条件0',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['float','char','string',]
         }, {
           idSuffix: 'input_1',
-          name: '条件1',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['any']
         }, {
           idSuffix: 'input_2',
-          name: '条件2',
-          type: ['boolean']
+          name: 'Value0',
+          type: ['any']
         }],
         outputs: [{
-          idSuffix: 'result',
-          name: '执行',
-          type: ['boolean']}],
+          idSuffix: 'result_array',
+          name: 'Array',
+          type: ['array']}],
         simulateFun: function () {
-          let result = true
-          this.inputs.forEach(e => { result = e && result })
-          return result
+
+        }
+      },
+      data_arrayValues: {
+        id: 'data_arrayValues',
+        title: 'ArrayValues',
+        titleInput: null,
+        titleOutput: null,
+        operateList: [],
+        inputs: [{
+          idSuffix: 'input_array',
+          name: 'Value0',
+          type: ['array']
+        }],
+        outputs: [{
+          idSuffix: 'value_0',
+          name: 'Value0',
+          type: ['any']},
+          {
+            idSuffix: 'value_0',
+            name: 'Value1',
+            type: ['any']},
+          {
+            idSuffix: 'value_0',
+            name: 'Value2',
+            type: ['any']}],
+        simulateFun: function () {
+
         }
       }
     }
