@@ -33,10 +33,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'frequency',
           type: 'int'},
-          {
-            name: 'amplitude',
-            type: 'int'
-          }
+        {
+          name: 'amplitude',
+          type: 'int'
+        }
         ],
         props: [{
           idSuffix: 'frequency',
@@ -47,15 +47,15 @@ export const nodesConfig = {
           hasOutput: true,
           hasInput: false
         },
-          {
-            idSuffix: 'amplitude',
-            name: '幅值',
-            type: 'int',
-            visual: 'number',
-            defValue: 50,
-            hasOutput: true,
-            hasInput: false
-          }],
+        {
+          idSuffix: 'amplitude',
+          name: '幅值',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: true,
+          hasInput: false
+        }],
         funs: []
       },
       voice_recognition: {
@@ -119,15 +119,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'wave',
-            name: '波形',
-            type: 'string',
-            visual: 'shape',
-            defValue: false,
-            hasOutput: false,
-            hasInput: true
-          }]
+        {
+          idSuffix: 'wave',
+          name: '波形',
+          type: 'string',
+          visual: 'shape',
+          defValue: false,
+          hasOutput: false,
+          hasInput: true
+        }]
       },
       micro_sequencer: {
         id: 'micro_sequencer',
@@ -138,10 +138,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'times',
           type: 'int'},
-          {
-            name: 'values',
-            type: 'Array'
-          }],
+        {
+          name: 'values',
+          type: 'Array'
+        }],
         props: [{
           idSuffix: 'times',
           name: '间隔时间（ms）',
@@ -151,15 +151,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'values',
-            name: '音序值',
-            type: 'Array',
-            visual: 'number',
-            defValue: [1023, 10],
-            hasOutput: true,
-            hasInput: false
-          }]
+        {
+          idSuffix: 'values',
+          name: '音序值',
+          type: 'Array',
+          visual: 'number',
+          defValue: [1023, 10],
+          hasOutput: true,
+          hasInput: false
+        }]
       },
       mp3: {
         id: 'mp3',
@@ -179,15 +179,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: false
         },
-          {
-            idSuffix: 'type',
-            name: '模式',
-            type: 'Boolean',
-            visual: 'el-switch',
-            defValue: 50,
-            hasOutput: false,
-            hasInput: false
-          }]
+        {
+          idSuffix: 'type',
+          name: '模式',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: false
+        }]
       },
       audio_playback: {
         id: 'audio_playback',
@@ -262,10 +262,8 @@ export const nodesConfig = {
             case 'input2':
               return !this['input2']
           }
-          // return !input
         }
       },
-
 
       // led: {
       //   id: 'led',
@@ -305,8 +303,6 @@ export const nodesConfig = {
       //     if (light) this.light = light
       //   }
       // },
-
-
 
       source: {
         id: 'source',
@@ -379,8 +375,7 @@ export const nodesConfig = {
           hasInput: true
         }],
         funs: []
-      },
-
+      }
 
     },
     sensor: {
@@ -773,10 +768,10 @@ export const nodesConfig = {
           name: 'sensitivity',
           type: 'int'
         },
-          {
-            name: 'keyDown',
-            type: 'Boolean'
-          }],
+        {
+          name: 'keyDown',
+          type: 'Boolean'
+        }],
         props: [{
           idSuffix: 'sensitivity',
           name: '灵敏度',
@@ -786,15 +781,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'keyDown',
-            name: '开关状态',
-            type: 'Boolean',
-            visual: 'el-switch',
-            defValue: false,
-            hasOutput: true,
-            hasInput: false
-          }]
+        {
+          idSuffix: 'keyDown',
+          name: '开关状态',
+          type: 'Boolean',
+          visual: 'el-switch',
+          defValue: false,
+          hasOutput: true,
+          hasInput: false
+        }]
       },
       reed_switch: {
         id: 'reed_switch',
@@ -845,10 +840,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'color',
           type: 'color'},
-          {
-            name: 'light',
-            type: 'int'
-          }],
+        {
+          name: 'light',
+          type: 'int'
+        }],
         props: [{
           idSuffix: 'color',
           name: '颜色',
@@ -858,15 +853,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'light',
-            name: '亮度',
-            type: 'int',
-            visual: 'number',
-            defValue: 50,
-            hasOutput: false,
-            hasInput: true
-          }],
+        {
+          idSuffix: 'light',
+          name: '亮度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }],
         funs: []
       },
       led_peri: {
@@ -878,10 +873,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'color',
           type: 'color'},
-          {
-            name: 'light',
-            type: 'int'
-          }],
+        {
+          name: 'light',
+          type: 'int'
+        }],
         props: [{
           idSuffix: 'color',
           name: '颜色',
@@ -891,15 +886,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'light',
-            name: '亮度',
-            type: 'int',
-            visual: 'number',
-            defValue: 50,
-            hasOutput: false,
-            hasInput: true
-          }],
+        {
+          idSuffix: 'light',
+          name: '亮度',
+          type: 'int',
+          visual: 'number',
+          defValue: 50,
+          hasOutput: false,
+          hasInput: true
+        }],
         funs: []
       },
       led_ultraviolet: {
@@ -950,10 +945,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'speed',
           type: 'int'},
-          {
-            name: 'direction',
-            type: 'int'
-          }],
+        {
+          name: 'direction',
+          type: 'int'
+        }],
         props: [{
           idSuffix: 'speed',
           name: '旋转速度',
@@ -963,15 +958,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'direction',
-            name: '旋转方向',
-            type: 'int',
-            visual: 'number',
-            defValue: 1,
-            hasOutput: false,
-            hasInput: true
-          }]
+        {
+          idSuffix: 'direction',
+          name: '旋转方向',
+          type: 'int',
+          visual: 'number',
+          defValue: 1,
+          hasOutput: false,
+          hasInput: true
+        }]
       },
       step_motor: {
         id: 'step_motor',
@@ -982,10 +977,10 @@ export const nodesConfig = {
         outputs: [{
           name: 'angle',
           type: 'int'},
-          {
-            name: 'times',
-            type: 'int'
-          }],
+        {
+          name: 'times',
+          type: 'int'
+        }],
         props: [{
           idSuffix: 'angle',
           name: '步进角',
@@ -995,15 +990,15 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'times',
-            name: '间隔时间（ms）',
-            type: 'int',
-            visual: 'number',
-            defValue: 10,
-            hasOutput: false,
-            hasInput: true
-          }],
+        {
+          idSuffix: 'times',
+          name: '间隔时间（ms）',
+          type: 'int',
+          visual: 'number',
+          defValue: 10,
+          hasOutput: false,
+          hasInput: true
+        }],
         funs: []
       },
       steering_engine: {
@@ -1055,26 +1050,26 @@ export const nodesConfig = {
         outputs: [{
           name: 'volume',
           type: 'int'},
-          {
-            name: 'echo',
-            type: 'int'
-          },
-          {
-            name: 'cut_off',
-            type: 'int'
-          },
-          {
-            name: 'peak',
-            type: 'int'
-          },
-          {
-            name: 'attack',
-            type: 'int'
-          },
-          {
-            name: 'decay',
-            type: 'int'
-          }],
+        {
+          name: 'echo',
+          type: 'int'
+        },
+        {
+          name: 'cut_off',
+          type: 'int'
+        },
+        {
+          name: 'peak',
+          type: 'int'
+        },
+        {
+          name: 'attack',
+          type: 'int'
+        },
+        {
+          name: 'decay',
+          type: 'int'
+        }],
         props: [{
           idSuffix: 'volume',
           name: '音量',
@@ -1084,52 +1079,52 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         },
-          {
-            idSuffix: 'echo',
-            name: '回声（ms）',
-            type: 'int',
-            visual: 'number',
-            defValue: 1000,
-            hasOutput: false,
-            hasInput: true
-          },
-          {
-            idSuffix: 'cut_off',
-            name: 'cut off',
-            type: 'int',
-            visual: 'number',
-            defValue: 8,
-            hasOutput: false,
-            hasInput: true
-          },
-          {
-            idSuffix: 'peak',
-            name: 'peak',
-            type: 'int',
-            visual: 'number',
-            defValue: 8,
-            hasOutput: false,
-            hasInput: true
+        {
+          idSuffix: 'echo',
+          name: '回声（ms）',
+          type: 'int',
+          visual: 'number',
+          defValue: 1000,
+          hasOutput: false,
+          hasInput: true
+        },
+        {
+          idSuffix: 'cut_off',
+          name: 'cut off',
+          type: 'int',
+          visual: 'number',
+          defValue: 8,
+          hasOutput: false,
+          hasInput: true
+        },
+        {
+          idSuffix: 'peak',
+          name: 'peak',
+          type: 'int',
+          visual: 'number',
+          defValue: 8,
+          hasOutput: false,
+          hasInput: true
 
-          },
-          {
-            idSuffix: 'attack',
-            name: 'attack',
-            type: 'int',
-            visual: 'number',
-            defValue: 8,
-            hasOutput: false,
-            hasInput: true
-          },
-          {
-            idSuffix: 'decay',
-            name: 'decay',
-            type: 'int',
-            visual: 'number',
-            defValue: 8,
-            hasOutput: false,
-            hasInput: true
-          }]
+        },
+        {
+          idSuffix: 'attack',
+          name: 'attack',
+          type: 'int',
+          visual: 'number',
+          defValue: 8,
+          hasOutput: false,
+          hasInput: true
+        },
+        {
+          idSuffix: 'decay',
+          name: 'decay',
+          type: 'int',
+          visual: 'number',
+          defValue: 8,
+          hasOutput: false,
+          hasInput: true
+        }]
       },
       buzzer: {
         id: 'buzzer',
@@ -1149,7 +1144,7 @@ export const nodesConfig = {
           hasOutput: false,
           hasInput: true
         }]
-      },
+      }
     }
   },
   virtual: {
@@ -1185,15 +1180,10 @@ export const nodesConfig = {
         simulateFun: function (idSuffix) {
           let result = true
           let payload = this
-          console.log(this)
           for (let input in payload) {
             if (input === 'result') continue
-            console.log('payload', payload[input])
-            console.log('result', result)
             result = result && payload[input]
-            console.log('-result', result)
           }
-          console.log('result', result)
           return result
           // return !input
         }
@@ -1295,7 +1285,6 @@ export const nodesConfig = {
 
         }
       }
-
     },
     control: {
       logic_and: {
@@ -1327,7 +1316,6 @@ export const nodesConfig = {
           return result
         }
       }
-
     },
     operator: {
       operator_bitwise: {
@@ -1339,16 +1327,16 @@ export const nodesConfig = {
         inputs: [{
           idSuffix: 'input_0',
           name: 'x',
-          type: ['int','char']
+          type: ['int', 'char']
         }, {
           idSuffix: 'input_1',
           name: 'y',
-          type: ['int','char']
+          type: ['int', 'char']
         }],
         outputs: [{
           idSuffix: 'result',
           name: '结果',
-          type: ['int','char']}],
+          type: ['int', 'char']}],
         simulateFun: function () {
 
         }
@@ -1372,7 +1360,6 @@ export const nodesConfig = {
 
         }
       }
-
     },
     math: {
       math_abs: {
@@ -1418,16 +1405,16 @@ export const nodesConfig = {
         title: 'Linear',
         titleInput: null,
         titleOutput: null,
-        operateList: ['min','max','cons'],
+        operateList: ['min', 'max', 'cons'],
         inputs: [{
           idSuffix: 'input_0',
           name: '条件0',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'input_1',
           name: '条件1',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'input_2',
           name: '条件2',
           type: ['float']
@@ -1450,19 +1437,19 @@ export const nodesConfig = {
           idSuffix: 'input',
           name: 'x',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'input_min',
           name: 'Input Min',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'input_max',
           name: 'Input Max',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'output_min',
           name: 'Output Min',
           type: ['float']
-        },{
+        }, {
           idSuffix: 'output_max',
           name: 'Output Max',
           type: ['float']
@@ -1475,7 +1462,6 @@ export const nodesConfig = {
 
         }
       }
-
     },
     utility: {
       utility_size: {
@@ -1487,7 +1473,7 @@ export const nodesConfig = {
         inputs: [{
           idSuffix: 'input_0',
           name: 'x',
-          type: ['array','string']
+          type: ['array', 'string']
         }],
         outputs: [{
           idSuffix: 'result',
@@ -1502,16 +1488,16 @@ export const nodesConfig = {
         title: 'Convert',
         titleInput: null,
         titleOutput: null,
-        operateList: ['char','int','float'],
+        operateList: ['char', 'int', 'float'],
         inputs: [{
           idSuffix: 'input_0',
           name: 'x',
-          type: ['char','int','float']
+          type: ['char', 'int', 'float']
         }],
         outputs: [{
           idSuffix: 'result',
           name: '结果',
-          type: ['char','int','float']}],
+          type: ['char', 'int', 'float']}],
         simulateFun: function () {
 
         }
@@ -1538,7 +1524,7 @@ export const nodesConfig = {
         simulateFun: function () {
 
         }
-      },
+      }
     },
     data: {
       data_array: {
@@ -1550,7 +1536,7 @@ export const nodesConfig = {
         inputs: [{
           idSuffix: 'input_0',
           name: 'Value0',
-          type: ['float','char','string',]
+          type: ['float', 'char', 'string']
         }, {
           idSuffix: 'input_1',
           name: 'Value0',
@@ -1583,19 +1569,18 @@ export const nodesConfig = {
           idSuffix: 'value_0',
           name: 'Value0',
           type: ['any']},
-          {
-            idSuffix: 'value_0',
-            name: 'Value1',
-            type: ['any']},
-          {
-            idSuffix: 'value_0',
-            name: 'Value2',
-            type: ['any']}],
+        {
+          idSuffix: 'value_0',
+          name: 'Value1',
+          type: ['any']},
+        {
+          idSuffix: 'value_0',
+          name: 'Value2',
+          type: ['any']}],
         simulateFun: function () {
 
         }
       }
     }
-
   }
 }

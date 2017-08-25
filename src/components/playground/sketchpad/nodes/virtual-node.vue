@@ -56,15 +56,12 @@
     watch:{
       curNode: {
         handler: function (val, old){
-          console.log(this.curNode)
           for (let con in this.getLinkMap){
             if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
               let [sourceId, s_plKey] = this.getLinkMap[con].sourceId.split('-') //source_payloadKey
               let [targetId, t_plKey] = this.getLinkMap[con].targetId.split('-') //target_payloadKey
               let calcFun = this.curNode.updateFun
-              console.log(calcFun)
               let output = calcFun.call(this.curNode.payload, s_plKey)
-              console.log(output)
               this.getNodeMap[targetId].payload[t_plKey] = output// 修改target节点的对应属性值
 //              console.log(this.getNodeMap[targetId].payload)
 //              this.getLinkMap[con].getOverlay('label').setLabel(output.toString())// 改变label
@@ -104,7 +101,13 @@
           }
           else
               return false
-      }
+      },
+      ...mapState({
+        curNode: function (state) {
+          return state.runtime.NodeMap[this.data.id]
+        }
+      }),
+      ...mapGetters(['getNodeMap','getLinkMap'])
     },
     methods: {
       init () {
@@ -174,16 +177,8 @@
           this.currentOperator = item;
           this.isHoverTitle = false;
 
-      }
-
-    },
-    computed:{
-      ...mapState({
-        curNode: function (state) {
-          return state.runtime.NodeMap[this.data.id]
-        }
-      }),
-      ...mapGetters(['getNodeMap','getLinkMap'])
+      },
+      ...mapMutations(['NODEMAP_ADD', 'NODEMAP_SET'])
     },
     created () {
       const id = this.data.id
@@ -200,7 +195,6 @@
         payload: NodePayload,
         updateFun: simulateFun
       })
-      console.log('##########',this.curNode, '######');
     },
     mounted () {
       this.init()

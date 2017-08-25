@@ -73,10 +73,9 @@
               let output = calcFun.call(this.curNode.payload, s_plKey)
 
               this.getNodeMap[targetId].payload[t_plKey] = output// 修改target节点的对应属性值
-              console.log(this.getNodeMap[targetId].payload)
               this.getLinkMap[con].getOverlay('label').setLabel(output.toString())// 改变label
             } else {
-              console.log(this.$store.state.runtime.LinkMap[con].sourceId)
+//              console.log(this.$store.state.runtime.LinkMap[con].sourceId)
             }
           }
         },
