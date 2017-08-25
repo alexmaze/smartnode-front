@@ -38,12 +38,12 @@
           </div>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="开关" name="2">
+      <el-collapse-item title="高级" name="2">
         <div style="display: flex; flex-wrap: wrap;">
-          <div v-for="(s, name) in node_device.switch"
+          <div v-for="(s, name) in node_device.advance"
                class="device"
                draggable="true"
-               @dragstart="setDataTransfer(['device', 'switch', name, s.title], $event)"
+               @dragstart="setDataTransfer(['device', 'advance', name, s.title], $event)"
                v-if="s.title.match(searchInp) != null">
             <!--{{name}}*******************{{s}}-->
             <div class="node">
@@ -80,10 +80,10 @@
       </el-collapse-item>
       <el-collapse-item title="执行器" name="4">
         <div style="display: flex; flex-wrap: wrap;">
-          <div v-for="(s, name) in node_device.module"
+          <div v-for="(s, name) in node_device.execute"
                class="device"
                draggable="true"
-               @dragstart="setDataTransfer(['device', 'module', name, s.title], $event)"
+               @dragstart="setDataTransfer(['device', 'execute', name, s.title], $event)"
                v-if="s.title.match(searchInp) != null">
             <!--{{name}}*******************{{s}}-->
             <div class="node">
@@ -277,7 +277,7 @@ export default {
 //        type._all = `${type.primary}-${type.secondary}`
         type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
-        //console.log(type)
+        console.log(type)
       }
     },
     toggleStage (stage) {
