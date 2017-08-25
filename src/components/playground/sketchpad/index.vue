@@ -20,7 +20,9 @@
 </template>
 
 <script>
-import AbstractNode from './nodes/abstract-node.vue'
+  /* eslint-disable  */
+
+  import AbstractNode from './nodes/abstract-node.vue'
 import VirtualLogicAndNode from './nodes/virtual-nodes/logic-nodes/and'
 import VirtualMathFormulaNode from './nodes/virtual-nodes/math-nodes/formula'
 import DeviceSwitchSnapNode from './nodes/device-nodes/switch-nodes/snap'
@@ -127,6 +129,7 @@ export default {
           let [sourceId, sourcePayloadKey] = info.sourceId.split('-')
           window.log(connection.getOverlay('label'),'payload')
           connection.getOverlay('label').setLabel(_this.getNodeMap[sourceId].payload[sourcePayloadKey].toString())
+          console.log('************************',connection,'****************************')
           _this.LINKMAP_ADD({
             keyName: connection.id,
             payload: connection

@@ -18,6 +18,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import { mapState, mapMutations, mapGetters } from 'vuex'
   import { nodesConfig } from '../../../../../node-conf'
   export default {
@@ -28,11 +29,33 @@
       return {
       }
     },
+    watch:{
+      curNode: {
+        handler: function (val, old){
+          console.log(this.curNode)
+          for (let con in this.getLinkMap){
+            if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
+              let [sourceId, s_plKey] = this.getLinkMap[con].sourceId.split('-') //source_payloadKey
+              let [targetId, t_plKey] = this.getLinkMap[con].targetId.split('-') //target_payloadKey
+              let calcFun = this.curNode.updateFun
+              console.log(calcFun)
+              let output = calcFun.call(this.curNode.payload, s_plKey)
+              console.log(output)
+              this.getNodeMap[targetId].payload[t_plKey] = output// 修改target节点的对应属性值
+//              console.log(this.getNodeMap[targetId].payload)
+//              this.getLinkMap[con].getOverlay('label').setLabel(output.toString())// 改变label
+            } else {
+//              console.log(this.$store.state.runtime.LinkMap[con].sourceId)
+            }
+          }
+        },
+        deep: true
+      }
+    },
     methods: {
       init () {
         const instance = this.instance
         const id = this.data.id
-        console.log(this.data);
         const nodeType = this.data.type.secondary
         instance.draggable(id)
         let palette = {
@@ -86,7 +109,33 @@
           //console.log(e.idSuffix)
           instance.addEndpoint(propLine, outputEndpoint(nodeType))
         })
-      }
+      },
+      ...mapMutations(['NODEMAP_ADD', 'NODEMAP_SET'])
+    },
+    computed:{
+      ...mapState({
+        curNode: function (state) {
+          return state.runtime.NodeMap[this.data.id]
+        }
+      }),
+      ...mapGetters(['getNodeMap','getLinkMap'])
+    },
+    created () {
+      const id = this.data.id
+      const config = this.data.type
+      let NodePayload = {}
+      let simulateFun = nodesConfig[config.primary][config.secondary][config.tertiary].simulateFun
+
+      config.inputs.forEach(e => { NodePayload[e.idSuffix] = null })
+      config.outputs.forEach(e=>{NodePayload[e.idSuffix] = ''})
+
+      if (config.titleInput) NodePayload.active = false
+      this.NODEMAP_ADD({
+        keyName: id,
+        payload: NodePayload,
+        updateFun: simulateFun
+      })
+      console.log('##########',this.curNode, '######');
     },
     mounted () {
       this.init()

@@ -40,6 +40,8 @@
   </div>
 </template>
 <script>
+  /* eslint-disable */
+
   import Node from './abstract-node'
   import { mapState, mapMutations, mapGetters } from 'vuex'
   import { nodesConfig } from '../../../../../node-conf'
@@ -82,16 +84,13 @@
       },
     },
     methods: {
-//      switchChange (info) {
-//        console.log(this.$store.state.runtime.NodeMap)
-//      },
       addFunc (item, ev) {
-          if(this.showMenuContent){
-            this.flagAdded = true
-            console.log(this.flagAdded)
-            this.addedFuncList.push(item)
-            this.showMenuContent = false
-          }
+        if(this.showMenuContent){
+          this.flagAdded = true
+          console.log(this.flagAdded)
+          this.addedFuncList.push(item)
+          this.showMenuContent = false
+        }
       },
       cliToggleFunc () {
           this.showMenuContent = !this.showMenuContent;
@@ -190,9 +189,6 @@
     },
     mounted () {
       this.init()
-//      this.CD_NODEMAP()
-//      window.log(this.$store.state.runtime.NodeMap,'mounted after clonedeep')
-//      console.log(this.$store.state.runtime.NodeMap)
     },
     updated () {  // 用updated钩子是因为要等dom更新完才能执行jsplumb的增加endpoint方法
         if(this.flagAdded){

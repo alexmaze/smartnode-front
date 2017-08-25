@@ -1078,7 +1078,6 @@ export const nodesConfig = {
           hasInput: true
         }],
         simulateFun: function (idSuffix) {
-          console.log(this)
           return this['keyDown']
         }
       },
@@ -1204,10 +1203,25 @@ export const nodesConfig = {
           idSuffix: 'result',
           name: '执行',
           type: ['boolean']}],
-        simulateFun: function () {
+        // simulateFun: function () {
+        //   let result = true
+        //   this.inputs.forEach(e => { result = e && result })
+        //   return result
+        // },
+        simulateFun: function (idSuffix) {
           let result = true
-          this.inputs.forEach(e => { result = e && result })
+          let payload = this
+          console.log(this)
+          for (let input in payload) {
+            if (input === 'result') continue
+            console.log('payload', payload[input])
+            console.log('result', result)
+            result = result && payload[input]
+            console.log('-result', result)
+          }
+          console.log('result', result)
           return result
+          // return !input
         }
       },
       logic_or: {
@@ -1269,11 +1283,11 @@ export const nodesConfig = {
           name: '条件0',
           type: ['boolean']
         },
-          {
-            idSuffix: 'input_1',
-            name: '条件1',
-            type: ['boolean']
-          }],
+        {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean']
+        }],
         outputs: [{
           idSuffix: 'result',
           name: '执行',
@@ -1288,21 +1302,21 @@ export const nodesConfig = {
         title: 'Equal or Not',
         titleInput: null,
         titleOutput: null,
-        operateList: ['==','!='],
+        operateList: ['==', '!='],
         inputs: [{
           idSuffix: 'input_0',
           name: '条件0',
-          type: ['boolean','float']
+          type: ['boolean', 'float']
         },
-          {
-            idSuffix: 'input_1',
-            name: '条件1',
-            type: ['boolean','float']
-          }],
+        {
+          idSuffix: 'input_1',
+          name: '条件1',
+          type: ['boolean', 'float']
+        }],
         outputs: [{
           idSuffix: 'result',
           name: '执行',
-          type: ['boolean','float']}],
+          type: ['boolean', 'float']}],
         simulateFun: function () {
 
         }
@@ -1401,7 +1415,7 @@ export const nodesConfig = {
           this.inputs.forEach(e => { result = e && result })
           return result
         }
-      },
+      }
 
     },
     utility: {
@@ -1433,7 +1447,7 @@ export const nodesConfig = {
           this.inputs.forEach(e => { result = e && result })
           return result
         }
-      },
+      }
 
     },
     data: {
