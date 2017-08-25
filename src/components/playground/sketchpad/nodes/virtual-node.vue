@@ -190,10 +190,21 @@
       config.outputs.forEach(e=>{NodePayload[e.idSuffix] = ''})
 
       if (config.titleInput) NodePayload.active = false
+
+      let type = {
+        primary: config.primary,
+        secondary: config.secondary,
+        tertiary: config.tertiary,
+        primaryLabel: config._primaryLabel,
+        secondaryLabel: config._secondaryLabel,
+        tertiaryLabel: config._tertiaryLabel
+      }
+
       this.NODEMAP_ADD({
         keyName: id,
         payload: NodePayload,
-        updateFun: simulateFun
+        updateFun: simulateFun,
+        type
       })
     },
     mounted () {

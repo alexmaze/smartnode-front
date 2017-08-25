@@ -101,13 +101,14 @@ const mutations = {
   [types.NODEMAP_DELETE] (state, { keyName }) {
     delete state.NodeMap[keyName]
   },
-  [types.NODEMAP_ADD] (state, { keyName, payload, updateFun }) {
+  [types.NODEMAP_ADD] (state, { keyName, payload, updateFun, type }) {
     if (state.NodeMap[keyName] !== undefined) {
       return false
     } else {
       state.NodeMap[keyName] = {
         payload,
-        updateFun
+        updateFun,
+        type
       }
       let clone = __.cloneDeep(state.NodeMap)
       state.NodeMap = clone
