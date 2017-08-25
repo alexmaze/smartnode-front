@@ -26,8 +26,8 @@
           </div>
         </div>
       </div>
-      <div class="virtual-formula">
-
+      <div class="virtual-formula" v-if="haveFormula">
+        <input type="text" name="input-formula" value="input" v-model="inputFormula"/>
       </div>
     </div>
 
@@ -47,7 +47,9 @@
       return {
           isHoverTitle: false,
           operatorClass: 0,
-          currentOperator: ''
+          currentOperator: '',
+          inputFormula: ''
+
       }
     },
     computed : {
@@ -70,6 +72,14 @@
           let a = this.data.type.operateList.length / 4
           console.log('height' + a)
         return a
+      },
+      haveFormula: function () {
+          if(this.data.type.title === 'Operation')
+          {
+              return true
+          }
+          else
+              return false
       }
     },
     methods: {
@@ -397,6 +407,21 @@
           }
         }
       }
+
+    }
+    .virtual-formula{
+      //width: 160px;
+      //padding: 7px 6px 7px 6px;
+      input{
+        width: 152px;
+        border-style: none;
+        border-radius: 0 0 8px 8px;
+        background-color: @black-20;
+        color: #fff;
+        font-size: 12px;
+        line-height: 1.75;
+        padding: 0 4px 0 4px;
+      }
     }
     .virtual-title{
       margin-top: 9px;
@@ -409,6 +434,7 @@
       font-size: 12px;
       align-self: center;
     }
+
   }
 
 </style>
