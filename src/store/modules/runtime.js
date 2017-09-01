@@ -116,7 +116,7 @@ const mutations = {
         payload,
         updateFun,
         type,
-        connectionInfo: null
+        connectionInfo: {}
       }
       // already add a nodemap item, why deep clone again?
       let clone = __.cloneDeep(state.NodeMap)
@@ -133,10 +133,10 @@ const mutations = {
   },
   [types.LINKMAP_DELETE] (state, { keyName }) {
     let {sourceId, targetId} = state.LinkMap[keyName]
-    sourceId = sourceId.split('-')[0]
-    targetId = targetId.split('-')[0]
-    state.NodeMap[sourceId].connectionInfo = null
-    state.NodeMap[targetId].connectionInfo = null
+    let [sId, sKey] = sourceId.split('-')
+    let [tId, tKey] = targetId.split('-')
+    delete state.NodeMap[sId].connectionInfo[sKey]
+    delete state.NodeMap[tId].connectionInfo[tKey]
     delete state.LinkMap[keyName]
   },
   [types.LINKMAP_ADD] (state, { keyName, payload }) {
@@ -145,18 +145,14 @@ const mutations = {
       return false
     } else {
       state.LinkMap[keyName] = payload
-      // window.log(keyName, 'linkmap app keyname')
-      // window.log(payload, 'linkmap payload')
       let [sourceId, sPayloadKey] = payload.sourceId.split('-')
       let [targetId, tPayloadKey] = payload.targetId.split('-')
-      // window.log(state.NodeMap[sourceId].payload, 'source payload key')
-      // window.log(state.NodeMap[targetId].payload, 'target payload key')
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
-      state.NodeMap[targetId].connectionInfo = {
+      state.NodeMap[targetId].connectionInfo[tPayloadKey] = {
         linkMapKey: keyName,
         isTarget: true
       }
-      state.NodeMap[sourceId].connectionInfo = {
+      state.NodeMap[sourceId].connectionInfo[sPayloadKey] = {
         linkMapKey: keyName,
         isTarget: false
       }
