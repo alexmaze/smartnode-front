@@ -10,19 +10,21 @@ export default {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         let fakeSeed = Math.random()
-        if(fakeSeed > 0.5){
+        if (fakeSeed > 0.5) {
           let fakeAllConnection = true
           console.log('fake allConnection:', fakeAllConnection)
           resolve(fakeAllConnection)
+        } else {
+          resolve(false)
         }
       }, 100)
     })
   },
-  checkHardware() {
+  checkHardware () {
     return new Promise((resolve, reject) => {
-      setTimeout( () => {
+      setTimeout(() => {
         let fakeSeed = Math.random()
-        if(fakeSeed > 0.5){
+        if (fakeSeed > 0.5) {
           let fakeHardwareConn = true
           console.log('fakeHardwareConn: ' + fakeHardwareConn)
           resolve(fakeHardwareConn)

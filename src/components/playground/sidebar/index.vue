@@ -160,7 +160,7 @@
 </template>
 
 <script>
-  /* eslint-disable indent */
+  /* eslint-disable */
 
   import { NODE_TYPES_TREE } from '../node-types-tree.const.js'
 import { nodesConfig } from '../../../../node-conf'
@@ -277,7 +277,7 @@ export default {
 //        type._all = `${type.primary}-${type.secondary}`
         type._all = type.primary
         ev.dataTransfer.setData('data', JSON.stringify(type))
-        console.log(type)
+//        console.log(type)
       }
     },
     toggleStage (stage) {

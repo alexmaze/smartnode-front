@@ -108,7 +108,8 @@ const mutations = {
       state.NodeMap[keyName] = {
         payload,
         updateFun,
-        type
+        type,
+        connectionInfo: null
       }
       let clone = __.cloneDeep(state.NodeMap)
       state.NodeMap = clone
@@ -123,6 +124,11 @@ const mutations = {
     }
   },
   [types.LINKMAP_DELETE] (state, { keyName }) {
+    let {sourceId, targetId} = state.LinkMap[keyName]
+    sourceId = sourceId.split('-')[0]
+    targetId = targetId.split('-')[0]
+    state.NodeMap[sourceId].connectionInfo = null
+    state.NodeMap[targetId].connectionInfo = null
     delete state.LinkMap[keyName]
   },
   [types.LINKMAP_ADD] (state, { keyName, payload }) {
@@ -138,6 +144,14 @@ const mutations = {
       // window.log(state.NodeMap[sourceId].payload, 'source payload key')
       // window.log(state.NodeMap[targetId].payload, 'target payload key')
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
+      state.NodeMap[targetId].connectionInfo = {
+        linkMapKey: keyName,
+        isTarget: true
+      }
+      state.NodeMap[sourceId].connectionInfo = {
+        linkMapKey: keyName,
+        isTarget: false
+      }
       // let clone = __.cloneDeep(state.LinkMap)
       // state.LinkMap = clone
       return true

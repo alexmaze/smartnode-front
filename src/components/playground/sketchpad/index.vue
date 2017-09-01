@@ -57,14 +57,17 @@ export default {
     }
   },
   methods: {
+    // 放大
     zoomIn () {
       this.zoomLevel *= 1 + this.zoomStep
       this.setZoom(this.zoomLevel)
     },
+    // 缩小
     zoomOut () {
       this.zoomLevel /= 1 + this.zoomStep
       this.setZoom(this.zoomLevel)
     },
+    // 设定缩放
     setZoom (zoom, instance, transformOrigin, el) {
       transformOrigin = transformOrigin || [ 1, 1 ]
       instance = instance || this.jsPlumbInstance
@@ -83,11 +86,13 @@ export default {
 
       instance.setZoom(zoom)
     },
+    // 拖拽移动
     dragSketchPad ({movementX, movementY}) {
       this.offsetX += (movementX / this.zoomLevel)
       this.offsetY += (movementY / this.zoomLevel)
       this.setZoom(this.zoomLevel)
     },
+    //
     drop (ev) {
       let offset = {
         x: (ev.layerX) / this.zoomLevel - this.offsetX,
@@ -120,7 +125,7 @@ export default {
           ]
         })
         this.jsPlumbInstance = instance
-        console.log('jsplumb容器:', instance.getContainer())
+
         // 绑定
         let _this = this
         instance.bind('connection', function (info) {

@@ -50,7 +50,6 @@
           operatorClass: 0,
           currentOperator: '',
           inputFormula: ''
-
       }
     },
     watch:{

@@ -40,41 +40,6 @@
       </div>
       <div v-if="showNewDevice" class="new-device-detail">
         <div class="detail-container">
-
-          <!--<div class="new-device" draggable="true" @dragstart="setDataTransfer(['device', 'switch', name, s.title], $event)">-->
-            <!--<div class="node">-->
-              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
-              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
-            <!--</div>-->
-            <!--<div class="device-info">-->
-              <!--<p>背光按键_1</p>-->
-              <!--<p class="last-timestamp">6.25 09:32</p>-->
-              <!--<p class="identifier"></p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="new-device">-->
-            <!--<div class="node">-->
-              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
-              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
-            <!--</div>-->
-            <!--<div class="device-info">-->
-              <!--<p>背光按键_2</p>-->
-              <!--<p class="last-timestamp">6.25 09:32</p>-->
-              <!--<p class="identifier"></p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="new-device">-->
-            <!--<div class="node">-->
-              <!--<img class="device-icon" src="/static/img/node.png" alt="">-->
-              <!--<img class="status" src="/static/img/icons/unconnected.svg" alt="">-->
-            <!--</div>-->
-            <!--<div class="device-info">-->
-              <!--<p>背光按键_3</p>-->
-              <!--<p class="last-timestamp">6.25 09:32</p>-->
-              <!--<p class="identifier"></p>-->
-            <!--</div>-->
-          <!--</div>-->
-
           <div class="new-device" v-for="(item,index) in connectedDev" draggable="true" @dragstart="setDataTransfer(item, $event)" @dragend="deleteItem(index, $event)">
             <div class="node">
               <img class="device-icon" src="/static/img/node.png" alt="">
@@ -103,7 +68,9 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+  /* eslint-disable */
+
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
 import MessageBox from '../../message-box'
 import { nodesConfig } from '../../../../node-conf'
 
@@ -129,7 +96,9 @@ export default {
     ...mapGetters({
       runtimeStage: 'getRuntimeStage',
       allConnected: 'getAllConnected',
-      getConnectedDev: 'getterConnDev'
+      getConnectedDev: 'getterConnDev',
+      nodeMap:'getNodeMap',
+      linkMap:'getLinkMap'
     }),
     connectedDev() {
         let newConnDev = []
@@ -200,7 +169,9 @@ export default {
         return
       }
       // 检查是否所有设备都已连接
-      let checkResult = (await this.checkConnection())[1] // 注：这么写的原因是vuex dispatch得到的返回值是一个数组[undefined,真实返回值]，原因暂时不明没有深入了解，时间原因hardcoded
+      let checkResult =  await this.checkConnection()// 注：这么写的原因是vuex dispatch得到的返回值是一个数组[undefined,真实返回值]，原因暂时不明没有深入了解，时间原因hardcoded
+      console.log(this.nodeMap)
+      console.log(this.linkMap)
       if (!checkResult) {
         this.errorType = 'UNCONNECTED'
         this.showMessageBox = true
@@ -247,15 +218,8 @@ export default {
     ...mapActions(['checkConnection', 'calcEndNodes']),
     ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
     getConnDev (index) {
-      //this.connectedDev.forEach(function (cur) {
       let data = this.connectedDev[index].split('-')
       return nodesConfig[data[0]][data[1]][data[2]].title
-
-//          let data = []
-//          data.push(cur.split('-')[2]) ;
-//          //this.idDev.push(cur.split('-')[2])
-//          console.log('data ' + data)
-      //})
     },
   }
 }

@@ -195,7 +195,7 @@
         type
       })
 //      this.payload = __.cloneDeep(this.NodePayload)
-      console.log(this.curNode);
+//      console.log(this.curNode);
     },
     mounted () {
       this.init()
