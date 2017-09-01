@@ -97,6 +97,8 @@ export default {
       runtimeStage: 'getRuntimeStage',
       allConnected: 'getAllConnected',
       getConnectedDev: 'getterConnDev',
+      getItLinkMap : 'getLinkMap',
+      getItNodeMap: 'getNodeMap',
       nodeMap:'getNodeMap',
       linkMap:'getLinkMap'
     }),
@@ -144,9 +146,78 @@ export default {
       } else {
         this.START_SIMULATION()
         let result = await this.calcEndNodes()
-        console.log(result)
+        //console.log(result)
 //        this.runtimeIcon = 'stop'
+        this.checkLinkTypes()
+        // call the type check function
+
       }
+    },
+    //type check function
+    checkLinkTypes () {
+      let linksArray = this.getItLinkMap
+      let nodesArray = this.getItNodeMap
+      console.log(linksArray)
+      for(let link in linksArray){
+          //get source
+        let temp_source = linksArray[link].sourceId.split('-')
+        let temp_source_id = temp_source[0]
+        let temp_source_type = temp_source[1]
+
+        //console.log(linksArray[link].sourceId)
+        //get source type; it's unique because the output only has one type
+        let temp_sourceNode = nodesArray[temp_source_id]
+        //get source node's type
+        let config_0 = temp_sourceNode.type.primary
+        let config_1 = temp_sourceNode.type.secondary
+        let config_2 = temp_sourceNode.type.tertiary
+
+        let config = nodesConfig[config_0][config_1][config_2]
+        let t_source_outputList = config.outputs
+        let outPointType
+        t_source_outputList.forEach(function (element) {
+            if(element.idSuffix === temp_source_type){
+                outPointType = element.type[0]
+            }
+        })
+        //console.log(outPointType)
+        let temp_target = linksArray[link].targetId.split('-')
+        let temp_target_id = temp_target[0]
+        let temp_target_type = temp_target[1]
+
+        let temp_targetNode = nodesArray[temp_target_id]
+
+        let tconfig_0 = temp_targetNode.type.primary
+        let tconfig_1 = temp_targetNode.type.secondary
+        let tconfig_2 = temp_targetNode.type.tertiary
+
+        let tconfig = nodesConfig[tconfig_0][tconfig_1][tconfig_2]
+        let t_target_inputList = tconfig.inputs
+        let inPointType
+        t_target_inputList.forEach(function (element) {
+            if(element.idSuffix === temp_target_type)
+            {
+                //inPointType is an array of possible type in inputs
+                inPointType = element.type
+            }
+        })
+        //console.log(inPointType)
+        inPointType.forEach(function (element) {
+            if(element === outPointType)
+            {
+                return
+            }
+            console.log(temp_target_id + 'node has an input error')
+        })
+
+
+       //// let temp_sourceType = temp_sourceNode.
+        //console.log(temp_sourceNode)
+        //get target
+
+        //get target type
+      }
+
     },
     hoverDetailOn ({fromElement, toElement, relatedTarget, srcElement, target}) {
       if (this.runtimeStage === 'SIMULATING') this.showWarnDetail = true

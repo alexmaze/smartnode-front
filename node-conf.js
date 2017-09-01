@@ -1280,7 +1280,7 @@ export const nodesConfig = {
         outputs: [{
           idSuffix: 'result',
           name: '执行',
-          type: ['boolean', 'float']}],
+          type: ['boolean']}],
         simulateFun: function () {
 
         }

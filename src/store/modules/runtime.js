@@ -47,7 +47,8 @@ const actions = {
       nodesArray[node]._target_ = []
       nodesArray[node]._source_ = []
     }
-    console.log(nodesArray)
+    console.log(state.LinkMap)
+    // console.log("that's what we called b-box")
     for (let con in state.LinkMap) {
       let sourceNode = nodesArray[state.LinkMap[con].sourceId.split('-')[0]]
       let targetNode = nodesArray[state.LinkMap[con].targetId.split('-')[0]]
@@ -74,6 +75,12 @@ const actions = {
     }
     result.forEach(e => { calcPreNode(e) })
     return result
+  },
+  checkTypes ({state, getters}) {
+    let linksArray = getters.getNodeMap
+    for (let link in linksArray) {
+      console.log(link.sourceId)
+    }
   }
 }
 
@@ -111,6 +118,7 @@ const mutations = {
         type,
         connectionInfo: null
       }
+      // already add a nodemap item, why deep clone again?
       let clone = __.cloneDeep(state.NodeMap)
       state.NodeMap = clone
       return true
