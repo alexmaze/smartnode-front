@@ -134,7 +134,7 @@ export default {
           let [sourceId, sourcePayloadKey] = info.sourceId.split('-')
           window.log(connection.getOverlay('label'),'payload')
           connection.getOverlay('label').setLabel(_this.getNodeMap[sourceId].payload[sourcePayloadKey].toString())
-          console.log('************************',connection,'****************************')
+//          console.log('************************',connection,'****************************')
           _this.LINKMAP_ADD({
             keyName: connection.id,
             payload: connection

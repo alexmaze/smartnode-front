@@ -132,9 +132,16 @@ export default {
   },
   props: ['config'],
   methods: {
+    /**
+     * 激活sidebar
+     * */
     toggleSidebar () {
       this.$emit('toggle-sidebar')
     },
+
+    /**
+     * 激活模拟运行
+     * */
     async toggleSimulation () {
       const enumSimulating = {
         'EDITING': false,
@@ -227,7 +234,50 @@ export default {
       if (this.runtimeStage === 'SIMULATING') this.showWarnDetail = false
       else if (this.runtimeStage === 'EDITING') this.showNewDevice = false
     },
+
+    /**
+     * 上传数据构建（Upload Data Constructor）
+     * */
+    UDC () {
+      let nodes = []
+      for(let nodeId in this.nodeMap){
+        let node = {
+          id: nodeId,
+          type: this.nodeMap[nodeId].type,
+          label: '',
+          inputs: [],
+          outputs: []
+        }
+        nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].props.forEach( (e, i) => {
+          if(e.hasInput){
+            // TODO: node.inputs.push
+            let inputItem = {
+              port: i,
+              valueType: null, //TODO: find the valueType
+              _label: e.name,
+              type: 'const', //TODO: 根据linknode判断是否是ref
+              refId: null,
+              refOutputPort: null
+            }
+            node.inputs.push(inputItem)
+          }
+          if(e.hasOutput){
+            // TODO: node.outputs.push
+            let outputItem = {
+              port: i,
+              valueType:null //TODO: find the valueType
+            }
+          }
+        })
+        nodes.push(node)
+      }
+      window.log('生成的数据结构',{nodes})
+    },
+    /**
+     * 上传烧录
+     * */
     async uploadToBoard () {
+      this.UDC()
       this.progress = 0
       // 检查是否在模拟运行阶段
       if (this.runtimeStage === 'SIMULATING') {
@@ -240,9 +290,11 @@ export default {
         return
       }
       // 检查是否所有设备都已连接
-      let checkResult =  await this.checkConnection()// 注：这么写的原因是vuex dispatch得到的返回值是一个数组[undefined,真实返回值]，原因暂时不明没有深入了解，时间原因hardcoded
-      console.log(this.nodeMap)
-      console.log(this.linkMap)
+      let checkResult =  await this.checkConnection()
+      window.log('NodeMap',this.nodeMap)
+      window.log('LinkMap',this.linkMap)
+//      console.log(this.nodeMap)
+//      console.log(this.linkMap)
       if (!checkResult) {
         this.errorType = 'UNCONNECTED'
         this.showMessageBox = true
@@ -264,6 +316,9 @@ export default {
       }
       requestAnimationFrame(fun)
     },
+    /**
+     * 设置拖拽数据传输
+     * */
     setDataTransfer (item,  ev) {
         let data = item.split('-')
         let tLabel = nodesConfig[data[0]][data[1]][data[2]].title
@@ -286,12 +341,13 @@ export default {
       let temp = this.connectedDev.splice(index, 1)
       this.showNewDevice = false
     },
-    ...mapActions(['checkConnection', 'calcEndNodes']),
-    ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
     getConnDev (index) {
       let data = this.connectedDev[index].split('-')
       return nodesConfig[data[0]][data[1]][data[2]].title
     },
+    ...mapActions(['checkConnection', 'calcEndNodes']),
+    ...mapMutations(['START_SIMULATION', 'STOP_SIMULATION', 'START_UPLOADING', 'FINISH_UPLOADING']),
+
   }
 }
 </script>

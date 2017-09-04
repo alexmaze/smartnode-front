@@ -135,8 +135,20 @@ const mutations = {
     let {sourceId, targetId} = state.LinkMap[keyName]
     let [sId, sKey] = sourceId.split('-')
     let [tId, tKey] = targetId.split('-')
-    delete state.NodeMap[sId].connectionInfo[sKey]
-    delete state.NodeMap[tId].connectionInfo[tKey]
+    let sQuery = {
+      linkMapKey: keyName,
+      isTarget: false
+    }
+    let tQuery = {
+      linkMapKey: keyName,
+      isTarget: true
+    }
+    let sIndex = state.NodeMap[sId].connectionInfo[sKey].indexOf(sQuery)
+    state.NodeMap[sId].connectionInfo[sKey].splice(sIndex, 1)
+    let tIndex = state.NodeMap[tId].connectionInfo[tKey].indexOf(tQuery)
+    state.NodeMap[tId].connectionInfo[tKey].splice(tIndex, 1)
+    // delete state.NodeMap[sId].connectionInfo[sKey]
+    // delete state.NodeMap[tId].connectionInfo[tKey]
     delete state.LinkMap[keyName]
   },
   [types.LINKMAP_ADD] (state, { keyName, payload }) {
@@ -148,14 +160,28 @@ const mutations = {
       let [sourceId, sPayloadKey] = payload.sourceId.split('-')
       let [targetId, tPayloadKey] = payload.targetId.split('-')
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
-      state.NodeMap[targetId].connectionInfo[tPayloadKey] = {
+      if (state.NodeMap[targetId].connectionInfo[tPayloadKey] === undefined) {
+        state.NodeMap[targetId].connectionInfo[tPayloadKey] = []
+      }
+      state.NodeMap[targetId].connectionInfo[tPayloadKey].push({
         linkMapKey: keyName,
         isTarget: true
+      })
+      if (state.NodeMap[sourceId].connectionInfo[sPayloadKey] === undefined) {
+        state.NodeMap[sourceId].connectionInfo[sPayloadKey] = []
       }
-      state.NodeMap[sourceId].connectionInfo[sPayloadKey] = {
+      state.NodeMap[sourceId].connectionInfo[sPayloadKey].push({
         linkMapKey: keyName,
-        isTarget: false
-      }
+        isTarget: true
+      })
+      // state.NodeMap[targetId].connectionInfo[tPayloadKey] = {
+      //   linkMapKey: keyName,
+      //   isTarget: true
+      // }
+      // state.NodeMap[sourceId].connectionInfo[sPayloadKey] = {
+      //   linkMapKey: keyName,
+      //   isTarget: false
+      // }
       // let clone = __.cloneDeep(state.LinkMap)
       // state.LinkMap = clone
       return true
