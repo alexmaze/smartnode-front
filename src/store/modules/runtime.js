@@ -116,7 +116,10 @@ const mutations = {
         payload,
         updateFun,
         type,
-        connectionInfo: {}
+        connectionInfo: {
+          inputs: [],
+          outputs: []
+        }
       }
       // already add a nodemap item, why deep clone again?
       let clone = __.cloneDeep(state.NodeMap)
@@ -133,20 +136,14 @@ const mutations = {
   },
   [types.LINKMAP_DELETE] (state, { keyName }) {
     let {sourceId, targetId} = state.LinkMap[keyName]
-    let [sId, sKey] = sourceId.split('-')
-    let [tId, tKey] = targetId.split('-')
-    let sQuery = {
-      linkMapKey: keyName,
-      isTarget: false
-    }
-    let tQuery = {
-      linkMapKey: keyName,
-      isTarget: true
-    }
-    let sIndex = state.NodeMap[sId].connectionInfo[sKey].indexOf(sQuery)
-    state.NodeMap[sId].connectionInfo[sKey].splice(sIndex, 1)
-    let tIndex = state.NodeMap[tId].connectionInfo[tKey].indexOf(tQuery)
-    state.NodeMap[tId].connectionInfo[tKey].splice(tIndex, 1)
+    // let [sId, sKey] = sourceId.split('-')
+    // let [tId, tKey] = targetId.split('-')
+    let sId = sourceId.split('-')[0]
+    let tId = targetId.split('-')[1]
+    let sIndex = state.NodeMap[sId].connectionInfo.outputs.indexOf(keyName)
+    state.NodeMap[sId].connectionInfo.outputs.splice(sIndex, 1)
+    let tIndex = state.NodeMap[tId].connectionInfo.inputs.indexOf(keyName)
+    state.NodeMap[tId].connectionInfo.inputs.splice(tIndex, 1)
     // delete state.NodeMap[sId].connectionInfo[sKey]
     // delete state.NodeMap[tId].connectionInfo[tKey]
     delete state.LinkMap[keyName]
@@ -160,30 +157,8 @@ const mutations = {
       let [sourceId, sPayloadKey] = payload.sourceId.split('-')
       let [targetId, tPayloadKey] = payload.targetId.split('-')
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
-      if (state.NodeMap[targetId].connectionInfo[tPayloadKey] === undefined) {
-        state.NodeMap[targetId].connectionInfo[tPayloadKey] = []
-      }
-      state.NodeMap[targetId].connectionInfo[tPayloadKey].push({
-        linkMapKey: keyName,
-        isTarget: true
-      })
-      if (state.NodeMap[sourceId].connectionInfo[sPayloadKey] === undefined) {
-        state.NodeMap[sourceId].connectionInfo[sPayloadKey] = []
-      }
-      state.NodeMap[sourceId].connectionInfo[sPayloadKey].push({
-        linkMapKey: keyName,
-        isTarget: true
-      })
-      // state.NodeMap[targetId].connectionInfo[tPayloadKey] = {
-      //   linkMapKey: keyName,
-      //   isTarget: true
-      // }
-      // state.NodeMap[sourceId].connectionInfo[sPayloadKey] = {
-      //   linkMapKey: keyName,
-      //   isTarget: false
-      // }
-      // let clone = __.cloneDeep(state.LinkMap)
-      // state.LinkMap = clone
+      state.NodeMap[targetId].connectionInfo.inputs.push(keyName)
+      state.NodeMap[sourceId].connectionInfo.outputs.push(keyName)
       return true
     }
   },
