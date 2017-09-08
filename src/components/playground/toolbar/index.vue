@@ -242,9 +242,7 @@ export default {
       let linksArray = this.getItLinkMap
       //console.log(linksArray)
       let nodesArray = this.getItNodeMap
-      console.log(nodesArray)
       let result = false
-      console.log('ddddddd' + this)
       if(this.checkLinkTypes(linksArray))
       {
         for(let node in nodesArray)
@@ -254,37 +252,35 @@ export default {
           console.log(cur)
           if(cur.type.primary === 'virtual' && cur.connectionInfo.inputs.length > 1)
           {
-              //do the check
-//
-//              let ctype
-//              //use for loop
-//              cur.connectionInfo.inputs.forEach(function (element) {
-//                  //found element in linksArray
-//                  //console.log(linksArray[element].sourceId)
-//                  let tsource = linksArray[element].sourceId
-//                  if(ctype === undefined)
-//                  {
-//                    console.log(tsource)
-//                    console.log('fffff' + this)
-//                    ctype = this.getSourceType(tsource)
-//
-//                  }
-//                console.log(tsource)
-//                  if(ctype === this.getSourceType(tsource))
-//                  {
-//                      result = true;
-//                  }
-//                  else {
-//                      result = false
-//                      console.log('error')
-//                      return false
-//                  }
-//                })
+            //do the check
+            let ctype
+            //use for loop
+            for(let i = 0; i < cur.connectionInfo.inputs.length; i++)
+            {
+              //found element in linksArray
+                  let element = cur.connectionInfo.inputs[i]
+                  let tsource = linksArray[element].sourceId
+                  if(ctype === undefined)
+                  {
+                    //console.log(tsource)
+                    ctype = this.getSourceType(tsource)
+
+                  }
+                console.log(tsource)
+                  if(ctype === this.getSourceType(tsource))
+                  {
+                      result = true;
+                  }
+                  else {
+                      result = false
+                      console.log('error')
+                      return false
+                  }
             }
+          }
             else {
               //just have one input, do not have to check
-                console.log('just have one input, do not have to check')
-                //return true
+              console.log('just have one input, do not have to check')
             }
         }
       }
