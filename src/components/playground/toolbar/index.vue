@@ -155,76 +155,149 @@ export default {
         let result = await this.calcEndNodes()
         //console.log(result)
 //        this.runtimeIcon = 'stop'
-        this.checkLinkTypes()
+        //this.checkLinkTypes()
+        this.checkNodeTypes()
         // call the type check function
 
       }
     },
-    //type check function
-    checkLinkTypes () {
-      let linksArray = this.getItLinkMap
+    getSourceType(source)
+    {
       let nodesArray = this.getItNodeMap
-      console.log(linksArray)
+      //console.log(nodesArray)
+      let temp_source = source.split('-')
+      let temp_source_id = temp_source[0]
+      let temp_source_type = temp_source[1]
+      let temp_sourceNode = nodesArray[temp_source_id]
+      //get source node's type
+      let config_0 = temp_sourceNode.type.primary
+      let config_1 = temp_sourceNode.type.secondary
+      let config_2 = temp_sourceNode.type.tertiary
+
+      let config = nodesConfig[config_0][config_1][config_2]
+      console.log(config)
+      let t_source_outputList = config.outputs
+      let outPointType
+      t_source_outputList.forEach(function (element) {
+        if(element.idSuffix === temp_source_type){
+          outPointType = element.type[0]
+        }
+      })
+      return outPointType
+    },
+    getTargetTypes(target)
+    {
+      let nodesArray = this.getItNodeMap
+
+      //console.log(nodesArray)
+      let temp_target = target.split('-')
+      let temp_target_id = temp_target[0]
+      let temp_target_type = temp_target[1]
+
+      let temp_targetNode = nodesArray[temp_target_id]
+
+      let tconfig_0 = temp_targetNode.type.primary
+      let tconfig_1 = temp_targetNode.type.secondary
+      let tconfig_2 = temp_targetNode.type.tertiary
+
+      let tconfig = nodesConfig[tconfig_0][tconfig_1][tconfig_2]
+      let t_target_inputList = tconfig.inputs
+      let inPointType
+      t_target_inputList.forEach(function (element) {
+        if(element.idSuffix === temp_target_type)
+        {
+          //inPointType is an array of possible type in inputs
+          inPointType = element.type
+        }
+      })
+      return inPointType
+    },
+    //type check function
+    checkLinkTypes (linksArray) {
+      //let linksArray = this.getItLinkMap
+      let flag = false
       for(let link in linksArray){
-          //get source
-        let temp_source = linksArray[link].sourceId.split('-')
-        let temp_source_id = temp_source[0]
-        let temp_source_type = temp_source[1]
-
-        //console.log(linksArray[link].sourceId)
-        //get source type; it's unique because the output only has one type
-        let temp_sourceNode = nodesArray[temp_source_id]
-        //get source node's type
-        let config_0 = temp_sourceNode.type.primary
-        let config_1 = temp_sourceNode.type.secondary
-        let config_2 = temp_sourceNode.type.tertiary
-
-        let config = nodesConfig[config_0][config_1][config_2]
-        let t_source_outputList = config.outputs
-        let outPointType
-        t_source_outputList.forEach(function (element) {
-            if(element.idSuffix === temp_source_type){
-                outPointType = element.type[0]
-            }
-        })
-        //console.log(outPointType)
-        let temp_target = linksArray[link].targetId.split('-')
-        let temp_target_id = temp_target[0]
-        let temp_target_type = temp_target[1]
-
-        let temp_targetNode = nodesArray[temp_target_id]
-
-        let tconfig_0 = temp_targetNode.type.primary
-        let tconfig_1 = temp_targetNode.type.secondary
-        let tconfig_2 = temp_targetNode.type.tertiary
-
-        let tconfig = nodesConfig[tconfig_0][tconfig_1][tconfig_2]
-        let t_target_inputList = tconfig.inputs
-        let inPointType
-        t_target_inputList.forEach(function (element) {
-            if(element.idSuffix === temp_target_type)
-            {
-                //inPointType is an array of possible type in inputs
-                inPointType = element.type
-            }
-        })
-        //console.log(inPointType)
+        let inPointType =  this.getTargetTypes(linksArray[link].targetId)
+        let outPointType = this.getSourceType(linksArray[link].sourceId)
         inPointType.forEach(function (element) {
             if(element === outPointType)
             {
-                return
+              console.log("true")
+              flag = true
             }
-            console.log(temp_target_id + 'node has an input error')
         })
-
-
-       //// let temp_sourceType = temp_sourceNode.
-        //console.log(temp_sourceNode)
-        //get target
-
-        //get target type
+        //handle
+        if(flag)
+        {
+            return true
+        }
+        else {
+          console.log(linksArray[link].targetId + '  node has an input error')
+          return false
+        }
       }
+    },
 
+    checkNodeTypes () {
+      let linksArray = this.getItLinkMap
+      //console.log(linksArray)
+      let nodesArray = this.getItNodeMap
+      console.log(nodesArray)
+      let result = false
+      console.log('ddddddd' + this)
+      if(this.checkLinkTypes(linksArray))
+      {
+        for(let node in nodesArray)
+        {
+            //console.log(node)
+          let cur = nodesArray[node]
+          console.log(cur)
+          if(cur.type.primary === 'virtual' && cur.connectionInfo.inputs.length > 1)
+          {
+              //do the check
+//
+//              let ctype
+//              //use for loop
+//              cur.connectionInfo.inputs.forEach(function (element) {
+//                  //found element in linksArray
+//                  //console.log(linksArray[element].sourceId)
+//                  let tsource = linksArray[element].sourceId
+//                  if(ctype === undefined)
+//                  {
+//                    console.log(tsource)
+//                    console.log('fffff' + this)
+//                    ctype = this.getSourceType(tsource)
+//
+//                  }
+//                console.log(tsource)
+//                  if(ctype === this.getSourceType(tsource))
+//                  {
+//                      result = true;
+//                  }
+//                  else {
+//                      result = false
+//                      console.log('error')
+//                      return false
+//                  }
+//                })
+            }
+            else {
+              //just have one input, do not have to check
+                console.log('just have one input, do not have to check')
+                //return true
+            }
+        }
+      }
+      else {
+          //don't have to check
+        console.log('check link types did not pass')
+        return false
+      }
+      if(result)
+      {
+          console.log('node check done!')
+          return true
+      }
     },
     hoverDetailOn ({fromElement, toElement, relatedTarget, srcElement, target}) {
       if (this.runtimeStage === 'SIMULATING') this.showWarnDetail = true
