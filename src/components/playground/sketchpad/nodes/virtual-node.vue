@@ -18,11 +18,13 @@
         <div class="virtual-inputs">
           <div :id="data.id + '-' + item.idSuffix" class="virtual-input-item" v-for="item in data.type.inputs">
             <p>{{ item.name }}</p>
+            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]"/>
           </div>
         </div>
         <div class="virtual-outputs">
           <div :id="data.id + '-' + item.idSuffix" class="virtual-output-item" v-for="item in data.type.outputs">
             <p>{{ item.name }}</p>
+            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]"/>
           </div>
         </div>
       </div>
@@ -165,6 +167,7 @@
           //console.log(e.idSuffix)
           instance.addEndpoint(propLine, outputEndpoint(nodeType))
         })
+        console.log(this.curNode)
       },
       hoverTitle () {
         this.isHoverTitle = true;
