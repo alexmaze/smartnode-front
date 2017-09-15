@@ -1231,8 +1231,9 @@ export const nodesConfig = {
           idSuffix: 'result',
           name: '执行',
           type: ['bool']}],
-        simulateFun: function () {
-
+        simulateFun: function (idSuffix) {
+          let payload = this
+          return !payload['input_0']
         }
 
       },

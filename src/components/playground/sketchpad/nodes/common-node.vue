@@ -68,6 +68,7 @@
             if (this.getLinkMap[con].sourceId.split('-')[0] === this.data.id) {
               let [sourceId, s_plKey] = this.getLinkMap[con].sourceId.split('-') //source_payloadKey
               let [targetId, t_plKey] = this.getLinkMap[con].targetId.split('-') //target_payloadKey
+              if(t_plKey === 'title') t_plKey = 'active'
               let calcFun = this.curNode.updateFun
 
               let output = calcFun.call(this.curNode.payload, s_plKey)

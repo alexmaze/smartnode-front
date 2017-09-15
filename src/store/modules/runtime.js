@@ -39,43 +39,43 @@ const actions = {
     commit(types.CHECK_HARDWARE, { hardwareConn })
     return hardwareConn
   },
-  calcEndNodes ({ state, getters }) {
-    let nodesArray = getters.getNodeMap
-    for (let node in nodesArray) {
-      nodesArray[node]._isSource_ = false
-      nodesArray[node]._isTarget_ = false
-      nodesArray[node]._target_ = []
-      nodesArray[node]._source_ = []
-    }
-    console.log(state.LinkMap)
-    // console.log("that's what we called b-box")
-    for (let con in state.LinkMap) {
-      let sourceNode = nodesArray[state.LinkMap[con].sourceId.split('-')[0]]
-      let targetNode = nodesArray[state.LinkMap[con].targetId.split('-')[0]]
-      sourceNode._isSource_ = true
-      sourceNode._target_.push(targetNode)
-      targetNode._isTarget_ = true
-      targetNode._source_.push(sourceNode)
-    }
-    let result = []
-    for (let node in nodesArray) {
-      if (!nodesArray[node]._isSource_ && nodesArray[node]._isTarget_) result.push(nodesArray[node])
-    }
-    let calcPreNode = (pN) => {
-      if (pN._source_.length === 0) {
-        let rrr = pN.updateFun.call(pN.payload)
-        window.log(rrr, '测试call')
-      } else {
-        pN._source_.forEach(e => {
-          calcPreNode(e)
-          let rrr = pN.updateFun.call(pN.payload)
-          window.log(rrr, '测试call')
-        })
-      }
-    }
-    result.forEach(e => { calcPreNode(e) })
-    return result
-  },
+  // calcEndNodes ({ state, getters }) {
+  //   let nodesArray = getters.getNodeMap
+  //   for (let node in nodesArray) {
+  //     nodesArray[node]._isSource_ = false
+  //     nodesArray[node]._isTarget_ = false
+  //     nodesArray[node]._target_ = []
+  //     nodesArray[node]._source_ = []
+  //   }
+  //   console.log(state.LinkMap)
+  //   // console.log("that's what we called b-box")
+  //   for (let con in state.LinkMap) {
+  //     let sourceNode = nodesArray[state.LinkMap[con].sourceId.split('-')[0]]
+  //     let targetNode = nodesArray[state.LinkMap[con].targetId.split('-')[0]]
+  //     sourceNode._isSource_ = true
+  //     sourceNode._target_.push(targetNode)
+  //     targetNode._isTarget_ = true
+  //     targetNode._source_.push(sourceNode)
+  //   }
+  //   let result = []
+  //   for (let node in nodesArray) {
+  //     if (!nodesArray[node]._isSource_ && nodesArray[node]._isTarget_) result.push(nodesArray[node])
+  //   }
+  //   let calcPreNode = (pN) => {
+  //     if (pN._source_.length === 0) {
+  //       let rrr = pN.updateFun.call(pN.payload)
+  //       window.log(rrr, '测试call')
+  //     } else {
+  //       pN._source_.forEach(e => {
+  //         calcPreNode(e)
+  //         let rrr = pN.updateFun.call(pN.payload)
+  //         window.log(rrr, '测试call')
+  //       })
+  //     }
+  //   }
+  //   result.forEach(e => { calcPreNode(e) })
+  //   return result
+  // },
   checkTypes ({state, getters}) {
     let linksArray = getters.getNodeMap
     for (let link in linksArray) {
@@ -157,6 +157,9 @@ const mutations = {
       state.LinkMap[keyName] = payload
       let [sourceId, sPayloadKey] = payload.sourceId.split('-')
       let [targetId, tPayloadKey] = payload.targetId.split('-')
+      window.log('tpk',tPayloadKey)
+      if((tPayloadKey) === 'title')  tPayloadKey = 'active'
+      window.log('tpk',tPayloadKey)
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
       state.NodeMap[targetId].connectionInfo.inputs.push(keyName)
       state.NodeMap[sourceId].connectionInfo.outputs.push(keyName)

@@ -338,12 +338,26 @@ export default {
 //        let outputsInfo = this.nodeMap[nodeId].connectionInfo.outputs
         let _in = this.nodeMap[nodeId].connectionInfo._in
         if(node.type.primary === 'device'){
+          let baseIndex = 0
+          if(nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].titleInput){
+            let inputItem = {
+              port: 0,
+              value: null,
+              valueType: 'bool',
+              _label: 'active',
+              type: 'ref',
+              refId: this.linkMap[_in['active']].sourceId.split('-')[0],
+              refOutputPort: this.getSourceType(this.linkMap[_in['active']].sourceId,true)[1]
+            }
+            node.inputs.push(inputItem)
+            baseIndex = 1
+          }
           nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].props.forEach( (e, i) => {
             if(e.hasInput){
               let inputItem = {
-                port: i,
+                port: i+baseIndex,
                 value: this.nodeMap[nodeId].payload[e.idSuffix],
-                valueType: null,
+                valueType: e.type,
                 _label: e.name,
                 type: 'const',
                 refId: null,
@@ -425,8 +439,6 @@ export default {
       let checkResult =  await this.checkConnection()
       window.log('toolbar-NodeMap',this.nodeMap)
       window.log('toolbar-LinkMap',this.linkMap)
-//      console.log(this.nodeMap)
-//      console.log(this.linkMap)
       if (!checkResult) {
         this.errorType = 'UNCONNECTED'
         this.showMessageBox = true
