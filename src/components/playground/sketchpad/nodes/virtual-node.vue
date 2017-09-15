@@ -18,13 +18,13 @@
         <div class="virtual-inputs">
           <div :id="data.id + '-' + item.idSuffix" class="virtual-input-item" v-for="item in data.type.inputs">
             <p>{{ item.name }}</p>
-            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]"/>
+            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]" v-if="item.visual === 'input'"/>
           </div>
         </div>
         <div class="virtual-outputs">
           <div :id="data.id + '-' + item.idSuffix" class="virtual-output-item" v-for="item in data.type.outputs">
             <p>{{ item.name }}</p>
-            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]"/>
+            <input type="text" name="input-debug" value="input" v-model="curNode.payload[item.idSuffix]"  v-if="item.visual === 'input'"/>
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
         let outputEndpoint = function(type) {
             return{
               uuid: id + '-output-0',
-              anchor: [1.5, 0.5, 0, 0],
+              anchor: [1.6, 0.5, 0, 0],
               cssClass: 'node-port-out-' + palette[type],
               hoverClass: 'node-port-hover-out-' + palette[type],
               radius: 6,
