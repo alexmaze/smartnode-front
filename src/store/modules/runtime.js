@@ -118,7 +118,8 @@ const mutations = {
         type,
         connectionInfo: {
           inputs: [],
-          outputs: []
+          outputs: [],
+          _in: {}
         }
       }
       // already add a nodemap item, why deep clone again?
@@ -159,6 +160,8 @@ const mutations = {
       state.NodeMap[targetId].payload[tPayloadKey] = state.NodeMap[sourceId].payload[sPayloadKey]
       state.NodeMap[targetId].connectionInfo.inputs.push(keyName)
       state.NodeMap[sourceId].connectionInfo.outputs.push(keyName)
+      // if (state.NodeMap[targetId].connectionInfo._in === undefined) state.NodeMap[targetId].connectionInfo._in = {}
+      state.NodeMap[targetId].connectionInfo._in[tPayloadKey] = keyName
       return true
     }
   },

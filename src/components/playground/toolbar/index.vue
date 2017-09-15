@@ -161,7 +161,11 @@ export default {
 
       }
     },
-    getSourceType(source)
+
+    /**
+     * 获取source的数据类型
+     * */
+    getSourceType(source,getOutputIndex=false)
     {
       let nodesArray = this.getItNodeMap
       //console.log(nodesArray)
@@ -173,18 +177,31 @@ export default {
       let config_0 = temp_sourceNode.type.primary
       let config_1 = temp_sourceNode.type.secondary
       let config_2 = temp_sourceNode.type.tertiary
-
       let config = nodesConfig[config_0][config_1][config_2]
-      console.log(config)
-      let t_source_outputList = config.outputs
-      let outPointType
-      t_source_outputList.forEach(function (element) {
-        if(element.idSuffix === temp_source_type){
+      // let t_source_outputList = config.outputs
+//      let t_source_outputList
+//      if(config_0 === 'virtual') t_source_outputList = config.outputs
+//      else t_source_outputList = config.props
+//      console.log(t_source_outputList)
+     let t_source_outputList = (config_0 === 'virtual') ? config.outputs : config.props
+//      window.log('source',source)
+     window.log('t_source_outputList',t_source_outputList)
+      let outPointType, outPointIndex
+      t_source_outputList.forEach(function (element,i) {
+        if(config_0 === 'virtual' && element.idSuffix === temp_source_type){
           outPointType = element.type[0]
+          if(getOutputIndex)  outPointIndex = i
+        }
+        else if(config_0 === 'device' && element.idSuffix === temp_source_type){
+          outPointType = element.type
+          if(getOutputIndex)  outPointIndex = i
         }
       })
-      return outPointType
+      if(!getOutputIndex) return outPointType
+      else return [outPointType,outPointIndex]
     },
+
+
     getTargetTypes(target)
     {
       let nodesArray = this.getItNodeMap
@@ -317,27 +334,73 @@ export default {
           inputs: [],
           outputs: []
         }
-        nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].props.forEach( (e, i) => {
-          if(e.hasInput){
-            // TODO: node.inputs.push
+//        let inputsInfo = this.nodeMap[nodeId].connectionInfo.inputs
+//        let outputsInfo = this.nodeMap[nodeId].connectionInfo.outputs
+        let _in = this.nodeMap[nodeId].connectionInfo._in
+        if(node.type.primary === 'device'){
+          nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].props.forEach( (e, i) => {
+            if(e.hasInput){
+              let inputItem = {
+                port: i,
+                value: this.nodeMap[nodeId].payload[e.idSuffix],
+                valueType: null,
+                _label: e.name,
+                type: 'const',
+                refId: null,
+                refOutputPort: null
+              }
+              if(_in[e.idSuffix] !== undefined){
+                inputItem.type = 'ref'
+                inputItem.refId = this.linkMap[_in[e.idSuffix]].sourceId.split('-')[0]
+                let _sid = this.linkMap[_in[e.idSuffix]].sourceId
+                let [refPortType,refPortIndex] = this.getSourceType(_sid,true)
+                inputItem.valueType = refPortType
+                inputItem.refOutputPort = refPortIndex
+                inputItem.value = null
+              }
+              node.inputs.push(inputItem)
+            }
+            if(e.hasOutput){
+              let outputItem = {
+                port: i,
+                valueType:null
+              }
+              node.outputs.push(outputItem)
+            }
+          })
+        }
+        if(node.type.primary === 'virtual'){
+          nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].inputs.forEach( (e, i) => {
             let inputItem = {
               port: i,
-              valueType: null, //TODO: find the valueType
+              value: this.nodeMap[nodeId].payload[e.idSuffix],
+              valueType: null,
               _label: e.name,
-              type: 'const', //TODO: 根据linknode判断是否是ref
+              type: 'const',
               refId: null,
               refOutputPort: null
             }
+            if(_in[e.idSuffix] !== undefined){
+              inputItem.type = 'ref'
+              inputItem.refId = this.linkMap[_in[e.idSuffix]].sourceId.split('-')[0]
+              window.GST = this.getSourceType
+              let _sid = this.linkMap[_in[e.idSuffix]].sourceId
+              window.log('_sid',_sid)
+              let [refPortType,refPortIndex] = this.getSourceType(_sid,true)
+              inputItem.valueType = refPortType
+              inputItem.refOutputPort = refPortIndex
+              inputItem.value = null
+            }
             node.inputs.push(inputItem)
-          }
-          if(e.hasOutput){
-            // TODO: node.outputs.push
+          })
+          nodesConfig[node.type.primary][node.type.secondary][node.type.tertiary].outputs.forEach((e,i)=>{
             let outputItem = {
               port: i,
-              valueType:null //TODO: find the valueType
+              valueType:null
             }
-          }
-        })
+            node.outputs.push(outputItem)
+          })
+        }
         nodes.push(node)
       }
       window.log('生成的数据结构',{nodes})
@@ -360,8 +423,8 @@ export default {
       }
       // 检查是否所有设备都已连接
       let checkResult =  await this.checkConnection()
-      window.log('NodeMap',this.nodeMap)
-      window.log('LinkMap',this.linkMap)
+      window.log('toolbar-NodeMap',this.nodeMap)
+      window.log('toolbar-LinkMap',this.linkMap)
 //      console.log(this.nodeMap)
 //      console.log(this.linkMap)
       if (!checkResult) {
