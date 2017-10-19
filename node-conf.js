@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by zhujiaye on 2017/7/13.
  */
 export const nodesConfig = {
@@ -1162,10 +1162,6 @@ export const nodesConfig = {
         }, {
           idSuffix: 'input_1',
           name: '条件1',
-          type: ['bool']
-        }, {
-          idSuffix: 'input_2',
-          name: '条件2',
           type: ['bool']
         }],
         outputs: [{
